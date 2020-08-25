@@ -1,0 +1,98 @@
+/* General Styling */
+
+  .App {
+    height: inherit;
+    box-sizing: border-box;
+  }
+  
+  .Card {
+    width: 300px;
+    height: 175px;
+    position: relative;
+    border-radius: 20px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.25);
+    display: grid;
+    grid-template-rows: auto auto;
+    transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    background-color: white;  
+    cursor: pointer;
+  }
+  
+  .Card h3 {
+    font-size: 1.5rem;
+  }
+  
+  .Card:hover {
+    transform: scale(1.05, 1.05);
+  }
+  
+  .study-card-date {
+    color: #91979F;
+  }
+  
+  .Card:hover .study-arrow {
+    animation: ArrowFadeIn;
+    animation-duration: 0.8s;
+    animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation-fill-mode: forwards;
+  }
+  
+  .valign-center {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+  }
+  
+  .study-arrow {
+    opacity: 0;
+  }
+  
+  .study-card-name {
+    margin-left: 1rem;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  #create-study-btn {
+    color: white;
+    border-color: white;
+    background-color: #00AA69;
+    width: 170px;
+    height: 45px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-right: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    outline: none;
+  }
+  
+  #create-study-btn:hover {
+    color: white;
+    border-color: white;
+    background-color: #008955;
+    cursor: pointer;
+  }
+  
+  .study-name-heading {
+    margin: 0 0 0 0;
+    padding: 8px;
+  }
+  
+  
+  @keyframes ArrowFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateX(15px);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translateX(-30px);
+    }
+  }

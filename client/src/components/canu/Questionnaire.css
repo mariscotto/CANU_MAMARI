@@ -1,0 +1,279 @@
+h1{
+    font-size: 2.1rem;
+    font-weight: 800;
+    margin: 10% 0 0 0;
+}
+h2{
+    font-size: 2.3rem;
+    margin: 0;
+}
+strong{
+    font-weight: 700;
+}
+.info-box{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 33%;
+    height: 100%;
+    text-align: center;
+    background-color: #F4F7F7;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    z-index: 1;
+}
+#list-icon{
+    width: 10vh;
+    margin: 15vh auto 0;
+}
+#personality-icon{
+    width: 12vh;
+    margin: 15vh auto 0;
+}
+#info-text{
+    padding:0 5%;
+    font-size: 1.2rem;
+}
+
+#personality{
+    visibility: hidden;
+}
+
+
+
+#content-area{
+    position: absolute;
+    right: 0;
+    width: 67%;
+    height: 100%;
+}
+
+#header{
+    padding: 2% 5%;
+}
+#form{
+    padding: 2% 5%;
+}
+.section-title{
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+.btn-large {
+    border-radius: 40px;
+    position: relative;
+    background-color: #336666;
+
+}
+.btn-large:hover{
+    background-color: #669999;
+
+}
+.next-button{
+    position: absolute;
+    float: right;
+    right: 8%;
+    z-index:5;
+    bottom: 5%;
+}
+.back-button {
+    position: absolute;
+    left: 5%;
+    bottom: 5%;
+}
+#finish-button{
+    position: absolute;
+    float: right;
+    right: 8%;
+    z-index:5;
+    bottom: 5%;
+}
+.material-icons.left{
+    width: 2.1vh;
+}
+
+
+
+.form-progress {
+    position: relative;
+    display: block;
+    margin: 8% auto;
+    width: 100%;
+    max-width: 400px;
+}
+.row{
+    margin-bottom: 0;
+}
+
+progress {
+    display: block;
+    position: relative;
+    top: 1px;
+    left: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #336666;
+    width: 100%;
+    height: 5px;
+    background: none;
+    -webkit-transition: 1s;
+    transition: 1s;
+    will-change: contents;
+}
+progress::-webkit-progress-bar {
+    background-color: #ddd;
+}
+progress::-webkit-progress-value {
+    background-color: #336666;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.form-progress-indicator {
+    position: absolute;
+    top: -6px;
+    left: 0;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    -webkit-transition-delay: 0.3s;
+    transition-delay: 0.3s;
+    will-change: transform;
+}
+.form-progress-indicator.one {
+    left: 0;
+}
+.form-progress-indicator.two {
+    left: 25%;
+}
+.form-progress-indicator.three {
+    left: 50%;
+}
+.form-progress-indicator.four {
+    left: 75%;
+}
+.form-progress-indicator.five {
+    left: 100%;
+}
+.form-progress-indicator.active {
+    -webkit-animation: bounce 0.5s forwards;
+    animation: bounce 0.5s forwards;
+    -webkit-animation-delay: 0.5s;
+    animation-delay: 0.5s;
+    border-color: #336666;
+}
+
+/*.animation-container {
+    position: relative;
+    width: 100%;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    will-change: padding;
+}*/
+.animation-container {
+    position: relative;
+    width: 100%;
+    height: 80%;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+.form-step {
+    -webkit-transition: 1s ease-in-out;
+    transition: 1s ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    will-change: transform, opacity;
+    width: 100%;
+    height: 100%;
+}
+
+.form-step.leaving {
+    -webkit-animation: left-and-out 0.3s forwards;
+    animation: left-and-out 0.3s forwards;
+}
+
+.form-step.waiting {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+}
+
+.form-step.coming {
+    -webkit-animation: right-and-in 0.5s forwards;
+    animation: right-and-in 0.5s forwards;
+}
+
+@-webkit-keyframes left-and-out {
+    100% {
+        opacity: 0;
+        -webkit-transform: translateX(-50px);
+        transform: translateX(-50px);
+    }
+}
+
+@keyframes left-and-out {
+    100% {
+        opacity: 0;
+        -webkit-transform: translateX(-50px);
+        transform: translateX(-50px);
+    }
+}
+@-webkit-keyframes right-and-in {
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+@keyframes right-and-in {
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+@-webkit-keyframes bounce {
+    50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+@keyframes bounce {
+    50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+
+.validation-field{
+    color:#D66258;
+}

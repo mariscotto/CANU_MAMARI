@@ -1,0 +1,30 @@
+#mountain-header{
+  margin-top: 2.5vh;
+}
+
+.modal-content{
+  padding: 0 !important;
+}
+.modal-footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#modal1{
+  overflow:hidden;
+  max-height: 100%;
+
+}
+#modal1 .modal-header{
+  height: auto;
+  width: 100%;
+}
+#modal1 .text-container{
+  padding: 3% 3% 0 3%;
+  overflow: scroll;
+  height: 53vh;
+}
+#modal1 .modal-footer{
+  height: auto;
+  padding:2.1%;
+}

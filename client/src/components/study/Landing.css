@@ -1,0 +1,193 @@
+/* Styling Study Landing Page */
+
+@import url("https://fonts.googleapis.com/css?family=Asul:400,700|Rubik:300,400,500");
+
+body {
+  background-color: #f8f8f8;
+  margin: 0;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+}
+
+.right {
+  position: absolute;
+  top: 12%;
+  left: 25%;
+  width: 50%;
+}
+
+.right h1 {
+  font-family: "Asul", sans-serif;
+  font-size: 3.5em;
+  font-weight: normal;
+}
+
+.right span {
+  font-weight: 500;
+}
+
+.right p {
+  font-family: "Rubik", sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+.right .btn-container {
+  position: relative;
+  margin-top: 1%;
+  margin-left: 45%;
+}
+
+.right .btn {
+  font-family: "Rubik", sans-serif;
+  font-size: 1.5em;
+  font-weight: normal;
+  background-color: #3200ff;
+  color: #f8f8f8;
+  border: 1.5px solid #3200ff;
+  border-radius: 100px;
+  padding: 10px 50px;
+  position: absolute;
+  top: 0px;
+  transition: 0.1s;
+}
+
+.right .btn:hover {
+  background-color: #f55000;
+  border: 1.5px solid #f55000;
+  color: white;
+  transform: scale(1.07);
+}
+
+.forms div {
+  position: absolute;
+  transform: scale(0.8);
+}
+
+.circle {
+  top: 20%;
+  left: 7%;
+  transform: scale(0.8);
+  animation: circle-move 17s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.rectangle {
+  top: 10%;
+  left: 20%;
+  animation: rotate-rectangle 15s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.half-circle {
+  top: 15%;
+  left: 30%;
+  animation: half-circle-move 30s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.triangle {
+  top: 25%;
+  left: 20%;
+  animation: triangle-move 13s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.square {
+  top: 55%;
+  left: 10%;
+  animation: square-move 12s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.arc {
+  top: 55%;
+  left: 30%;
+  animation: arc-move 10s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rotate-rectangle {
+  0% {
+    transform: rotate(0deg) scale(0.8);
+  }
+  50% {
+    transform: rotate(15deg) scale(0.8);
+  }
+  100% {
+    transform: rotate(0deg) scale(0.8);
+  }
+}
+
+@keyframes arc-move {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-20deg);
+    top: 60%;
+    left: 32%;
+  }
+  100% {
+    transform: rotate(0deg);
+    top: 55%;
+    left: 30%;
+  }
+}
+
+@keyframes square-move {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, 30px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes triangle-move {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30px, 0) rotate(-15deg);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes circle-move {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-25px, -15px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes half-circle-move {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}

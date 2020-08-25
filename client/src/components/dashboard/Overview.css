@@ -1,0 +1,9 @@
+/* Styling Dashboard Overview */
+
+.card-heading-overview {
+    font-size: 1.17em;
+    font-weight: 500;
+    margin: 0 0 0 0;
+    color: #818ea3;
+    padding: 10px 0 0 10px;
+}

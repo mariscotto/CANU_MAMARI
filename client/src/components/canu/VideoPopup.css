@@ -1,0 +1,15 @@
+/*video::-webkit-media-controls {
+    display: none;
+}*/
+#video-container {
+    width: fit-content;
+    max-height:inherit;
+    background-color: black;
+}
+#fire {
+    width: 60%;
+}
+
+#start-practical-test{
+    margin: 1vh 1vh 0 0;
+}

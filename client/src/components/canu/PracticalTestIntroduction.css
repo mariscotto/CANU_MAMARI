@@ -1,0 +1,67 @@
+/*height: 43vh;
+width: 87vh;*/
+
+.practical-info{
+    height: 43vh;
+    width: 87vh;
+    top: 27% !important;
+}
+.practical-info .modal-content {
+    height: 100%;
+    display: flex;
+}
+.practical-info .piece-container{
+    width: 39%;
+    background-color: #F3F7F7;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.16), 0 3px 3px rgba(0,0,0,0.23);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.practical-info .text-container{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    width: 61%;
+    float: right;
+    justify-content: center;
+    padding: 0 4vh;
+}
+.practical-info .modal-close{
+    align-self: flex-end;
+}
+.practical-info p{
+    color: black;
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+.practical-info h2{
+    color: black;
+    font-size: 2.2rem;
+    font-weight: 400;
+}
+
+#walkthrough {
+    width:60%;
+}
+
+#walk-wrapper:before{
+    border-radius: 0 !important;
+}
+#walk-wrapper:after{
+    border-radius: 0 !important;
+}
+
+#walk-wrapper #walk-action{
+    height: 36px;
+    padding: 0 2rem;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 0;
+    border-radius: 30px !important;
+    letter-spacing: 1px;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}

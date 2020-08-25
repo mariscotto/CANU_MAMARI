@@ -1,0 +1,11 @@
+/* Styling Sidebar */
+
+#sidebar-dashboard {
+    padding-top: 60px;
+    width: 240px;
+    height: 100vh;
+    background: white;
+    position: fixed;
+    box-shadow: rgba(0, 0, 0, 0.05) -1px 0px 3px inset;
+    border-right: 1px solid rgb(233, 232, 241);
+}

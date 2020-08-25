@@ -1,0 +1,28 @@
+/* Styling End Page */
+
+.finished-text-wrapper {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.finished-text {
+    font-size: 4rem;
+    font-family: 'Asul', sans-serif;
+    font-weight: 400;
+    animation: FinishFadeIn 0.8s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    /* border-bottom: 5px solid #3100FF; */
+}
+
+@keyframes FinishFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
