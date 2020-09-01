@@ -113,4 +113,5 @@
   width: 25vh;
   height: 25vh;
   top: 30% !important;
+  overflow-x: hidden;
 }

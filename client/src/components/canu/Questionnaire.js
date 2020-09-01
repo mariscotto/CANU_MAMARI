@@ -14,9 +14,31 @@ import QuestionnaireIntroduction from "./QuestionnaireIntroduction";
 
 class Questionnaire extends React.Component {
     // storing link to tasks
-    state = {
-        link: `/${this.props.match.params.studyid}/canu/apm`
-    };
+    constructor(props) {
+        super(props);
+        this.onChangeAge = this.onChangeAge.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeGender = this.onChangeGender.bind(this);
+        this.onChangeCreativeSkills = this.onChangeCreativeSkills.bind(this);
+        this.onChangeCreativeTest = this.onChangeCreativeTest.bind(this);
+        this.onChangeEducationGrade = this.onChangeEducationGrade.bind(this);
+        this.onChangeJobArea = this.onChangeJobArea.bind(this);
+        this.onChangePersonalityAdjectives = this.onChangePersonalityAdjectives.bind(this);
+
+
+        this.state = {
+            link: `/${this.props.match.params.studyid}/canu/apm`,
+            email: "",
+            age: "",
+            gender: "",
+            creative_test: "",
+            creative_skills: "",
+            education_grade: "",
+            job_area: "",
+            personality_adjectives: []
+        };
+    }
+
     value = 0;
     transitionEnd = 'webkitTransitionEnd transitionend';
 
@@ -25,6 +47,66 @@ class Questionnaire extends React.Component {
         this.setupFloatLabels();
         this.setupClickHandlers();
     }
+
+    /*Database Methods*/
+    postQuestionnaireData() {
+
+    }
+
+    onChangeEmail(e) {
+        this.setState({
+            email: e.target.value
+        })
+    }
+
+    onChangeAge(e) {
+        this.setState({
+            age: e.target.value
+        })
+    }
+
+    onChangeGender(e) {
+        this.setState({
+            gender: e.target.value
+        })
+    }
+
+    onChangeCreativeTest(e) {
+        this.setState({
+            creative_test: e.target.value
+        })
+    }
+
+    onChangeCreativeSkills(e) {
+        this.setState({
+            creative_skills: e.target.value
+        })
+    }
+
+    onChangeEducationGrade(e) {
+        this.setState({
+            education_grade: e.target.value
+        })
+    }
+
+    onChangeJobArea(e) {
+        this.setState({
+            job_area: e.target.value
+        })
+    }
+
+    onChangePersonalityAdjectives (e){
+        if (e.target.checked) {
+            this.setState({
+                personality_adjectives: [...this.state.personality_adjectives, e.target.value]
+            })
+        } else {
+            this.setState({personality_adjectives: this.state.personality_adjectives.filter(adjective => adjective !== e.target.value)})
+        }
+    };
+
+
+    /*Form Navigation*/
 
     /*Resets the form back to the default state.*/
     formReset() {
@@ -85,11 +167,11 @@ class Questionnaire extends React.Component {
         this.value -= 25;
 
         // Reset if we've reached the end
-        $(document.getElementsByClassName("form-progress-indicator")[currentFormStep-1])
-                .removeClass('active');
+        $(document.getElementsByClassName("form-progress-indicator")[currentFormStep - 1])
+            .removeClass('active');
 
-            // Set progress bar to the next value
-            $('progress').val(this.value);
+        // Set progress bar to the next value
+        $('progress').val(this.value);
 
         // Update hidden progress descriptor (for a11y)
         $('.js-form-progress-completion').html($('progress').val() + '% complete');
@@ -165,13 +247,13 @@ class Questionnaire extends React.Component {
         this.value += 25;
 
         // Reset if we've reached the end
-            $('.form-progress')
-                .find('.form-progress-indicator.active')
-                .next('.form-progress-indicator')
-                .addClass('active');
+        $('.form-progress')
+            .find('.form-progress-indicator.active')
+            .next('.form-progress-indicator')
+            .addClass('active');
 
-            // Set progress bar to the next value
-            $('progress').val(this.value);
+        // Set progress bar to the next value
+        $('progress').val(this.value);
 
         // Update hidden progress descriptor (for a11y)
         $('.js-form-progress-completion').html($('progress').val() + '% complete');
@@ -254,7 +336,8 @@ class Questionnaire extends React.Component {
                                     <div className="col s12">
                                         <div className="input-field inline">
                                             <div className="section-title">E-mail</div>
-                                            <input id="email_inline" type="email" className="validate"></input>
+                                            <input id="email_inline" type="email" className="validate"
+                                                   value={this.state.email} onChange={this.onChangeEmail}></input>
                                             <span className="helper-text">if you are interested in receiving your test score, feel free to add a e-mail address here.</span>
                                         </div>
                                     </div>
@@ -262,7 +345,8 @@ class Questionnaire extends React.Component {
                                 <div className="row">
                                     <div className="input-field col s6">
                                         <div className="section-title">Age</div>
-                                        <input placeholder="" id="age" type="number" className="validate"></input>
+                                        <input placeholder="" id="age" type="number" className="validate"
+                                               value={this.state.age} onChange={this.onChangeAge}></input>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -270,19 +354,22 @@ class Questionnaire extends React.Component {
                                         <div className="section-title">Gender</div>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio" value={"Male"}
+                                                       onChange={this.onChangeGender}/>
                                                 <span>Male</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio" value={"Female"}
+                                                       onChange={this.onChangeGender}/>
                                                 <span>Female</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio" value={"Diverse"}
+                                                       onChange={this.onChangeGender}/>
                                                 <span>Diverse</span>
                                             </label>
                                         </p>
@@ -299,37 +386,44 @@ class Questionnaire extends React.Component {
                             <div id="form">
                                 <div className="row">
                                     <div className="col s12">
-                                            <div className="section-title">I think that the Pracitcal Test was assessing my creativity</div>
-                                            <p>
-                                                <label>
-                                                    <input className="with-gap" name="group1" type="radio"/>
-                                                    <span>Strongly Agree</span>
-                                                </label>
-                                            </p>
-                                            <p>
-                                                <label>
-                                                    <input className="with-gap" name="group1" type="radio"/>
-                                                    <span>Agree</span>
-                                                </label>
-                                            </p>
-                                            <p>
-                                                <label>
-                                                    <input className="with-gap" name="group1" type="radio"/>
-                                                    <span>Undecided</span>
-                                                </label>
-                                            </p>
-                                            <p>
-                                                <label>
-                                                    <input className="with-gap" name="group1" type="radio"/>
-                                                    <span>Disagree</span>
-                                                </label>
-                                            </p>
-                                            <p>
-                                                <label>
-                                                    <input className="with-gap" name="group1" type="radio"/>
-                                                    <span>Strongly Disagree</span>
-                                                </label>
-                                            </p>
+                                        <div className="section-title">I think that the Pracitcal Test was assessing my
+                                            creativity
+                                        </div>
+                                        <p>
+                                            <label>
+                                                <input className="with-gap" name="group1" type="radio" value={0}
+                                                       onChange={this.onChangeCreativeTest}/>
+                                                <span>Strongly Agree</span>
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <label>
+                                                <input className="with-gap" name="group1" type="radio" value={1}
+                                                       onChange={this.onChangeCreativeTest}/>
+                                                <span>Agree</span>
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <label>
+                                                <input className="with-gap" name="group1" type="radio" value={2}
+                                                       onChange={this.onChangeCreativeTest}/>
+                                                <span>Undecided</span>
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <label>
+                                                <input className="with-gap" name="group1" type="radio" value={3}
+                                                       onChange={this.onChangeCreativeTest}/>
+                                                <span>Disagree</span>
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <label>
+                                                <input className="with-gap" name="group1" type="radio" value={4}
+                                                       onChange={this.onChangeCreativeTest}/>
+                                                <span>Strongly Disagree</span>
+                                            </label>
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -338,31 +432,36 @@ class Questionnaire extends React.Component {
                                         </div>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio" value={0}
+                                                       onChange={this.onChangeCreativeSkills}/>
                                                 <span>Excellent</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio" value={1}
+                                                       onChange={this.onChangeCreativeSkills}/>
                                                 <span>Good</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio" value={2}
+                                                       onChange={this.onChangeCreativeSkills}/>
                                                 <span>Fair</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio" value={3}
+                                                       onChange={this.onChangeCreativeSkills}/>
                                                 <span>Poor</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio" value={4}
+                                                       onChange={this.onChangeCreativeSkills}/>
                                                 <span>Very Poor</span>
                                             </label>
                                         </p>
@@ -383,37 +482,49 @@ class Questionnaire extends React.Component {
                                     <div className="col s12">
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Less than high school degree"}
+                                                       onChange={this.onChangeEducationGrade}/>
                                                 <span>Less than high school degree</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"High school degree or equivalent"}
+                                                       onChange={this.onChangeEducationGrade}/>
                                                 <span>High school degree or equivalent</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Some college but no degree"}
+                                                       onChange={this.onChangeEducationGrade}/>
                                                 <span>Some college but no degree</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Associate degree"}
+                                                       onChange={this.onChangeEducationGrade}/>
                                                 <span>Associate degree</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Bachelor degree"}
+                                                       onChange={this.onChangeEducationGrade}/>
                                                 <span>Bachelor degree</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Graduate degree"}
+                                                       onChange={this.onChangeEducationGrade}/>
                                                 <span>Graduate degree</span>
                                             </label>
                                         </p>
@@ -433,61 +544,75 @@ class Questionnaire extends React.Component {
                                     <div className="col s12">
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
-                                                <span>Agriculture and forestry</span>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Architecture and Forestry"}
+                                                       onChange={this.onChangeJobArea}/>
+                                                <span>Agriculture and Forestry</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Social Science"} onChange={this.onChangeJobArea}/>
                                                 <span>Social Sciences</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Computer Science & Mathematics"}
+                                                       onChange={this.onChangeJobArea}/>
                                                 <span>Computer Science & Mathematics</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Media & Communication"} onChange={this.onChangeJobArea}/>
                                                 <span>Media & Communication</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Art, Design & Music"} onChange={this.onChangeJobArea}/>
                                                 <span>Art, Design & Music</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Natural Sciences"} onChange={this.onChangeJobArea}/>
                                                 <span>Natural Sciences</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Linguistics and cultural studies"}
+                                                       onChange={this.onChangeJobArea}/>
                                                 <span>Linguistics and cultural studies</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Technology & Engineering"}
+                                                       onChange={this.onChangeJobArea}/>
                                                 <span>Technology & Engineering</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Economy & Law"} onChange={this.onChangeJobArea}/>
                                                 <span>Economy & Law</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" name="group1" type="radio"/>
+                                                <input className="with-gap" name="group1" type="radio"
+                                                       value={"Administration"} onChange={this.onChangeJobArea}/>
                                                 <span>Administration</span>
                                             </label>
                                         </p>
@@ -506,61 +631,69 @@ class Questionnaire extends React.Component {
                                     <div className="col s4">
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Capable"}
+                                                       onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Capable</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Clever"}
+                                                       onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Clever</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Confident"}
+                                                       onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Confident</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Egoistical"}
+                                                       onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Egoistical</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Humorous"}
+                                                       onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Humorous</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Individualistic"}
+                                                       onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Individualistic</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Informal"}
+                                                       onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Informal</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Insightful"}
+                                                       onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Insightful</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Intelligent</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Interest wide</span>
                                             </label>
                                         </p>
@@ -568,61 +701,61 @@ class Questionnaire extends React.Component {
                                     <div className="col s4">
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Inventive</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Original</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Reflective</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Resourceful</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Self-confident</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Sexy</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Snobbish</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Unconventional</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Artificial</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Cautious</span>
                                             </label>
                                         </p>
@@ -630,55 +763,55 @@ class Questionnaire extends React.Component {
                                     <div className="col s4">
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Conventional</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Conservative</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Dissatisfied</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Honest</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Interests narrow</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Mannerly</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Sincere</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Submissive</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input className="with-gap" type="radio"/>
+                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
                                                 <span>Suspicious</span>
                                             </label>
                                         </p>

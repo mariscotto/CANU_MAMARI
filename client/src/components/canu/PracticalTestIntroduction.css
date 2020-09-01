@@ -1,6 +1,8 @@
 /*height: 43vh;
 width: 87vh;*/
-
+.modal-close{
+    cursor:pointer;
+}
 .practical-info{
     height: 43vh;
     width: 87vh;

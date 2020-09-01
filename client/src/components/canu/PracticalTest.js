@@ -17,22 +17,23 @@ import './practicalTest/nullTile.js';
 import './practicalTest/shape.js';
 import './practicalTest/tile.js';
 import './practicalTest/tray.js';*/
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import "./PracticalTest.css";
 import PracticalTestIntroduction from "./PracticalTestIntroduction";
 import VideoPopup from "./VideoPopup";
 
 
 class PracticalTest extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.submitSolution = this.submitSolution.bind(this);
-        this.test = this.test.bind(this);
     }
+
     // storing link to tasks
     state = {
         link: `/${this.props.match.params.studyid}/canu/questionnaire`
     };
+
     componentDidMount() {
         let rootEl = $('.wrapper');
         let game = new Game();
@@ -42,7 +43,7 @@ class PracticalTest extends React.Component {
         //rootEl.append(submit);
         //load audio files
 
-         window.view.swiper = new Swiper('.swiper-container', {
+        window.view.swiper = new Swiper('.swiper-container', {
             slidesPerView: 6,
             spaceBetween: 10,
             freeMode: true,
@@ -147,19 +148,20 @@ class PracticalTest extends React.Component {
     }
 
 
-    submitSolution(){
+    submitSolution() {
         var boardGrid = window.view.game.board.grid;
         var solutions = window.view.solutions;
+        var minifiedGrid;
         //console.log(this.compareSolution(boardGrid));
-        if(this.isPieceInGrid(boardGrid)) {
+        if (this.isPieceInGrid(boardGrid)) {
             if (!this.compareSolution(boardGrid)) {
-                this.buildSolutionGrid(boardGrid);
+                minifiedGrid = this.calculateUsefulness2(this.deepCloneArray(boardGrid));
+                this.buildSolutionGrid(minifiedGrid);
                 solutions.push(this.deepCloneArray(boardGrid));
                 var rotatedGrid = boardGrid;
-                if (this.shapeInGridRotatable(boardGrid)){
+                if (this.shapeInGridRotatable(boardGrid)) {
                     for (var i = 0; i < 3; i++) {
                         rotatedGrid = this.rotateSolutionGrid(rotatedGrid);
-                        this.buildSolutionGrid(rotatedGrid);
                         solutions.push(this.deepCloneArray(rotatedGrid));
                     }
                 }
@@ -184,12 +186,16 @@ class PracticalTest extends React.Component {
         var self = this;
         var swiperContainer = $("<div>").addClass("swiper-slide");
         var $ul = $("<ul>").addClass("solution");
+        $ul.css('min-height', boardGrid.length * 20 + "px");
+        $ul.css('max-height', boardGrid.length * 20 + "px");
+        $ul.css('min-width', boardGrid[0].length * 20 + "px");
+        $ul.css('max-width', boardGrid[0].length * 20 + "px");
         boardGrid.forEach(function (row, rowIdx) {
             row.forEach(function (tile, tileIdx) {
                 var $li = $("<li>");
                 $li.data("pos", [rowIdx, tileIdx]);
                 $li.css('background', tile.color);
-                if(!tile.color){
+                if (!tile.color) {
                     $li.css('visibility', 'hidden');
                 }
                 $ul.append($li);
@@ -215,10 +221,9 @@ class PracticalTest extends React.Component {
             var f = startPosSolution[0];
             var j = startPosSolution[1];
             var condition;
-            i + n * 5 <= f + j * 5 ? condition = f < newSolution.length - 1 || j < newSolution.length - 1 : condition = i < newSolution.length - 1 || n < newSolution.length - 1;
-            console.log(condition);
+            i + n * 5 <= f + j * 5 ? condition = f <= newSolution.length - 1 || j <= newSolution.length - 1 : condition = i <= newSolution.length - 1 || n <= newSolution.length - 1;
             for (; condition;) {
-                if (solution[f][j].type !== newSolution[i][n].type) {
+                if (solution[f][j].kind !== newSolution[i][n].kind) {
                     break;
                     //return false;
                 }
@@ -226,20 +231,21 @@ class PracticalTest extends React.Component {
                     status = true;
                     break;
                 }
-                if (i === newSolution.length - 1) {
-                    i = -1;
-                    n++;
+                if (n === newSolution.length - 1) {
+                    n = -1;
+                    i++;
                 }
-                if (f === newSolution.length - 1) {
-                    f = -1;
-                    j++;
+                if (j === newSolution.length - 1) {
+                    j = -1;
+                    f++;
                 }
-                f++;
-                i++;
+                j++;
+                n++;
             }
             return status;
         });
     }
+
     isPieceInGrid(grid) {
         for (var i = 0; i < grid.length; i++) {
             for (var n = 0; n < grid[i].length; n++) {
@@ -249,6 +255,7 @@ class PracticalTest extends React.Component {
             }
         }
     }
+
     shapeInGridRotatable(grid) {
         for (var i = 0; i < grid.length; i++) {
             for (var n = 0; n < grid[i].length; n++) {
@@ -259,6 +266,7 @@ class PracticalTest extends React.Component {
         }
         return false;
     }
+
     getFirstPiecePos(grid) {
         for (var i = 0; i < grid.length; i++) {
             for (var n = 0; n < grid[i].length; n++) {
@@ -267,6 +275,141 @@ class PracticalTest extends React.Component {
                 }
             }
         }
+    }
+
+    deleteRow(arr, row) {
+        // arr = arr.slice(0); // make copy
+        arr.splice(row, 1);
+        return arr;
+    }
+
+    deleteCol(arr, col) {
+        //  arr = arr.slice(0); // make copy
+        for (let i = 0; i < arr.length; i++) {
+            let row = arr[i];
+            row.splice(col, 1);
+        }
+        return arr;
+    }
+
+    removeTopRows(grid) {
+        var deleted = true;
+        var pieceFoundFlag = false;
+        for (let i = 0; i < grid.length; i++) {
+            for (let n = 0; n < grid[i].length; n++) {
+                if (grid[0][n].type) {
+                    deleted = false;
+                    pieceFoundFlag = true;
+                    break;
+                }
+            }
+            if (pieceFoundFlag) {
+                pieceFoundFlag = false;
+                break;
+            }
+            if (deleted) {
+                grid = this.deleteRow(grid, 0);
+                deleted = true;
+            }
+        }
+        return grid;
+    }
+
+    removeBotRows(grid) {
+        var deleted = true;
+        var pieceFoundFlag = false;
+        for (let a = grid.length - 1; a >= 0; a--) {
+            for (let b = 0; b < grid[a].length; b++) {
+                if (grid[grid.length - 1][b].type) {
+                    deleted = false;
+                    break;
+                }
+            }
+            if (pieceFoundFlag) {
+                pieceFoundFlag = false;
+                break;
+            }
+            if (deleted) {
+                grid = this.deleteRow(grid, grid.length - 1);
+                deleted = true;
+            }
+        }
+        return grid;
+    }
+
+    removeLeftCols(grid) {
+        var deleted = true;
+        var pieceFoundFlag = false;
+        for (let f = 0; f < grid[0].length; f++) {
+            for (let j = 0; j < grid.length; j++) {
+                if (grid[j][0].type) {
+                    deleted = false;
+                    pieceFoundFlag = true;
+                    break;
+                }
+            }
+            if (pieceFoundFlag) {
+                return grid;
+            }
+            if (deleted) {
+                grid = this.deleteCol(grid, 0);
+                deleted = true;
+            }
+        }
+        return grid;
+    }
+
+    removeRightCols(grid) {
+        var deleted = true;
+        var pieceFoundFlag = false;
+        for (let y = grid[0].length - 1; y >= 0; y--) {
+            for (let z = 0; z < grid.length; z++) {
+                if (grid[z][grid[0].length - 1].type) {
+                    deleted = false;
+                    pieceFoundFlag = true;
+                    break;
+                }
+            }
+            if (pieceFoundFlag) {
+                return grid;
+            }
+            if (deleted) {
+                grid = this.deleteCol(grid, grid[0].length - 1);
+                deleted = true;
+            }
+        }
+        return grid;
+    }
+
+
+    calculateUsefulness2(grid) {
+        var deleted = true;
+        var pieceFoundFlag = false;
+        this.removeTopRows(grid);
+        this.removeBotRows(grid);
+        this.removeLeftCols(grid);
+        this.removeRightCols(grid);
+        console.log(this.largestSquare(this.deepCloneArray(grid)));
+        return grid;
+    }
+
+    calculateUsefulness3(grid) {
+        var usefulness;
+        var totalFields;
+        var filledFields = 0;
+        this.removeTopRows(grid);
+        this.removeBotRows(grid);
+        this.removeLeftCols(grid);
+        this.removeRightCols(grid);
+        grid.length >= grid[0].length ? totalFields = grid.length * grid.length : totalFields = grid[0].length * grid[0].length;
+        for (let i = 0; i < grid.length; i++) {
+            for (let n = 0; n < grid[i].length; n++) {
+                if (grid[i][n].type) {
+                    filledFields++;
+                }
+            }
+        }
+        return filledFields / totalFields;
     }
 
     calculateUsefulness(grid) {
@@ -280,7 +423,7 @@ class PracticalTest extends React.Component {
         var emptyCounter;
         for (var i = 0; i < 4; i++) {
             for (var n = 0; n < grid[i].length; n++) {
-                var topIsEmpty,botIsEmpty,rightIsEmpty,leftIsEmpty = true;
+                var topIsEmpty, botIsEmpty, rightIsEmpty, leftIsEmpty = true;
                 if (grid[posTop][n].type) {
                     topIsEmpty = false;
                 }
@@ -294,22 +437,22 @@ class PracticalTest extends React.Component {
                 if (grid[maxPosRight][n].type) {
                     rightIsEmpty = false;
                 }
-                if(topIsEmpty+botIsEmpty === rightIsEmpty+leftIsEmpty){
+                if (topIsEmpty + botIsEmpty === rightIsEmpty + leftIsEmpty) {
 
                 } else {
                     return grid.length - 1;
                 }
             }
-            if(leftIsEmpty && rightIsEmpty && botIsEmpty && topIsEmpty){
-                maxSize-=2;
+            if (leftIsEmpty && rightIsEmpty && botIsEmpty && topIsEmpty) {
+                maxSize -= 2;
                 posTop++;
                 posLeft++;
                 maxPosBottom--;
                 maxPosRight--;
 
             } else {
-                emptyCounter = this.calculateEmptyCounter(topIsEmpty,rightIsEmpty,botIsEmpty,leftIsEmpty);
-                if (emptyCounter>=2) {
+                emptyCounter = this.calculateEmptyCounter(topIsEmpty, rightIsEmpty, botIsEmpty, leftIsEmpty);
+                if (emptyCounter >= 2) {
                     maxSize--;
                     break;
                 }
@@ -317,41 +460,57 @@ class PracticalTest extends React.Component {
                     return emptyCounter;
                 }
             }
-            if(!(leftIsEmpty || rightIsEmpty || botIsEmpty || topIsEmpty)){
+            if (!(leftIsEmpty || rightIsEmpty || botIsEmpty || topIsEmpty)) {
                 return maxSize;
             }
         }
     }
 
+
+    encodeArray(grid) {
+        var arr = this.deepCloneArray(grid);
+        for (var i = 0; i < arr.length; i++) {
+            for (var n = 0; n < arr[i].length; n++) {
+                if (arr[i][n].type) {
+                    arr[i][n] = 1;
+                } else {
+                    arr[i][n] = 0;
+                }
+            }
+        }
+        return arr;
+    }
+
     largestSquare(grid) {
-        var cache = grid.clone();
+        var cache = this.encodeArray(grid);
         var result = 0;
         for (var i = 0; i < grid.length; i++) {
             for (var n = 0; n < grid[i].length; n++) {
-                if(i===0 || n === 0){
+                if (i === 0 || n === 0) {
 
-                } else if(cache[i][n] > 0){
-                    cache[i][n] = 1+ Math.min(cache[i-1][n],cache[i][n-1],cache[i-1][n-1]);
+                } else if (cache[i][n] > 0 || cache[i][n].type) {
+                    cache[i][n] = 1 + Math.min(cache[i - 1][n], cache[i][n - 1], cache[i - 1][n - 1]);
                 }
-                if(cache[i][n] > result){
+                if (cache[i][n] > result) {
                     result = cache[i][n];
                 }
             }
         }
         return result;
     }
-    calulateSize(topIsEmpty,rightIsEmpty,botIsEmpty,leftIsEmpty) {
+
+    calulateSize(topIsEmpty, rightIsEmpty, botIsEmpty, leftIsEmpty) {
         var counter = 0;
-        if(topIsEmpty){
+        if (topIsEmpty) {
             counter++;
         }
-        if(rightIsEmpty){
+        if (rightIsEmpty) {
             counter++;
         }
-        if(botIsEmpty){
+        if (botIsEmpty) {
             counter++;
         }
-        if(leftIsEmpty){
+        if (leftIsEmpty) {
             counter++;
         }
         return counter;
@@ -361,16 +520,11 @@ class PracticalTest extends React.Component {
         return val;
     }
 
-    test(){
-    console.log("test");
-    this.props.history.push(this.state.link);
-    }
-
 
     render() {
         return (
-            <div style={{height:"100%"}}>
-                <PracticalTestIntroduction  />
+            <div style={{height: "100%"}}>
+                <PracticalTestIntroduction/>
                 <div id="piece-found" className="modal piece-info">
                     <div className="modal-content">
                         <div className="piece-container">
@@ -404,7 +558,7 @@ class PracticalTest extends React.Component {
                         <h4>Pieces Pallete</h4>
                     </div>
                     <div className="right-area">
-                        <h2>Form a square with Pieces provided in the Puzzle Pallete</h2>
+                        <h2>Form a square with the pieces provided in the Puzzle Pallete</h2>
                         <div className="clock-container">
                             <div id="main">
                                 <div id="countdown"></div>
@@ -420,7 +574,7 @@ class PracticalTest extends React.Component {
                 <div className="module-area">
                     <div className="wrapper">
                         <a id="submit-button" className="waves-effect waves-light btn-large"
-                           onClick={this.submitSolution} onMouseDown={this.submitSolution}>Submit</a>
+                           onClick={this.submitSolution}>Submit</a>
                     </div>
                     <div className="module-footer">
                         <div className="footer-left">
@@ -432,11 +586,12 @@ class PracticalTest extends React.Component {
                                     className="fa fa-pause"></i> Pause
                                 </button>
                                 <button className="btn btn-danger" id="reset-button">Reset</button>
-                                <a onClick={this.test} className="waves-effect waves-light btn-large modal-action modal-close">Paddle!</a>
+                                <a onClick={this.test}
+                                   className="waves-effect waves-light btn-large modal-action modal-close">Paddle!</a>
                             </div>
                         </div>
                         <div className="footer-right">
-                            <h4>Timeline</h4>
+                            <h4>Solutions</h4>
                             <div className="slider">
                                 <div className="swiper-container">
                                     <div className="swiper-wrapper">
@@ -449,10 +604,10 @@ class PracticalTest extends React.Component {
                         </div>
                     </div>
                 </div>
-                <img className="background" src="/ressources/background.svg"></img>
+                <img className="background" src="/ressources/Asset12.svg"></img>
             </div>
-    );
+        );
     }
-    }
+}
 
-    export default PracticalTest;
+export default PracticalTest;

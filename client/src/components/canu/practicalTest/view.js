@@ -36,6 +36,7 @@ class View {
 
         this.$el.append(pallet);
         this.addDroppableListener(pallet);
+        this.addDroppableListenerSolution($ul);
         this.$el.append($ul);
         //self.addDroppableListener($ul);
     };
@@ -46,174 +47,42 @@ class View {
             this.shapes.push(new Shape(i));
         }
     };
-    submitSolution(){
-        var boardGrid = window.view.game.board.grid;
-        var solutions = window.view.solutions;
-        //console.log(this.compareSolution(boardGrid));
-        if(this.isPieceInGrid(boardGrid)) {
-            if (!this.compareSolution(boardGrid)) {
-                this.buildSolutionGrid(boardGrid);
-                solutions.push(this.deepCloneArray(boardGrid));
-                var rotatedGrid = boardGrid;
-                if (this.shapeInGridRotatable(boardGrid)){
-                    for (var i = 0; i < 3; i++) {
-                        rotatedGrid = this.rotateSolutionGrid(rotatedGrid);
-                        this.buildSolutionGrid(rotatedGrid);
-                        solutions.push(this.deepCloneArray(rotatedGrid));
-                    }
-                }
-            } else {
-                var pieceFound = document.getElementById('piece-found');
-                var instance1 = M.Modal.init(pieceFound);
-                instance1.open();
-            }
-        } else {
-            var noPiece = document.getElementById('no-piece');
-            var instance2 = M.Modal.init(noPiece);
-            instance2.open();
-        }
-    }
-
-    deepCloneArray(arr) {
-        //  return arr.map(row => row.slice(0));
-        return JSON.parse(JSON.stringify(arr));
-    }
-
-    buildSolutionGrid(boardGrid) {
-        var self = this;
-        var swiperContainer = $("<div>").addClass("swiper-slide");
-        var $ul = $("<ul>").addClass("solution");
-        boardGrid.forEach(function (row, rowIdx) {
-            row.forEach(function (tile, tileIdx) {
-                var $li = $("<li>");
-                $li.data("pos", [rowIdx, tileIdx]);
-                $li.css('background', tile.color);
-                if(!tile.color){
-                    $li.css('visibility', 'hidden');
-                }
-                $ul.append($li);
-            });
-        });
-        swiperContainer.append($ul);
-        window.view.swiper.appendSlide(swiperContainer);
-    }
-
-    rotateSolutionGrid(boardGrid) {
-        return boardGrid.map((val, index) => boardGrid.map(row => row[index]).reverse());
-    }
-
-    compareSolution(newSolution) {
-        var solutions = window.view.solutions;
-        // var solutions = [newSolution];
-        var startPosNewSolution = this.getFirstPiecePos(newSolution);
-        var status = false;
-        return solutions.some((solution) => {
-            var startPosSolution = this.getFirstPiecePos(solution);
-            var i = startPosNewSolution[0];
-            var n = startPosNewSolution[1];
-            var f = startPosSolution[0];
-            var j = startPosSolution[1];
-            var condition;
-            i + n * 5 <= f + j * 5 ? condition = f < newSolution.length - 1 || j < newSolution.length - 1 : condition = i < newSolution.length - 1 || n < newSolution.length - 1;
-            console.log(condition);
-            for (; condition;) {
-                if (solution[f][j].type !== newSolution[i][n].type) {
-                    break;
-                    //return false;
-                }
-                if ((f === newSolution.length - 1 && j === newSolution.length - 1) || (i === newSolution.length - 1 && n === newSolution.length - 1)) {
-                    status = true;
-                    break;
-                }
-                if (i === newSolution.length - 1) {
-                    i = -1;
-                    n++;
-                }
-                if (f === newSolution.length - 1) {
-                    f = -1;
-                    j++;
-                }
-                f++;
-                i++;
-            }
-            return status;
-        });
-    }
-    isPieceInGrid(grid) {
-        for (var i = 0; i < grid.length; i++) {
-            for (var n = 0; n < grid[i].length; n++) {
-                if (grid[i][n].type) {
-                    return true;
-                }
-            }
-        }
-    }
-    shapeInGridRotatable(grid) {
-        for (var i = 0; i < grid.length; i++) {
-            for (var n = 0; n < grid[i].length; n++) {
-                if (grid[i][n].type && grid[i][n].type !== "square") {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    getFirstPiecePos(grid) {
-        for (var i = 0; i < grid.length; i++) {
-            for (var n = 0; n < grid[i].length; n++) {
-                if (grid[i][n].type) {
-                    return [i, n];
-                }
-            }
-        }
-    }
 
     /*View.prototype.placeShape = function (listItem) {
         this.game.playMove();
         this.setupPieceTray();
     };*/
 
-    transformCoords(startPos, coords) {
+   /* transformCoords(startPos, coords) {
         this.transformedCoords = coords.map(function (pos) {
             return [startPos[0] + pos[0], startPos[1] + pos[1]];
         });
-    };
+    };*/
 
-    renderFullShape(color) {
-        this.listItems.forEach(function ($li) {
-            $li.css('background', color);
-            $li.data('color', color);
-            //$li.addClass('piece')
-        });
-        // this.horizontals();
-        //this.verticals();
-    };
 
-    validMove(startPos) {
-        var self = this;
-        var coords = this.shapes[0].coords;
-        this.transformCoords(startPos, coords);
-        this.transformedCoords.forEach((pos) => {
-            if (this.isValidPos(pos)) {
-                $('.group > li').each((idx, li) => {
-                    var $li = $(li);
-                    if (($li.data('pos').equals(pos)) && ($li.data('color') !== undefined)) {
-                        self.valid = false;
-                    } else if ($li.data('pos').equals(pos)) {
-                        self.listItems.push($li);
-                    }
-                });
-            } else {
-                self.valid = false;
-            }
-        });
-    };
-
-    isValidPos(pos) {
+    /*var self = this;
+    var coords = this.shapes[0].coords;
+    this.transformCoords(startPos, coords);
+    this.transformedCoords.forEach((pos) => {
+    if (this.isValidPos(pos)) {
+    $('.group > li').each((idx, li) => {
+    var $li = $(li);
+    if (($li.data('pos').equals(pos)) && ($li.data('color') !== undefined)) {
+    self.valid = false;
+} else if ($li.data('pos').equals(pos)) {
+    self.listItems.push($li);
+}
+});
+} else {
+    self.valid = false;
+}
+});
+};*/
+   /* isValidPos(pos) {
         return (
             (0 <= pos[0]) && (pos[0] < 5) && (0 <= pos[1]) && (pos[1] < 5)
         );
-    };
+    };*/
 
     /*View.prototype.rotateShape = function () {
         //this.game.playMove();
@@ -352,6 +221,89 @@ class View {
             },
         });
     };
+    addDroppableListenerSolution(item) {
+        var self = this;
+        item.droppable({
+            /*hoverClass: 'hovered',*/
+            tolerance: "touch",
+            drop: (e, ui) => {
+                var shape = this.getShape(ui.helper[0].id);
+                var snapped = ui.helper.data('ui-draggable').snapElements;
+                /*var snappedTo = $.map(snapped, function(element) {
+                    return element.snapping ? element.item : null;
+                });*/
+                var xCoord = Math.round((ui.offset["top"] - snapped[0].top) / 40);
+                xCoord = xCoord == -0 ? 0 : xCoord;
+                var yCoord = Math.round((ui.offset["left"] - snapped[0].left) / 40);
+                yCoord = yCoord == -0 ? 0 : yCoord;
+                var startPos = [xCoord, yCoord];
+                var coords = shape.coords;
+                var transformedCoords = this.transformCoords(startPos, coords);
+               if (!this.validMove(transformedCoords) && transformedCoords) {
+                   if(window.view.transformedCoords) {
+                       this.renderFullShape(window.view.transformedCoords, shape);
+                   }
+                    window.view.valid = false;
+                }
+
+                /*self.valid = true;
+                self.listItems = [];
+                self.validMove($(this).data('pos'));
+                if (self.valid) {
+                  //self.renderFullShape($(ui.draggable[0]).data('color'));
+                    self.renderFullShape("green");
+                  //self.placeShape();
+                }*/
+            },
+        });
+    };
+    getShape(id) {
+        var shapes = window.view.shapes;
+        var shape;
+        shapes.forEach((item) => {
+            if(item.name === id){shape = item}
+        });
+        return shape
+    };
+
+    transformCoords(startPos, coords) {
+        return coords.map(function (pos) {
+            return [startPos[0] + pos[0], startPos[1] + pos[1]];
+        });
+    };
+    validMove(transformedCoords) {
+        var view = window.view;
+        //view.valid = true;
+        //view.listItems = [];
+        return this.isValidPos(transformedCoords) && !this.pieceExists(transformedCoords);
+    };
+
+    validTurn() {
+        if(!window.view.valid){
+            window.view.valid = true;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    isValidPos(transformedCoords) {
+        return !transformedCoords.some(pos => ((pos[0] < 0) || (pos[0] >= 5)) || ((pos[1] < 0) || (pos[1] >= 5)));
+    };
+
+    pieceExists(transformedCoords) {
+        var boardGrid = window.view.game.board.grid;
+        return transformedCoords.some(pos => boardGrid[pos[0]][pos[1]].type);
+    };
+
+    renderFullShape(transformedCoords, shape) {
+        var boardGrid = window.view.game.board.grid;
+        transformedCoords.forEach((coord) => {
+            boardGrid[coord[0]][coord[1]].type = shape.name;
+            boardGrid[coord[0]][coord[1]].kind = shape.kind;
+            boardGrid[coord[0]][coord[1]].color = shape.color;
+        });
+    };
 
     addDraggableListener() {
         var self = this;
@@ -383,84 +335,7 @@ class View {
               cursorAt: { top: 40 }
           });*/
 
-        /*$('.tray').draggable({
-            //scope:'group',
-            //cursor: 'pointer',
-            //revert: true,
-            snap: '.snap',
-            snapMode: 'inner',
-            snapTolerance: 30,
-            snaped: function(event, ui) {
-                console.log("snapper");
-            },
-            helper: function (e) {
-                var helperList = $('<ul class="draggable-helper">')
-                helperList.append($('.tray > li').clone());
-                return helperList;
-            },
-            drag: function (e, ui) {
-                //$('.tray > li.piece').css('visibility', 'hidden');
-                //$(".tray").css("background", "white");
-            },
-            stop: function (e, ui) {
-                var snapped = $(this).data('ui-draggable').snapElements;
-                var snappedTo = $.map(snapped, function(element) {
-                    return element.snapping ? element.item : null;
-                });
-               /*var snappedTo = $.map($(this).data('piece').snapElements, function (element) {
-                    if (element.snapping) { return console.log("true"); }
-                });
-                //$(".tray").css("background", "green");
-                //$( '.tray' ).draggable( "option", "revert", true );
-                if (!this.validMove) {
-                    //$( '.tray' ).draggable( "option", "revert", true );
-                    //$('.tray > li.piece').css('visibility', 'visible');
-                }
-            },
-            cursorAt: {left: 30, top: 30}
-        });*/
     };
-
-    /*$.fn.multiDraggable = function (opts) {
-        var initLeftOffset = []
-            ,initTopOffset = [];
-        return this.each (function (){
-            $(this).live("mouseover", function() {
-                if (!$(this).data("init")) {
-                    $(this).data("init", true).draggable(opts,{
-                        snap: '.snap',
-                        snapMode: 'inner',
-                        snapTolerance: 30,
-                        start: function (event,ui) {
-                            var pos = $(this).position();
-                            $.each(opts.group || {}, function(key,value) {
-                                var elemPos = $(value).position();
-                                initLeftOffset[key] = elemPos.left - pos.left;
-                                initTopOffset[key] = elemPos.top - pos.top;
-                            });
-                            opts.startNative ? opts.startNative() : {};
-                        },
-                        drag: function(event,ui) {
-                            var pos = $(this).offset();
-                            $.each(opts.group || {}, function(key,value) {
-                                $(value).offset({left: pos.left + initLeftOffset[key],
-                                    top: pos.top + initTopOffset[key]});
-                            });
-                            opts.dragNative ? opts.dragNative() : {};
-                        },
-                        stop: function(event,ui) {
-                            var pos = $(this).offset();
-                            $.each(opts.group || {}, function(key,value) {
-                                $(value).offset({left: pos.left + initLeftOffset[key],
-                                    top: pos.top + initTopOffset[key]});
-                            });
-                            opts.stopNative ? opts.stopNative() : {};
-                        },
-                    });
-                }
-            });
-        });
-    };*/
 
    touchHandler(event) {
         var touch = event.changedTouches[0];

@@ -45,37 +45,24 @@ class LandingCanu extends React.Component {
                             <p>Welcome to the CANU test - thank you for supporting this research!<br/><br/> This study is
                                 part
                                 of an
-                                interdisciplinary project of the TUM<br/> Chair of Ergonomics. The Subject of this study is
+                                interdisciplinary project of the TUM Chair of Ergonomics. The Subject of this study is
                                 a
                                 newly
                                 developed measuring instrument in creativity research. On the basis of different task types
-                                a
-                                creativity
-                                score is determined. The following test will consist of 4 major elements:<br/><br/> 1.)
-                                Practical
-                                Test<br/> 2.) Demographic Questionnaire<br/> 3.) Personality Test<br/> 4.) Minified
-                                IQ-Test<br/><br/>
-                                Due to responsive design, this study can be performed on every device but suits best on PC
-                                or
-                                laptop<br/><br/> Please read through each question or task at your leisure and answer them.
-                                For
-                                the
-                                practical test a maximum processing time specified. The data collection is exclusively for
-                                evaluation
-                                purposes of the measuring instrument. You as a test person can do nothing wrong. The study
-                                will
-                                take
-                                about 25 minutes to complete.<br/><br/> The results and data of this study will be used
-                                for<br/>
-                                scientific publications. The data of the individual participants will be registered in
+                                a creativity tool will be evaluated. The following test will consist of 4 major parts and
+                                will take approximately 25 minutes.<br/><br/>
+                                This study can be performed either on PC or Tablet device.<br/><br/>
+                                Please read through each task at your leisure and answer them.
+                                The data collection is exclusively for evaluation
+                                purposes of the measuring instrument. You as a test person can do nothing wrong.
+                                <br/><br/> The results and data of this study will be used
+                                for scientific publications. The data of the individual participants will be registered in
                                 pseudonymised
-                                form and will be used exclusively at the Chair of Ergonomics.<br/> The analysis will be
+                                form and will be used exclusively at the Chair of Ergonomics. The analysis will be
                                 treated
-                                according to legal and confidential<br/> regulations and evaluated anonymously. Through the
-                                anonymised
-                                form, the data allows no conclusions about you as a single person. Via a generated code, a
+                                according to legal and confidential regulations. The data allows no conclusions about you as a single person. Via a generated code, a
                                 deletion of
-                                the data can be initiated at any time<br/> Your details will be treated in accordance with
+                                the data can be initiated at any time. Your details will be treated in accordance with
                                 the
                                 guidelines for securing good scientific practice for at least ten years.<br/><br/> With your
                                 participation you agree to the collection and processing of data.<br/><br/> Please contact

@@ -41,8 +41,8 @@ class PracticalTestIntroduction extends React.Component {
             {
                 target: '.group', // It works also with js pure and jquery elements!
                 color: '#669999', // All css color values can be setted here!,
-                content: 'Puzzle pieces can be dragged in the this area and solutions can be formed here', // YES, YOU CAN put Html code in the content!,
-                acceptText: 'Oh nice!'
+                content: 'Puzzle pieces can be dragged in the this area and solutions can be formed here.', // YES, YOU CAN put Html code in the content!,
+                acceptText: 'Perfect!'
             },
             {
                 target: '#submit-button',
@@ -53,7 +53,7 @@ class PracticalTestIntroduction extends React.Component {
             {
                 target: '.slider',
                 color: '#003333',
-                content: 'Submitted Solutions and their rotations are added to this timeline. Rotated Solutions are already hend in to save time.',
+                content: 'Submitted Solutions and their rotations are added to this Slider. Rotated Solutions are already hend in to save time.',
                 acceptText: 'Got it!'
             }
 
@@ -111,7 +111,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Solutions</h1>
-                            <p>Your goal is to find as many creative solutions as possible with the puzzle pieces. To boost your creativity, a small video will be played beforehand.</p>
+                            <p>Your goal is to find as many creative ways as possible to build a square with the puzzle pieces. To boost your creativity, a small video will be played beforehand.</p>
                             <a href="#" onClick={this.startVideo} className="waves-effect waves-light btn-large modal-action modal-close">Let's go</a>
                         </div>
                     </div>

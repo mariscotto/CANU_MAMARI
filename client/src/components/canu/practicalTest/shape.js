@@ -3,13 +3,14 @@ import Tile from './tile';
 import NullTile from './nullTile';
 const SHAPES = require("./shapes");
 /*'lelbow3', 'lelbow3_upscaled','horizontal3', 'puzzle', 'counterpart'*/
-var COLORS = ['rgb(134,227,206, 0.6)', 'rgb(136, 185, 153, 0.6)', 'rgb(255,221,148, 0.6)', 'rgb(250,137,123, 0.6)', 'rgb(204,171,216, 0.6)', 'rgb(136, 185, 153, 0.6)'];
+var COLORS = ['rgb(134,227,206, 0.6)', 'rgb(136, 185, 153, 0.6)', 'rgb(255,221,148, 0.6)', 'rgb(250,137,123, 0.6)', 'rgb(204,171,216, 0.6)','rgb(72, 73, 124, 0.6)'];
 
 class Shape {
 
   constructor(type = 1, rotation = "0", scaled = 0) {
     this.type = type;
     this.name = SHAPES[type].name;
+    this.kind = SHAPES[type].kind;
     this.scalable = SHAPES[type].scalable;
     this.rotatable = SHAPES[type].rotatable;
     this.rotation = rotation;
@@ -155,12 +156,31 @@ class Shape {
     $('.shape-wrapper').draggable({
       //scope:'group',
       //cursor: 'pointer',
-      //revert: true,
+      revert:window.view.validTurn,
       handle: '.piece',
       containment: '.wrapper',
       snap: '.snap',
       snapMode: 'inner',
       snapTolerance: 37,
+      start: (e, ui) => {
+        var shape = this.getShape(ui.helper[0].id);
+        var snapped = ui.helper.data('ui-draggable').snapElements;
+        /*var snappedTo = $.map(snapped, function(element) {
+            return element.snapping ? element.item : null;
+        });*/
+        var xCoord = Math.round((ui.offset["top"] - snapped[0].top) / 40);
+        xCoord = xCoord == -0 ? 0 : xCoord;
+        var yCoord = Math.round((ui.offset["left"] - snapped[0].left) / 40);
+        yCoord = yCoord == -0 ? 0 : yCoord;
+        var startPos = [xCoord, yCoord];
+        var coords = shape.coords;
+        var transformedCoords = this.transformCoords(startPos, coords);
+        if(this.isValidPos(transformedCoords)) {
+          window.view.transformedCoords = transformedCoords;
+        } else {
+          window.view.transformedCoords = null;
+        }
+      },
       drag: (e, ui) => {
         var menu = $("#" + ui.helper[0].id + " .menu");
         var shape = this.getShape(ui.helper[0].id);
@@ -196,6 +216,9 @@ class Shape {
           //$( '.shape-wrapper' ).draggable( "option", "revert", true );
           //$( '.shape-wrapper' ).draggable( "option", "revert", true );
           //$('.tray > li.piece').css('visibility', 'visible');
+        } else{
+          //window.view.valid=false;
+          //$("#"+shape.name).animate({'left': ui.offset.left-window.view.startLeft+'px','bottom':ui.offset.top-window.view.startTop+'px'});
         }
       }
       //cursorAt: {left: 30, top: 30}
@@ -217,6 +240,7 @@ class Shape {
       row.forEach(function (tile, tileIdx) {
         if (tile.type === shape.name) {
           tile.type = null;
+          tile.kind = null;
           tile.color = null;
         }
       });
@@ -241,6 +265,7 @@ class Shape {
     var boardGrid = window.view.game.board.grid;
     transformedCoords.forEach((coord) => {
       boardGrid[coord[0]][coord[1]].type = shape.name;
+      boardGrid[coord[0]][coord[1]].kind = shape.kind;
       boardGrid[coord[0]][coord[1]].color = shape.color;
     });
   };
@@ -301,7 +326,7 @@ class Shape {
   };
 
   isValidPos(transformedCoords) {
-    return !transformedCoords.some(pos => (pos[0] < 0) || (pos[0] >= 5) || (pos[1] < 0) || (pos[1] >= 5));
+    return !transformedCoords.some(pos => ((pos[0] < 0) || (pos[0] >= 5)) || ((pos[1] < 0) || (pos[1] >= 5)));
   };
 
   pieceExists(transformedCoords) {

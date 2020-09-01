@@ -1,6 +1,7 @@
 const SHAPES = [
     {
         name: "square",
+        kind: "square",
         scalable: true,
         rotatable: false,
         shapes: {
@@ -12,6 +13,7 @@ const SHAPES = [
     },
     {
         name: "elbow",
+        kind: "elbow",
         scalable:true,
         rotatable: true,
         shapes: {
@@ -23,6 +25,7 @@ const SHAPES = [
     },
     {
         name: "cross",
+        kind: "cross",
         scalable:false,
         rotatable: true,
         shapes: {
@@ -34,6 +37,7 @@ const SHAPES = [
     },
     {
         name: "square2",
+        kind: "square",
         scalable: true,
         rotatable: false,
         shapes: {
@@ -45,6 +49,7 @@ const SHAPES = [
     },
     {
         name: "puzzle",
+        kind: "puzzle",
         scalable: false,
         rotatable: true,
         shapes: {
@@ -56,6 +61,7 @@ const SHAPES = [
     },
     {
         name: "counterpart",
+        kind: "counterpart",
         scalable:false,
         rotatable: true,
         shapes: {

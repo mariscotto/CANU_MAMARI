@@ -23,6 +23,7 @@
   padding: 3% 3% 0 3%;
   overflow: scroll;
   height: 53vh;
+  display: inline-block;
 }
 #modal1 .modal-footer{
   height: auto;

@@ -41,7 +41,7 @@ class VideoPopup extends React.Component {
             <div>
                 <div id="video-container" className="modal">
                     <div className="modal-content">
-                        <video id="video" controls="false">
+                        <video id="video" controls={true}>
                             <source src="/ressources/motivation.mp4" type="video/mp4"></source>
                         </video>
                     </div>
@@ -53,7 +53,7 @@ class VideoPopup extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Ready!</h1>
-                            <p>You are set to get creative - hit start.</p>
+                            <p>You are set to get creative - if you are ready, hit start.</p>
                             <a id="start-practical-test" onClick={this.startCountdown} className="waves-effect waves-light btn-large modal-action modal-close">Start</a>
                         </div>
                     </div>

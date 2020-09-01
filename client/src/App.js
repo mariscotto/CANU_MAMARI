@@ -20,12 +20,14 @@ import Study from "./components/dashboard/Study";
 
 import Finish from "./components/study/Finish";
 import LandingStudy from "./components/study/LandingStudy";
+import PracticalTest from "./components/canu/PracticalTest";
+import Questionnaire from "./components/canu/Questionnaire";
+
 
 import VideoPopup from "./components/canu/VideoPopup.js";
 import LandingCanu from "./components/canu/LandingCanu";
 import practicalTestIntro from "./components/canu/PracticalTestIntroduction";
-import PracticalTest from "./components/canu/PracticalTest";
-import Questionnaire from "./components/canu/Questionnaire";
+import Congratulations from "./components/canu/ThankYou";
 
 
 import StudySequence from "./components/study/StudySequence";
@@ -84,6 +86,7 @@ class App extends Component {
               <Route exact path="/:studyid/canu/video" component={VideoPopup} />
               <Route exact path="/:studyid/canu/practicalTestIntro" component={practicalTestIntro} />
               <Route exact path="/:studyid/canu/walkthrough" component={Walkthrough} />
+              <Route exact path="/:studyid/canu/congratz" component={Congratulations} />
             </Switch>
 
             {/* Study Routes */}
