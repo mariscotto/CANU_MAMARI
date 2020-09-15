@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var GroupSchema = require('./group').GroupSchema;
-var SolutionSchema = require('./solution').SolutionSchema;
+var SolutionSchema = require('./solutionCanu').SolutionCanuSchema;
 
 var StudySchema = new Schema ({
     study_name: {
@@ -19,13 +19,9 @@ var StudySchema = new Schema ({
         type: Array
     },
     groups: [GroupSchema],
-    tasks: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Task'
-    }],
     solutions: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'SolutionAll'
+        ref: 'SolutionCanuAll'
     }],
     user:  {
         type: mongoose.Schema.Types.ObjectId,

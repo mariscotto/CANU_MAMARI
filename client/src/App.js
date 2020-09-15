@@ -20,6 +20,7 @@ import Study from "./components/dashboard/Study";
 
 import Finish from "./components/study/Finish";
 import LandingStudy from "./components/study/LandingStudy";
+import DSGVO from "./components/canu/DSGVO";
 import PracticalTest from "./components/canu/PracticalTest";
 import Questionnaire from "./components/canu/Questionnaire";
 
@@ -32,7 +33,7 @@ import Congratulations from "./components/canu/ThankYou";
 
 import StudySequence from "./components/study/StudySequence";
 import Post_Questionaire from "./components/study/Post_Questionnaire";
-import APM from "./components/study/APM";
+import APM from "./components/canu/APM";
 import ICAA from "./components/study/ICAA";
 
 import "./App.css";
@@ -80,27 +81,28 @@ class App extends Component {
 
             <Switch>
               <Route path="/studies/:id" component={Study} />
-              <Route exact path="/:studyid/:groupid" component={LandingStudy} />
+              <Route exact path="/:studyid/:groupid" component={LandingCanu} />
 
 
-              <Route exact path="/:studyid/canu/video" component={VideoPopup} />
-              <Route exact path="/:studyid/canu/practicalTestIntro" component={practicalTestIntro} />
-              <Route exact path="/:studyid/canu/walkthrough" component={Walkthrough} />
-              <Route exact path="/:studyid/canu/congratz" component={Congratulations} />
             </Switch>
 
             {/* Study Routes */}
-            <Route exact path="/:studyid/canu/intro" component={LandingCanu} />
-            <Route path="/:studyid/canu/practicalTest" component={PracticalTest} />
-            <Route path="/:studyid/canu/questionnaire" component={Questionnaire} />
-            <Route path="/:studyid/canu/apm" component={APM} />
+            <Route path="/:studyid/:groupid/canu/dsgvo" component={DSGVO} />
+            <Route path="/:studyid/:groupid/canu/practicalTest" component={PracticalTest} />
+            <Route path="/:studyid/:groupid/canu/questionnaire" component={Questionnaire} />
+            <Route path="/:studyid/:groupid/canu/apm" component={APM} />
+            <Route path="/:studyid/:groupid/canu/congratz" component={Congratulations} />
 
-            <Route path="/:studyid/:groupid/active" component={StudySequence} />
 
+
+            {/* <Route path="/:studyid/:groupid/active" component={StudySequence} />
+                     <Route exact path="/:studyid/canu/video" component={VideoPopup} />
+              <Route exact path="/:studyid/canu/practicalTestIntro" component={practicalTestIntro} />
+              <Route exact path="/:studyid/canu/walkthrough" component={Walkthrough} />
             <Route path="/finished" component={Finish} />
             <Route path="/post_questionnaire" component={Post_Questionaire} />
             <Route path="/apm" component={APM} />
-            <Route path="/icaa" component={ICAA} />
+            <Route path="/icaa" component={ICAA} />*/}
           </div>
         </Router>
       </Provider>

@@ -31,11 +31,11 @@ class QuestionnaireIntroduction extends React.Component {
                 <div id="questionnaire-introduction" className="modal practical-info">
                     <div className="modal-content">
                         <div className="piece-container">
-                            <img src="/ressources/adventurer.svg"></img>
+                            <img id="questionnaire-logo" src="/ressources/questionnaireLogo.svg"></img>
                         </div>
                         <div className="text-container">
                             <h1>Questionnaire</h1>
-                            <p>You have completed the Practical Test, in the following section a questionaire and a personality test will be served for you.</p>
+                            <p>You have completed the Practical Test, in the following we would like to ask that you answer some personal questions.</p>
                             <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">Okay</a>
                         </div>
                     </div>

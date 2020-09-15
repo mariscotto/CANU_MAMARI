@@ -57,7 +57,7 @@ class Shape {
   createMenu() {
     var menu = $("<div class='menu'></div>");
     if(this.scalable) {
-      menu.append("<i class='scale material-icons'>swap_vert</i>")
+      menu.append("<i id='size-up' class='scale material-icons'>add</i>")
     }
     if(this.rotatable) {
       menu.append("<i class='rotate material-icons'>refresh</i>")
@@ -182,6 +182,7 @@ class Shape {
         }
       },
       drag: (e, ui) => {
+        $("#" + ui.helper[0].id).addClass('jello-vertical');
         var menu = $("#" + ui.helper[0].id + " .menu");
         var shape = this.getShape(ui.helper[0].id);
         menu.addClass('hide-menu');
@@ -192,6 +193,7 @@ class Shape {
       },
       stop: (e, ui) => {
         var ui = ui;
+        $("#" + ui.helper[0].id).removeClass('jello-vertical');
         var shape = this.getShape(ui.helper[0].id);
         var snapped = ui.helper.data('ui-draggable').snapElements;
         /*var snappedTo = $.map(snapped, function(element) {
@@ -393,12 +395,14 @@ class Shape {
       shape.grid = shape.makeGrid();
       shape.placeShape();
       shape.doRotation(shape);
+      $("#"+shape.name+">.menu .scale").html("remove");
     } else {
       shape.scaled = 0;
       shape.coords = SHAPES[shape.type].shapes[shape.rotation][shape.scaled]
       shape.grid = shape.makeGrid();
       shape.placeShape();
       shape.doRotation(shape);
+      $("#"+shape.name+">.menu .scale").html("add");
       //window.view.shapes[0]= new Shape(1, rotation.toString(), event.data.shape.scaled);
     }
   };

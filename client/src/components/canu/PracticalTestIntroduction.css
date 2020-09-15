@@ -27,14 +27,14 @@ width: 87vh;*/
     width: 61%;
     float: right;
     justify-content: center;
-    padding: 0 4vh;
+    padding: 0 3vh;
 }
 .practical-info .modal-close{
     align-self: flex-end;
 }
 .practical-info p{
     color: black;
-    font-size: 1.3rem;
+    font-size: 2.3vmin; /*1.3rem*/
     font-weight: 400;
 }
 .practical-info h2{
@@ -66,4 +66,12 @@ width: 87vh;*/
     font-weight: bold;
     text-transform: uppercase;
     color: white;
+}
+
+#practical-test-logo{
+    width: 54%;
+}
+
+#clock-logo{
+    width: 52%;
 }

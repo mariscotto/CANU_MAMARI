@@ -14,18 +14,13 @@ class VideoPopup extends React.Component {
     componentDidMount() {
         var vid = document.getElementById("video");
         vid.onended = function() {
-            var elem = document.getElementById('video-container');
-            var instance = M.Modal.init(elem,{dismissible:false});
-            instance.close();
+            var elem2 = document.getElementById('video-container');
+            var instance2 = M.Modal.init(elem2,{dismissible:false});
+            instance2.close();
             var elem = document.getElementById('start-popup');
             var instance = M.Modal.init(elem,{dismissible:false});
             instance.open();
         };
-    }
-    startCountdown(){
-        var elem = document.getElementById('countdown-popup');
-        var instance = M.Modal.init(elem,{dismissible:false});
-        instance.open();
     }
     /*startVideo(){
         if (this.paused) {
@@ -46,19 +41,6 @@ class VideoPopup extends React.Component {
                         </video>
                     </div>
                 </div>
-                <div id="start-popup" className="modal practical-info">
-                    <div className="modal-content">
-                        <div className="piece-container">
-                            <img id="fire" src="/ressources/fire.svg"></img>
-                        </div>
-                        <div className="text-container">
-                            <h1>Ready!</h1>
-                            <p>You are set to get creative - if you are ready, hit start.</p>
-                            <a id="start-practical-test" onClick={this.startCountdown} className="waves-effect waves-light btn-large modal-action modal-close">Start</a>
-                        </div>
-                    </div>
-                </div>
-                <Countdown2 />
             </div>
     );
     }

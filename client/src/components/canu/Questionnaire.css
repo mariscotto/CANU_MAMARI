@@ -53,13 +53,13 @@ strong{
 }
 #form{
     padding: 0 5%;
-    height:62vh;
+    height:56vh;
     overflow-x: scroll;
     -ms-overflow-style: none;
 }
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
     display: none;
-}
+}*/
 
 .section-title{
     font-weight: bold;
@@ -76,19 +76,16 @@ strong{
 
 }
 .next-button{
-    position: absolute;
+    position: relative;
     float: right;
     right: 8%;
     z-index:5;
-    bottom: 5%;
 }
 .back-button {
-    position: absolute;
-    left: 5%;
-    bottom: 5%;
+    position: relative;
 }
 #finish-button{
-    position: absolute;
+    position: relative;
     float: right;
     right: 8%;
     z-index:5;
@@ -185,7 +182,7 @@ progress::-webkit-progress-value {
 .animation-container {
     position: relative;
     width: 100%;
-    height: 82vh;
+    height: 80%;
     -webkit-transition: 0.3s;
     transition: 0.3s;
 }
@@ -196,7 +193,7 @@ progress::-webkit-progress-value {
     transition-timing-function: ease-in-out;
     will-change: transform, opacity;
     width: 100%;
-    height: 100%;
+    height: inherit;
 }
 
 .form-step.leaving {
@@ -279,8 +276,30 @@ progress::-webkit-progress-value {
 }
 
 
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after{
+    border: 2px solid #336666;
+}
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after{
+    background-color: #336666;
+}
+[type="checkbox"].filled-in:checked+span:not(.lever):after{
+    background-color: #336666;
+    border: 2px solid #336666;
+}
 
-
+label{
+    color:black;
+}
+.animation-footer{
+    height: 17vmin;
+    padding-left: 5%;
+    padding-top: 2vmin;
+}
 .validation-field{
+    /*padding-top: 5%;
+    padding-left:6%;*/
+    padding-bottom: 2vmin;
     color:#D66258;
 }
+
+

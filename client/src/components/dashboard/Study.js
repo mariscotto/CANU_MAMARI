@@ -38,6 +38,10 @@ import { CSVLink } from "react-csv";
 
 
 class Study extends React.Component {
+    constructor(props){
+        super(props);
+        this.updateNovelty = this.updateNovelty.bind(this);
+    }
     state = {
         study_name: '',
         study_description: '',
@@ -55,7 +59,8 @@ class Study extends React.Component {
         isUpdated: false,
 
         open: false,
-        download: []
+        download: [],
+        downloadSolution: []
     }
 
     componentDidMount() {
@@ -68,9 +73,6 @@ class Study extends React.Component {
                 this.setState({
                     study_name: res.data.study_name,
                     study_description: res.data.description,
-                    tasks: res.data.tasks,
-                    blocks_count: res.data.tasks.filter((obj) => obj.task_type === "Tetris").length,
-                    newWords_count: res.data.tasks.filter((obj) => obj.task_type === "Neue_Wörter").length,
                     groups: res.data.groups,
                     study_open: res.data.open,
                     participants_count: res.data.groups.reduce((a, b) => a + (b['participants_count'] || 0), 0),
@@ -96,6 +98,16 @@ class Study extends React.Component {
             .catch(err => {
                 console.log(err);
             })
+        // Fetch csv download data solution
+        axios.get(`/api/study/${this.props.userID}/${this.props.match.params.id}/downloadSolutions`)
+            .then(res => {
+                this.setState({
+                    downloadSolution: res.data
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     // Update view when state has changed
@@ -107,16 +119,12 @@ class Study extends React.Component {
                     this.setState({
                         study_name: res.data.study_name,
                         study_description: res.data.description,
-                        tasks: res.data.tasks,
-                        blocks_count: res.data.tasks.filter((obj) => obj.task_type === "Tetris").length,
-                        newWords_count: res.data.tasks.filter((obj) => obj.task_type === "Neue_Wörter").length,
                         groups: res.data.groups,
                         study_open: res.data.open,
                         participants_count: res.data.groups.reduce((a, b) => a + (b['participants_count'] || 0), 0),
                         date: new Date(res.data.createdAt).toLocaleDateString(),
                         study_link: res.data.study_link,
                         solutions: res.data.solutions,
-
                         isLoading: false
                     });
                 })
@@ -142,6 +150,15 @@ class Study extends React.Component {
         this.setState({ open: false });
     }
 
+    updateNovelty(){
+        axios.post('/api/solutionCanu/updateNovelty', null)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
     // handle close study click
     handleCloseStudy = (e) => {
         e.preventDefault();
@@ -171,7 +188,7 @@ class Study extends React.Component {
         const rows = [];
 
         this.state.groups.map((group, index) => {
-            let row = { group_name: group.group_name, participants: group.participants_count, usefulness_mean: group.useful_mean, novelty_mean: group.neu_mean, creativity_mean: group.creative_mean }
+            let row = { group_name: group.group_name, participants: group.participants_count, usefulness_mean: group.usefulness_mean, novelty_mean: group.novelty_mean, creativity_mean: group.creative_mean }
             rows.push(row);
 
         })
@@ -195,8 +212,8 @@ class Study extends React.Component {
         });
 
         sortedSolutionsArray.map((solution, index) => {
-            yNovelty.push(solution.solution.neu);
-            yUsefulness.push(solution.solution.useful);
+            yNovelty.push(solution.solution.novelty_score);
+            yUsefulness.push(solution.solution.usefulness_score);
         });
 
         // data configured for boxplot
@@ -323,6 +340,38 @@ class Study extends React.Component {
 
                                     </div>
                                     <div>
+                                        {(this.state.participants_count === 0) ? (
+                                            <TooltipMUI title="No download possible due to no data" placement="top">
+                                                <button id="download-btn-greyed">
+                                                    <svg style={{ fill: "white" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        <path d="M14.7928932,11.5 L11.6464466,8.35355339 C11.4511845,8.15829124 11.4511845,7.84170876 11.6464466,7.64644661 C11.8417088,7.45118446 12.1582912,7.45118446 12.3535534,7.64644661 L16.3535534,11.6464466 C16.5488155,11.8417088 16.5488155,12.1582912 16.3535534,12.3535534 L12.3535534,16.3535534 C12.1582912,16.5488155 11.8417088,16.5488155 11.6464466,16.3535534 C11.4511845,16.1582912 11.4511845,15.8417088 11.6464466,15.6464466 L14.7928932,12.5 L4,12.5 C3.72385763,12.5 3.5,12.2761424 3.5,12 C3.5,11.7238576 3.72385763,11.5 4,11.5 L14.7928932,11.5 Z M16,4.5 C15.7238576,4.5 15.5,4.27614237 15.5,4 C15.5,3.72385763 15.7238576,3.5 16,3.5 L19,3.5 C20.3807119,3.5 21.5,4.61928813 21.5,6 L21.5,18 C21.5,19.3807119 20.3807119,20.5 19,20.5 L16,20.5 C15.7238576,20.5 15.5,20.2761424 15.5,20 C15.5,19.7238576 15.7238576,19.5 16,19.5 L19,19.5 C19.8284271,19.5 20.5,18.8284271 20.5,18 L20.5,6 C20.5,5.17157288 19.8284271,4.5 19,4.5 L16,4.5 Z" transform="rotate(90 12.5 12)" />
+                                                    </svg>
+                                                </button>
+                                            </TooltipMUI>
+                                        ) : (
+                                            <CSVLink data={this.state.downloadSolution}>
+                                                <TooltipMUI title="Download .csv" placement="top">
+                                                    <button id="download-btn">
+                                                        <svg style={{ fill: "white" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                            <path d="M14.7928932,11.5 L11.6464466,8.35355339 C11.4511845,8.15829124 11.4511845,7.84170876 11.6464466,7.64644661 C11.8417088,7.45118446 12.1582912,7.45118446 12.3535534,7.64644661 L16.3535534,11.6464466 C16.5488155,11.8417088 16.5488155,12.1582912 16.3535534,12.3535534 L12.3535534,16.3535534 C12.1582912,16.5488155 11.8417088,16.5488155 11.6464466,16.3535534 C11.4511845,16.1582912 11.4511845,15.8417088 11.6464466,15.6464466 L14.7928932,12.5 L4,12.5 C3.72385763,12.5 3.5,12.2761424 3.5,12 C3.5,11.7238576 3.72385763,11.5 4,11.5 L14.7928932,11.5 Z M16,4.5 C15.7238576,4.5 15.5,4.27614237 15.5,4 C15.5,3.72385763 15.7238576,3.5 16,3.5 L19,3.5 C20.3807119,3.5 21.5,4.61928813 21.5,6 L21.5,18 C21.5,19.3807119 20.3807119,20.5 19,20.5 L16,20.5 C15.7238576,20.5 15.5,20.2761424 15.5,20 C15.5,19.7238576 15.7238576,19.5 16,19.5 L19,19.5 C19.8284271,19.5 20.5,18.8284271 20.5,18 L20.5,6 C20.5,5.17157288 19.8284271,4.5 19,4.5 L16,4.5 Z" transform="rotate(90 12.5 12)" />
+                                                        </svg>
+                                                    </button>
+                                                </TooltipMUI>
+                                            </CSVLink>
+
+                                        )}
+                                        {/* <CSVLink data={this.state.download}>
+                                            <TooltipMUI title="Download .csv" placement="top">
+                                                <button id="download-btn">
+                                                    <svg style={{ fill: "white" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        <path d="M14.7928932,11.5 L11.6464466,8.35355339 C11.4511845,8.15829124 11.4511845,7.84170876 11.6464466,7.64644661 C11.8417088,7.45118446 12.1582912,7.45118446 12.3535534,7.64644661 L16.3535534,11.6464466 C16.5488155,11.8417088 16.5488155,12.1582912 16.3535534,12.3535534 L12.3535534,16.3535534 C12.1582912,16.5488155 11.8417088,16.5488155 11.6464466,16.3535534 C11.4511845,16.1582912 11.4511845,15.8417088 11.6464466,15.6464466 L14.7928932,12.5 L4,12.5 C3.72385763,12.5 3.5,12.2761424 3.5,12 C3.5,11.7238576 3.72385763,11.5 4,11.5 L14.7928932,11.5 Z M16,4.5 C15.7238576,4.5 15.5,4.27614237 15.5,4 C15.5,3.72385763 15.7238576,3.5 16,3.5 L19,3.5 C20.3807119,3.5 21.5,4.61928813 21.5,6 L21.5,18 C21.5,19.3807119 20.3807119,20.5 19,20.5 L16,20.5 C15.7238576,20.5 15.5,20.2761424 15.5,20 C15.5,19.7238576 15.7238576,19.5 16,19.5 L19,19.5 C19.8284271,19.5 20.5,18.8284271 20.5,18 L20.5,6 C20.5,5.17157288 19.8284271,4.5 19,4.5 L16,4.5 Z" transform="rotate(90 12.5 12)" />
+                                                    </svg>
+                                                </button>
+                                            </TooltipMUI>
+                                        </CSVLink> */}
+
+                                    </div>
+                                    <div>
                                         <EditStudy
                                             study_name={this.state.study_name}
                                             study_description={this.state.study_description}
@@ -339,6 +388,11 @@ class Study extends React.Component {
                                             action={this.updateView} />
 
                                     </div>
+                                    <div>
+                                        <button id="update-btn" onClick={this.updateNovelty}>
+                                            <span>Update Novelty</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -354,63 +408,8 @@ class Study extends React.Component {
                                         <p>{this.state.study_description}</p>
                                     </div>
 
-                                    <div id="study-tasks">
-                                        <h3 className="card-heading">TASKS</h3>
-                                        <div className="task-row">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="41" viewBox="0 0 60 41">
-                                                <g id="Tetromino_Icon_Yellow" data-name="Tetromino Icon Yellow" transform="translate(-1423 -477)">
-                                                    <g id="Rechteck_12" data-name="Rechteck 12" transform="translate(1442 496)" fill="#ffe748" stroke="#000" strokeLinejoin="round" strokeWidth="3">
-                                                        <rect width="22" height="22" stroke="none" />
-                                                        <rect x="1.5" y="1.5" width="19" height="19" fill="none" />
-                                                    </g>
-                                                    <g id="Rechteck_13" data-name="Rechteck 13" transform="translate(1423 496)" fill="#ffe748" stroke="#000" strokeLinejoin="round" strokeWidth="3">
-                                                        <rect width="22" height="22" stroke="none" />
-                                                        <rect x="1.5" y="1.5" width="19" height="19" fill="none" />
-                                                    </g>
-                                                    <g id="Rechteck_14" data-name="Rechteck 14" transform="translate(1461 496)" fill="#ffe748" stroke="#000" strokeLinejoin="round" strokeWidth="3">
-                                                        <rect width="22" height="22" stroke="none" />
-                                                        <rect x="1.5" y="1.5" width="19" height="19" fill="none" />
-                                                    </g>
-                                                    <g id="Rechteck_15" data-name="Rechteck 15" transform="translate(1442 477)" fill="#ffe748" stroke="#000" strokeLinejoin="round" strokeWidth="3">
-                                                        <rect width="22" height="22" stroke="none" />
-                                                        <rect x="1.5" y="1.5" width="19" height="19" fill="none" />
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                            <span>Blocks:</span>
-                                            <div className="task-number">{this.state.blocks_count}</div>
 
-                                        </div>
 
-                                        <br />
-
-                                        <div className="task-row">
-                                            <svg data-name="New Words Icon" xmlns="http://www.w3.org/2000/svg" width="69.469" height="18.389">
-                                                <g data-name="Rechteck 122" fill="#fff" stroke="#000" strokeLinejoin="round" strokeWidth="1.4">
-                                                    <path stroke="none" d="M0 0h18.389v18.389H0z" />
-                                                    <path fill="none" d="M.7.7h16.989v16.989H.7z" />
-                                                </g>
-                                                <g data-name="Rechteck 123" fill="#fff" stroke="#000" strokeLinejoin="round" strokeWidth="1.4">
-                                                    <path stroke="none" d="M17.367 0h18.389v18.389H17.367z" />
-                                                    <path fill="none" d="M18.067.7h16.989v16.989H18.067z" />
-                                                </g>
-                                                <g data-name="Rechteck 124" fill="#fff" stroke="#000" strokeLinejoin="round" strokeWidth="1.4">
-                                                    <path stroke="none" d="M34.735 0h18.389v18.389H34.735z" />
-                                                    <path fill="none" d="M35.435.7h16.989v16.989H35.435z" />
-                                                </g>
-                                                <g data-name="Rechteck 125" fill="#fff" stroke="#000" strokeLinejoin="round" strokeWidth="1.4">
-                                                    <path stroke="none" d="M51.081 0H69.47v18.389H51.081z" />
-                                                    <path fill="none" d="M51.781.7H68.77v16.989H51.781z" />
-                                                </g>
-                                                <path d="M5.8 14l-.6-9.8H7l.3 5.9.1 1.8h.1l.8-5.6h1.9l.8 5.6h.1l.1-1.8.3-5.9h1.7l-.5 9.8H10l-.6-5.4h-.2L8.5 14H5.8zM22.5 9.1c0-3.2 1.2-5.1 3.8-5.1 2.6 0 3.8 1.9 3.8 5.1s-1.2 5.1-3.8 5.1c-2.6 0-3.8-1.9-3.8-5.1zm5.5.9V8.3c0-1.6-.4-2.5-1.6-2.5-1.2 0-1.6.9-1.6 2.5V10c0 1.6.4 2.5 1.6 2.5 1.2 0 1.6-1 1.6-2.5zM42.4 14h-2.1V4.2h3.8c1.9 0 3 1.2 3 3.1 0 1.4-.6 2.5-1.7 2.8l1.9 3.9H45l-1.6-3.6h-1V14zm1.2-5.3c1 0 1.3-.4 1.3-1.2v-.4c0-.9-.3-1.2-1.3-1.2h-1.2v2.8h1.2zM57.2 4.2h3.2c2.6 0 3.9 1.8 3.9 4.9S63 14 60.4 14h-3.2V4.2zm3 8.1c1.2 0 1.8-.8 1.8-2.4V8.2c0-1.5-.6-2.3-1.8-2.3h-.9v6.5h.9z" />
-                                            </svg>
-
-                                            <span>New Words:</span>
-                                            <div className="task-number">{this.state.newWords_count}</div>
-
-                                        </div>
-
-                                    </div>
 
 
                                     {this.state.study_open ? (

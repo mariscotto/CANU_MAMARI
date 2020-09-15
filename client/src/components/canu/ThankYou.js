@@ -6,11 +6,25 @@ import $ from 'jquery'; // Importing jQuery first
 
 import "./ThankYou.css";
 import M from "materialize-css";
+import axios from "axios";
 
 class ThankYou extends React.Component {
     // storing link to tasks
 
+    state = {
+       VP_id:"Error within Database."
+    };
+
     componentDidMount() {
+        axios.get(`/api/solutionCanu/${this.props.match.params.studyid}/${
+            this.props.match.params.groupid}`)
+            .then(res => {
+                console.log(res);
+                this.setState({VP_id:res.data});
+            })
+            .catch(err => {
+                console.log(err.response);
+            });
         const blockSize = 35;
         const stepSpeed = 110;
         const fallSpeed = 1500;
@@ -523,12 +537,25 @@ class ThankYou extends React.Component {
             ]
         }
     }
+    getVPID(){
+        axios.get(`/api/solutionCanu/${this.props.match.params.studyid}/${
+        this.props.match.params.groupid}`)
+            .then(res => {
+                console.log(res);
+               this.setState("VP_id",res.data);
+            })
+            .catch(err => {
+                console.log(err.response);
+            });
+    }
 
     render() {
         return (
             <div>
                     <div id="congratulations-popup">
-                        <h2 id="congratulations-text">Thank you for your participation!</h2>
+                        <h2 id="congratulations-text">Thank you!</h2>
+                        <p>If you wish to delete or get insight in your data send an E-mail to jonas.bender@tum.de with following key:</p>
+                        <p id="session-id">{this.state.VP_id}</p>
                     </div>
             </div>
     );

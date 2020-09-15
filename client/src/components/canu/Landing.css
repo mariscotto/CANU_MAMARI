@@ -1,5 +1,5 @@
 #mountain-header{
-  margin-top: 2.5vh;
+  margin-top: 1%;
 }
 
 .modal-content{
@@ -13,6 +13,7 @@
 #modal1{
   overflow:hidden;
   max-height: 100%;
+  width:80%;
 
 }
 #modal1 .modal-header{
@@ -20,7 +21,7 @@
   width: 100%;
 }
 #modal1 .text-container{
-  padding: 3% 3% 0 3%;
+  padding: 2% 3% 0 3%;
   overflow: scroll;
   height: 53vh;
   display: inline-block;

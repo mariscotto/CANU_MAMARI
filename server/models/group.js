@@ -33,7 +33,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Solution = require('./solution').Solution;
+var Solution = require('./solutionCanu').SolutionCanu;
 
 var GroupSchema = new Schema({
     group_name: {
@@ -45,14 +45,17 @@ var GroupSchema = new Schema({
     participants_count: {
         type: Number
     },
-    neu_mean: {
+    novelty_mean: {
         type: Number
     },
-    useful_mean: {
+    usefulness_mean: {
         type: Number
     },
     creative_mean: {
         type: Number
+    },
+    motivated: {
+        type: Boolean
     }
 });
 

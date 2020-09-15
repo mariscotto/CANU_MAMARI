@@ -8,6 +8,30 @@ var APM = new Schema({
     type: String,
     required: true
   },
+  APM_1: {
+    type: String,
+    required: true
+  },
+  APM_2: {
+    type: String,
+    required: true
+  },
+  APM_3: {
+    type: String,
+    required: true
+  },
+  APM_4: {
+    type: String,
+    required: true
+  },
+  APM_5: {
+    type: String,
+    required: true
+  },
+  APM_6: {
+    type: String,
+    required: true
+  },
   APM_7: {
     type: String,
     required: true

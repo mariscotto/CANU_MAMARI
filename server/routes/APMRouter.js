@@ -15,6 +15,12 @@ APMRouter.route('/')
 .post((req, res, next) => {
     APM.create({
         VP_id: req.sessionID,
+        APM_1: req.body.APM_1,
+        APM_2: req.body.APM_2,
+        APM_3: req.body.APM_3,
+        APM_4: req.body.APM_4,
+        APM_5: req.body.APM_5,
+        APM_6: req.body.APM_6,
         APM_7: req.body.APM_7,
         APM_8: req.body.APM_8,
         APM_9: req.body.APM_9,

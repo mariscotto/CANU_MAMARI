@@ -14,16 +14,18 @@ var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usersRouter');
-var solutionRouter = require('./routes/solutionRouter');
+//var solutionRouter = require('./routes/canu/solutionRouter');
 var studyRouter = require('./routes/studyRouter');
 
 // über diese Route können vorhandene Tasks in Datenbank eingepflegt werden
-var insertTaskRouter = require('./routes/insertTaskRouter');
+//var insertTaskRouter = require('./routes/canu/insertTaskRouter');
 
-var Post_QuestionnaireRouter = require('./routes/Post_QuestionnaireRouter');
+//var Post_QuestionnaireRouter = require('./routes/canu/Post_QuestionnaireRouter');
 var APMRouter = require('./routes/APMRouter');
-var ICAARouter = require('./routes/ICAARouter');
+//var ICAARouter = require('./routes/canu/ICAARouter');
 
+var QuestionnaireRouter = require('./routes/QuestionnaireRouter');
+var solutionCanuRouter = require('./routes/solutionCanuRouter');
 //Connection zu Datenbank und ODM mongoose
 const mongoose = require('mongoose');
 
@@ -39,11 +41,14 @@ const mongoose = require('mongoose');
 // Connection to mongoDB Atlas, Cloud Database
 // Falls eigene lokale Datenbank, den unteren Block löschen oder auskommentieren
 
-const uri = "mongodb://canu-client:Cr34t1v1ty@creativity.lfe.mw.tum.de:27017/creativityDB";
 
-// const uri = "mongodb+srv://Marcel:marcel94@test-cluster-m3jtf.mongodb.net/test?retryWrites=true";
+//const uri = "mongodb://canu-client:Cr34t1v1ty@creativity.lfe.mw.tum.de:27017/creativityDB";
 
-mongoose.connect(uri, { useNewUrlParser: true })
+const uri = "mongodb+srv://tedt:test1234@cluster0.0pgbs.mongodb.net/test?retryWrites=true";
+
+//const uri = "mongodb+srv://Marcel:marcel94@test-cluster-m3jtf.mongodb.net/test?retryWrites=true";
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
 
@@ -84,10 +89,12 @@ require("./config/passport")(passport);
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/solution', solutionRouter);
+//app.use('/api/solution', solutionRouter);
+app.use('/api/Questionnaire', QuestionnaireRouter);
+app.use('/api/solutionCanu', solutionCanuRouter);
 app.use('/api/study', studyRouter);
 
-app.use('/api/insertTasks', insertTaskRouter);
+//app.use('/api/insertTasks', insertTaskRouter);
 
 // Deployment Test
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
@@ -99,9 +106,10 @@ app.get('/*', function (req, res) {
 });
 
 
-app.use('/api/Post_Questionnaire', Post_QuestionnaireRouter);
+//app.use('/api/Post_Questionnaire', Post_QuestionnaireRouter);
 app.use('/api/APM', APMRouter);
-app.use('/api/ICAA', ICAARouter);
+//app.use('/api/ICAA', ICAARouter);
+
 
 // //LogIn Barrier
 // function auth(req, res, next) {

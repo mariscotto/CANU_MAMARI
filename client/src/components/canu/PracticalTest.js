@@ -1,11 +1,12 @@
 // Study Landing Page Component
 
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import M from "materialize-css"; // It installs the JS asset only
 import 'materialize-css/dist/css/materialize.min.css';
 import $ from 'jquery';
 import 'material-icons';
+import "./PracticalTest.css";
 import './practicalTest/board.js';
 import Swiper from 'swiper';
 // import Swiper styles
@@ -17,31 +18,81 @@ import './practicalTest/nullTile.js';
 import './practicalTest/shape.js';
 import './practicalTest/tile.js';
 import './practicalTest/tray.js';*/
-import {withRouter} from "react-router-dom";
-import "./PracticalTest.css";
 import PracticalTestIntroduction from "./PracticalTestIntroduction";
 import VideoPopup from "./VideoPopup";
+import axios from "axios";
+import Impressum from "./Impressum";
+import Countdown2 from "./Countdown2";
 
 
 class PracticalTest extends React.Component {
     constructor(props) {
         super(props);
         this.submitSolution = this.submitSolution.bind(this);
+        this.compareSolution = this.compareSolution.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.postSolutions = this.postSolutions.bind(this);
     }
 
     // storing link to tasks
     state = {
-        link: `/${this.props.match.params.studyid}/canu/questionnaire`
+        link: `/${this.props.match.params.studyid}/${
+            this.props.match.params.groupid
+        }/canu/apm`,
+        solutions: [],
+        motivated: undefined,
+    };
+    line = 100;
+    workTime = 60;
+    running = false;
+    startTime;
+    minutes = this.workTime / 60;
+    seconds = 0;
+    tickCheck;
+
+    onChangeSolutions(e) {
+        if (e.target.checked) {
+            this.setState({
+                solutions: [...this.state.solutions, e.target.value]
+            })
+        } else {
+            this.setState({solutions: this.state.solutions.filter(solution => solution !== e.target.value)})
+        }
     };
 
+    async postSolutions() {
+        return await Promise.all([this.state.solutions.map(async (solution) => {
+            const usefulness = this.calculateUsefulness(solution);
+            var minSolution = this.beautifySolution(this.deepCloneArray(solution));
+            const solutionObject = {
+                solution: this.prepareArrayForPost(minSolution),
+                usefulness_score: usefulness
+            };
+
+            try {
+                const res = await axios.post(
+                    `/api/solutionCanu/${this.props.match.params.studyid}/${
+                        this.props.match.params.groupid
+                    }`,
+                    solutionObject
+                );
+                console.log(res.data);
+            } catch (err) {
+                console.log(err.response);
+            }
+        })]);
+    }
+
     componentDidMount() {
-        let rootEl = $('.wrapper');
-        let game = new Game();
+        const rootEl = $('.wrapper');
+        const game = new Game();
         window.view = new View(game, rootEl);
         window.view.createShapes();
         //var submit = $("<a id=\"submit-button\" class=\"waves-effect waves-light btn-large\" onclick='{this.submitSolution()}'>Submit</a>");
         //rootEl.append(submit);
         //load audio files
+        //Motivated or Not
+
 
         window.view.swiper = new Swiper('.swiper-container', {
             slidesPerView: 6,
@@ -56,77 +107,41 @@ class PracticalTest extends React.Component {
                 prevEl: '.swiper-button-prev',
             },
         });
-        var timerID;
-        var line = 100;
-        var workTime = 240;
-        //var workTime = 0;
-        var running = false;
-        var startTime;
-        var minutes = workTime / 60;
-        var seconds = 0;
-        var tickCheck;
-        //empty the timer circle on load
+
+        /*axios.get(`/api/study/${this.props.match.params.groupid}/getGroup`)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err.response);
+            });*/
         document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', "0 100");
-
-        //set the default times display in minutes
-        $('#work-box').text("Work: " + (workTime / 60) + " min");
-        //$('#break-box').text("Break: " + (breakTime / 60) + " min");
-        $('#countdown').text(workTime / 60 + ":00");
-
+        if(this.state.motivated) {
+            document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', "100 100");
+            $('#work-box').text("Work: " + (this.workTime / 60) + " min");
+            $('#countdown').text(this.workTime / 60 + ":00");
+        }
+       // $(".clock-container").css("visibility", "hidden");
         //This function controls the clock display and ticking
-        function countDown(num) {
-            seconds -= num;
-            //play a tick if the second will change
-            if (Math.floor(seconds) !== tickCheck) {
-                //ticking.play();
-                tickCheck = Math.floor(seconds);
-            }
-            //roll over to the next minute
-            if (seconds <= 0) {
-                seconds = 59.9;
-                minutes -= 1;
-            }
-            //prevent minutes from displaying -1
-            if (minutes < 0) {
-                minutes = 0;
-            }
-            //change the countdown text
-            $('#countdown').text(minutes + ":" + ("0" + Math.floor(seconds)).slice(-2));
-        }
-
-        //This is the primary timing function that is called in setInterval()
-        function timer() {
-            var currentTime = new Date().getTime();
-            //Time to work. Fill the circle.
-            //Start the break countdown
-            line -= (((currentTime - startTime) / 1000) / workTime) * 100;
-            countDown((currentTime - startTime) / 1000);
-            startTime = currentTime;
-            //Keep the circle from underfilling, creates a visual glitch
-            if (line < 0) {
-                line = 0;
-            }
-            document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', line + " 100");
-        }
 
         //functions for the start, pause, and reset buttons
-        $('#start-button').click(function () {
-            if (!running) {
-                $('#circle-fill').css('transition', 'stroke-dasharray 0.1s');
-                startTime = new Date().getTime();
-                timerID = setInterval(timer, 50);
-                running = true;
-            }
-            $('#activity').addClass("animated rubberBand");
-        });
-
+        /* $('#start-button').click(function () {
+             if (!running) {
+                 $('#circle-fill').css('transition', 'stroke-dasharray 0.1s');
+                 startTime = new Date().getTime();
+                 timerID = setInterval(timer, 90);
+                 running = true;
+             }
+             $('#activity').addClass("animated rubberBand");
+         });*/
+/*
         $('#pause-button').click(function () {
-            running = false;
-            clearInterval(timerID);
+            this.state.running = false;
+            clearInterval(this.state.timerID);
             $('#activity').removeClass("animated rubberBand");
-        });
+        });*/
 
-        $('#reset-button').click(function () {
+        /*$('#reset-button').click(function () {
             minutes = workTime / 60;
             running = false;
             clearInterval(timerID);
@@ -144,18 +159,76 @@ class PracticalTest extends React.Component {
             $('#break-box').css('color', '#E0F7FA');
             $('#circle-fill').css('transition', 'stroke-dasharray 1.5s ease-out');
             document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', "0 100");
-        });
+        });*/
     }
 
+    startClock() {
+        var self = this;
+        //$('#break-box').text("Break: " + (breakTime / 60) + " min");
+        if (!this.running) {
+            $('#circle-fill').css('transition', 'stroke-dasharray 0.1s');
+            this.startTime = new Date().getTime();
+            this.timerID = setInterval(this.timer.bind(this), 100);
+            this.running = true;
+        }
+        $('#activity').addClass("animated rubberBand");
+    }
+
+    timer() {
+        const currentTime = new Date().getTime();
+        //Time to work. Fill the circle.
+        //Start the break countdown
+        this.line -= (((currentTime - this.startTime) / 1000) / this.workTime) * 100;
+        if (this.line < 0) {
+            this.line = 0;
+        }
+        document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', this.line + " 100");
+        this.countDown((currentTime - this.startTime) / 1000);
+        this.startTime = currentTime;
+        //Keep the circle from underfilling, creates a visual glitch
+    }
+
+    countDown(num) {
+        this.seconds -= num;
+        //play a tick if the second will change
+        if (Math.floor(this.seconds) !== this.tickCheck) {
+            //ticking.play();
+            this.tickCheck = Math.floor(this.seconds);
+        }
+        //roll over to the next minute
+        if (this.seconds <= 0 && this.minutes <= 0) {
+            clearInterval(this.timerID);
+            //console.log(this.postSolution);
+            this.postSolutions().then((r) => {this.props.history.push(this.state.link);});
+            // this.postSolution();
+        } else if (this.seconds <= 0) {
+            this.seconds = 59.9;
+            this.minutes -= 1;
+        }
+        //prevent minutes from displaying -1
+        if (this.minutes < 0) {
+            this.minutes = 0;
+        }
+        if (this.seconds < 0) {
+            this.seconds = 0;
+        }
+        //change the countdown text
+        if ($('#countdown')) {
+            $('#countdown').text(this.minutes + ":" + ("0" + Math.floor(this.seconds)).slice(-2));
+        }
+    }
 
     submitSolution() {
         var boardGrid = window.view.game.board.grid;
-        var solutions = window.view.solutions;
+        var solutions = this.state.solutions;
         var minifiedGrid;
         //console.log(this.compareSolution(boardGrid));
         if (this.isPieceInGrid(boardGrid)) {
             if (!this.compareSolution(boardGrid)) {
-                minifiedGrid = this.calculateUsefulness2(this.deepCloneArray(boardGrid));
+                /*$(".App").addClass("blink-2");
+                setTimeout(() =>  $(".App").removeClass("blink-2"), 750);*/
+                console.log(this.calculateUsefulness(boardGrid));
+                minifiedGrid = this.beautifySolution(this.deepCloneArray(boardGrid));
                 this.buildSolutionGrid(minifiedGrid);
                 solutions.push(this.deepCloneArray(boardGrid));
                 var rotatedGrid = boardGrid;
@@ -163,6 +236,8 @@ class PracticalTest extends React.Component {
                     for (var i = 0; i < 3; i++) {
                         rotatedGrid = this.rotateSolutionGrid(rotatedGrid);
                         solutions.push(this.deepCloneArray(rotatedGrid));
+                        minifiedGrid = this.beautifySolution(this.deepCloneArray(rotatedGrid));
+                        //this.buildSolutionGrid(minifiedGrid);
                     }
                 }
             } else {
@@ -175,6 +250,10 @@ class PracticalTest extends React.Component {
             var instance2 = M.Modal.init(noPiece);
             instance2.open();
         }
+    }
+
+    prepareArrayForPost(solution){
+        return solution.map(row => row.map((col) => {return {kind:col.kind}}));
     }
 
     deepCloneArray(arr) {
@@ -210,7 +289,7 @@ class PracticalTest extends React.Component {
     }
 
     compareSolution(newSolution) {
-        var solutions = window.view.solutions;
+        var solutions = this.state.solutions;
         // var solutions = [newSolution];
         var startPosNewSolution = this.getFirstPiecePos(newSolution);
         var status = false;
@@ -275,6 +354,39 @@ class PracticalTest extends React.Component {
                 }
             }
         }
+    }
+
+    calculateUsefulness(grid) {
+        var usefulnessOuterVariables = this.calculateUsefulnessOuter(this.deepCloneArray(grid));
+        var usefulnessOuter = usefulnessOuterVariables[0] / usefulnessOuterVariables[1];
+        var usefulnessInner = this.calculateUsefulnessInner(this.deepCloneArray(grid), usefulnessOuterVariables[0], usefulnessOuterVariables[1]);
+        return usefulnessOuter >= usefulnessInner ? usefulnessOuter : usefulnessInner;
+    }
+
+    calculateUsefulnessOuter(grid) {
+        var totalFields;
+        var filledFields = 0;
+        this.removeTopRows(grid);
+        this.removeBotRows(grid);
+        this.removeLeftCols(grid);
+        this.removeRightCols(grid);
+        grid.length >= grid[0].length ? totalFields = grid.length * grid.length : totalFields = grid[0].length * grid[0].length;
+        for (let i = 0; i < grid.length; i++) {
+            for (let n = 0; n < grid[i].length; n++) {
+                if (grid[i][n].type) {
+                    filledFields++;
+                }
+            }
+        }
+        return [filledFields, totalFields];
+    }
+
+    calculateUsefulnessInner(grid, filledFields, totalFieldsOuter) {
+        var largestSquare = this.largestSquare(grid);
+        var fields = largestSquare * largestSquare;
+        //if (largestSquare === totalFieldsOuter - 1) {
+        return (fields - (filledFields - fields)) / fields;
+
     }
 
     deleteRow(arr, row) {
@@ -382,37 +494,15 @@ class PracticalTest extends React.Component {
     }
 
 
-    calculateUsefulness2(grid) {
-        var deleted = true;
-        var pieceFoundFlag = false;
+    beautifySolution(grid) {
         this.removeTopRows(grid);
         this.removeBotRows(grid);
         this.removeLeftCols(grid);
         this.removeRightCols(grid);
-        console.log(this.largestSquare(this.deepCloneArray(grid)));
         return grid;
     }
 
-    calculateUsefulness3(grid) {
-        var usefulness;
-        var totalFields;
-        var filledFields = 0;
-        this.removeTopRows(grid);
-        this.removeBotRows(grid);
-        this.removeLeftCols(grid);
-        this.removeRightCols(grid);
-        grid.length >= grid[0].length ? totalFields = grid.length * grid.length : totalFields = grid[0].length * grid[0].length;
-        for (let i = 0; i < grid.length; i++) {
-            for (let n = 0; n < grid[i].length; n++) {
-                if (grid[i][n].type) {
-                    filledFields++;
-                }
-            }
-        }
-        return filledFields / totalFields;
-    }
-
-    calculateUsefulness(grid) {
+    /*calculateUsefulness(grid) {
         var colIsNotEmpty = false;
         var lineIsNotEmpty = false;
         var maxPosRight = grid.length;
@@ -464,7 +554,7 @@ class PracticalTest extends React.Component {
                 return maxSize;
             }
         }
-    }
+    }*/
 
 
     encodeArray(grid) {
@@ -499,32 +589,20 @@ class PracticalTest extends React.Component {
         return result;
     }
 
-    calulateSize(topIsEmpty, rightIsEmpty, botIsEmpty, leftIsEmpty) {
-        var counter = 0;
-        if (topIsEmpty) {
-            counter++;
-        }
-        if (rightIsEmpty) {
-            counter++;
-        }
-        if (botIsEmpty) {
-            counter++;
-        }
-        if (leftIsEmpty) {
-            counter++;
-        }
-        return counter;
+    openImpressum() {
+        var elem = document.getElementById('impressum');
+        var instance = M.Modal.init(elem, {dismissible: false});
+        instance.open();
     }
-
-    calculateUsefulnes(val) {
-        return val;
-    }
-
 
     render() {
+        const randomNum = Math.round(Math.random());
+        randomNum === 1 ? this.state.motivated = false : this.state.motivated = true;
         return (
             <div style={{height: "100%"}}>
-                <PracticalTestIntroduction/>
+                <Countdown2 practicalTest={this} motivated={this.state.motivated}/>
+                <Impressum/>
+                <PracticalTestIntroduction motivated={this.state.motivated}/>
                 <div id="piece-found" className="modal piece-info">
                     <div className="modal-content">
                         <div className="piece-container">
@@ -532,7 +610,7 @@ class PracticalTest extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Ups!</h1>
-                            <p>You have already submitted this solution.</p>
+                            <p>You have already submitted this solution or a rotation of it.</p>
                             <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">Got
                                 it</a>
                         </div>
@@ -558,7 +636,7 @@ class PracticalTest extends React.Component {
                         <h4>Pieces Pallete</h4>
                     </div>
                     <div className="right-area">
-                        <h2>Form a square with the pieces provided in the Puzzle Pallete</h2>
+                        <h2>Form a square with the pieces provided in the Pieces Pallete</h2>
                         <div className="clock-container">
                             <div id="main">
                                 <div id="countdown"></div>
@@ -574,7 +652,7 @@ class PracticalTest extends React.Component {
                 <div className="module-area">
                     <div className="wrapper">
                         <a id="submit-button" className="waves-effect waves-light btn-large"
-                           onClick={this.submitSolution}>Submit</a>
+                           onMouseDown={this.submitSolution}>Submit</a>
                     </div>
                     <div className="module-footer">
                         <div className="footer-left">
@@ -586,7 +664,7 @@ class PracticalTest extends React.Component {
                                     className="fa fa-pause"></i> Pause
                                 </button>
                                 <button className="btn btn-danger" id="reset-button">Reset</button>
-                                <a onClick={this.test}
+                                <a onClick={this.postSolutions}
                                    className="waves-effect waves-light btn-large modal-action modal-close">Paddle!</a>
                             </div>
                         </div>
@@ -604,7 +682,9 @@ class PracticalTest extends React.Component {
                         </div>
                     </div>
                 </div>
-                <img className="background" src="/ressources/Asset12.svg"></img>
+                <a className="waves-effect waves-light btn-small impressum-button modal-trigger"
+                   onClick={this.openImpressum}>i</a>
+                <img className="background" src="/ressources/background_s.svg"></img>
             </div>
         );
     }
