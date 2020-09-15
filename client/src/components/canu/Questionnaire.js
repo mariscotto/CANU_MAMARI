@@ -161,6 +161,12 @@ class Questionnaire extends React.Component {
             });
 
     }
+
+    onSubmitPopup(){
+        var elem = document.getElementById('questionnaire-finish');
+        var instance = M.Modal.init(elem,{dismissible:false});
+        instance.open();
+    }
     /*Form Navigation*/
 
     /*Resets the form back to the default state.*/
@@ -395,8 +401,11 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                         <div className="text-container">
                             <h1>Finish</h1>
                             <p>Are you done with the Questionnaire?</p>
-                            <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">Yes</a>
+                            <div className="popup-footer">
+                            <a onClick={this.onSubmit}
+                               className="waves-effect waves-light btn-large">Yes</a>
                             <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">No</a>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -412,8 +421,8 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                     <img id="personality-icon" src="/ressources/questionnaireLogo.svg"></img>
                     <h1>Questionnaire</h1>
                     <p id="info-text">These questions are used for statistical analysis and interpretation</p>
-                    <a onClick={this.onSubmit}
-                       className="waves-effect waves-light btn-large modal-action modal-close">Paddle!</a>
+                    {/*<a onClick={this.onSubmit}
+                       className="waves-effect waves-light btn-large modal-action modal-close">Paddle!</a>*/}
                 </div>
                 <div id="content-area">
                     <div className="form-progress">
@@ -434,7 +443,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                             </div>
                             <div id="form">
                                 <div className="row">
-                                    <div className="input-field col s6">
+                                    <div className="input-field col s3">
                                         <div className="section-title">Age</div>
                                         <input placeholder="" id="age" type="number" className="validate"
                                                value={this.state.age} onChange={this.onChangeAge}></input>
@@ -485,7 +494,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Less than high school degree"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Less than high school degree</span>
+                                                <span>Less than high school degree (Haupt- oder Realschulabschluss)</span>
                                             </label>
                                         </p>
                                         <p>
@@ -493,7 +502,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"High school degree or equivalent"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>High school degree or equivalent</span>
+                                                <span>High school degree or equivalent (Abitur)</span>
                                             </label>
                                         </p>
                                         <p>
@@ -501,7 +510,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Some college but no degree"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Some college but no degree</span>
+                                                <span>Bachelor degree</span>
                                             </label>
                                         </p>
                                         <p>
@@ -509,7 +518,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Associate degree"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Associate degree</span>
+                                                <span>Master degree</span>
                                             </label>
                                         </p>
                                         <p>
@@ -517,15 +526,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Bachelor degree"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Bachelor degree</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group2" type="radio"
-                                                       value={"Graduate degree"}
-                                                       onChange={this.onChangeEducationGrade}/>
-                                                <span>Graduate degree</span>
+                                                <span>Graduate degree (Diplom)</span>
                                             </label>
                                         </p>
                                     </div>
@@ -940,7 +941,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                             <div className="animation-footer">
                                 <div className="validation-field"/>
                             <a className="waves-effect waves-light btn-large back-button">back</a>
-                            <a id="finish-button" onClick={this.onSubmit}
+                            <a id="finish-button" onClick={this.onSubmitPopup}
                                   className="waves-effect waves-light btn-large">finish</a>
                             </div>
                         </div>

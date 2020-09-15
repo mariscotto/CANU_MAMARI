@@ -64,7 +64,6 @@ class StudyList extends React.Component {
                         <h2 className="study-name-heading">Studies</h2>
                     </Grid>
                     <Grid item>
-                        <CreateStudy action={this.updateView} />
                         <CreateStudy2 action={this.updateView} />
                     </Grid>
 

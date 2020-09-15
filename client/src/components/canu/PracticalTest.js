@@ -32,6 +32,7 @@ class PracticalTest extends React.Component {
         this.compareSolution = this.compareSolution.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.postSolutions = this.postSolutions.bind(this);
+        this.triggerSubmitSolution = this.triggerSubmitSolution.bind(this);
     }
 
     // storing link to tasks
@@ -43,7 +44,7 @@ class PracticalTest extends React.Component {
         motivated: undefined,
     };
     line = 100;
-    workTime = 60;
+    workTime = 720;
     running = false;
     startTime;
     minutes = this.workTime / 60;
@@ -199,7 +200,9 @@ class PracticalTest extends React.Component {
         if (this.seconds <= 0 && this.minutes <= 0) {
             clearInterval(this.timerID);
             //console.log(this.postSolution);
-            this.postSolutions().then((r) => {this.props.history.push(this.state.link);});
+            var elem = document.getElementById('countdown-over');
+            var instance = M.Modal.init(elem,{dismissible:false});
+            instance.open();
             // this.postSolution();
         } else if (this.seconds <= 0) {
             this.seconds = 59.9;
@@ -216,6 +219,14 @@ class PracticalTest extends React.Component {
         if ($('#countdown')) {
             $('#countdown').text(this.minutes + ":" + ("0" + Math.floor(this.seconds)).slice(-2));
         }
+    }
+    onSubmitPopup(){
+        var elem = document.getElementById('practical-test-finish');
+        var instance = M.Modal.init(elem,{dismissible:false});
+        instance.open();
+    }
+    triggerSubmitSolution(){
+        this.postSolutions().then((r) => {this.props.history.push(this.state.link);});
     }
 
     submitSolution() {
@@ -603,6 +614,34 @@ class PracticalTest extends React.Component {
                 <Countdown2 practicalTest={this} motivated={this.state.motivated}/>
                 <Impressum/>
                 <PracticalTestIntroduction motivated={this.state.motivated}/>
+                <div id="practical-test-finish" className="modal practical-info">
+                    <div className="modal-content">
+                        <div className="piece-container">
+                            <img className="lifeguard-logo" src="/ressources/lifeguardLogo.svg"/>
+                        </div>
+                        <div className="text-container">
+                            <h1>Finish</h1>
+                            <p>Are you done with the Practical Test?</p>
+                            <div className="popup-footer">
+                            <a onClick={this.triggerSubmitSolution}
+                               className="waves-effect waves-light btn-large">Yes</a>
+                            <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">No</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="countdown-over" className="modal practical-info">
+                    <div className="modal-content">
+                        <div className="piece-container">
+                            <img id="clock-logo" src="/ressources/clock.svg"></img>
+                        </div>
+                        <div className="text-container">
+                            <h1>Time's up</h1>
+                            <p>You've finished the Practical Test - click next to proceed.</p>
+                            <a href="#" onMouseDown={this.triggerSubmitSolution} className="waves-effect waves-light btn-large modal-action modal-close">Okay</a>
+                        </div>
+                    </div>
+                </div>
                 <div id="piece-found" className="modal piece-info">
                     <div className="modal-content">
                         <div className="piece-container">
@@ -636,7 +675,7 @@ class PracticalTest extends React.Component {
                         <h4>Pieces Pallete</h4>
                     </div>
                     <div className="right-area">
-                        <h2>Form a square with the pieces provided in the Pieces Pallete</h2>
+                        <h2>Try to form squares with the pieces provided in the Pieces Pallete</h2>
                         <div className="clock-container">
                             <div id="main">
                                 <div id="countdown"></div>
@@ -651,12 +690,16 @@ class PracticalTest extends React.Component {
                 </div>
                 <div className="module-area">
                     <div className="wrapper">
+                        <div id="button-nav-bar">
                         <a id="submit-button" className="waves-effect waves-light btn-large"
                            onMouseDown={this.submitSolution}>Submit</a>
+                        <a id="p-finish-button" className="waves-effect waves-light btn-large"
+                           onMouseDown={this.onSubmitPopup}>Finish</a>
+                        </div>
                     </div>
                     <div className="module-footer">
                         <div className="footer-left">
-                            <div className="btn-group btn-group-md">
+                            {/*<div className="btn-group btn-group-md">
                                 <button className="btn btn-success" id="start-button"><i
                                     className="fa fa-play"></i> Start
                                 </button>
@@ -666,7 +709,7 @@ class PracticalTest extends React.Component {
                                 <button className="btn btn-danger" id="reset-button">Reset</button>
                                 <a onClick={this.postSolutions}
                                    className="waves-effect waves-light btn-large modal-action modal-close">Paddle!</a>
-                            </div>
+                            </div>*/}
                         </div>
                         <div className="footer-right">
                             <h4>Solutions</h4>

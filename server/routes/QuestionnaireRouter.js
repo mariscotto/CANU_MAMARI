@@ -14,7 +14,6 @@ QuestionnaireRouter.route('/:studyId')
     .post((req, res, next) => {
         Questionnaire.create({
             VP_id: req.sessionID,
-            email: req.body.email,
             age: req.body.age,
             gender: req.body.gender,
             creative_test: req.body.creative_test,

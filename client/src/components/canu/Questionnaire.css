@@ -301,5 +301,8 @@ label{
     padding-bottom: 2vmin;
     color:#D66258;
 }
-
+#questionnaire-finish {
+    height: 32vh;
+    width: 66vh;
+}
 

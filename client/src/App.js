@@ -14,31 +14,22 @@ import ScrollToTop from "./components/layout/ScrollToTop";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-// import PrivateRoute from "./components/private-route/PrivateRoute";
 import Dashboard from "./components/dashboard/Dashboard";
 import Study from "./components/dashboard/Study";
 
-import Finish from "./components/study/Finish";
-import LandingStudy from "./components/study/LandingStudy";
 import DSGVO from "./components/canu/DSGVO";
 import PracticalTest from "./components/canu/PracticalTest";
 import Questionnaire from "./components/canu/Questionnaire";
 
 
-import VideoPopup from "./components/canu/VideoPopup.js";
 import LandingCanu from "./components/canu/LandingCanu";
-import practicalTestIntro from "./components/canu/PracticalTestIntroduction";
 import Congratulations from "./components/canu/ThankYou";
 
 
-import StudySequence from "./components/study/StudySequence";
-import Post_Questionaire from "./components/study/Post_Questionnaire";
 import APM from "./components/canu/APM";
-import ICAA from "./components/study/ICAA";
 
 import "./App.css";
 import SidebarDashboard from "./components/dashboard/SidebarDashboard";
-import Walkthrough from "./components/canu/Walkthrough";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {

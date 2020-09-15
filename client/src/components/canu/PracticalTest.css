@@ -60,7 +60,9 @@ li {
 }
 .logo{
 }
-
+#lifeguard-logo {
+  width:52%;
+}
 /*LAYOUT*/
 .module-area{
   height: 100%;
@@ -117,11 +119,16 @@ li {
 .footer-right{
   width: 100%;
 }
-#submit-button{
+#button-nav-bar {
+  display: flex;
   align-self: flex-end;
   position: absolute;
-  right: 10%;
+  right: 5%;
+  min-width: 240px;
   margin-bottom: 3%;
+}
+#p-finish-button{
+  margin-left: 6%;
 }
 
 .group {
@@ -539,6 +546,21 @@ p {
   align-self: flex-end;
 }
 
+#practical-test-finish {
+  height: 32vh;
+  width: 66vh;
+}
+
+.popup-footer{
+width: 100%;
+display: flex;
+justify-content: flex-start;
+}
+
+.popup-footer .btn-large{
+  width: 30%;
+  margin-left: 10%;
+}
 
 .blink-2 {
   -webkit-animation: blink-2 0.7s both;

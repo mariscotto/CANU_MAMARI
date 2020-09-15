@@ -55,6 +55,9 @@
     margin-bottom: 2rem;
     
 }
+#study-group-links h3 {
+    font-size: 1.4rem;
+}
 
 .groups-study-closed {
   background-color: white;

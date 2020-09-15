@@ -58,15 +58,21 @@ class PracticalTestIntroduction extends React.Component {
             },
             {
                 target: '#submit-button',
-                color: '#336666',
+                color: '#003333',
                 content: 'Submit your solution with this button.',
                 acceptText: 'Alright!'
             },
             {
                 target: '.slider',
-                color: '#003333',
+                color: '#669999',
                 content: 'Submitted Solutions are added here.',
                 acceptText: 'Got it!'
+            },
+            {
+                target: '#p-finish-button',
+                color: '#003333',
+                content: 'The Practical test can be finished with this button.',
+                acceptText: 'Okay!'
             }
 
            /* {
@@ -183,7 +189,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Solutions</h1>
-                            <p>Your goal is to find as many creative ways as possible to build a square with the puzzle pieces.To boost your creativity, a small video will be played beforehand.</p>
+                            <p>Your goal is to find as many creative ways as possible to build a square with the puzzle pieces. To boost your creativity, a small video will be played beforehand.</p>
                             <a href="#" onMouseDown={this.startVideo} className="waves-effect waves-light btn-large modal-action modal-close">Let's go</a>
                         </div>
                     </div>

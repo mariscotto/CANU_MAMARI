@@ -46,7 +46,7 @@ class LandingCanu extends React.Component {
                 <div id="modal1" className="modal">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <img id="mountain-header" src="/ressources/background.svg"></img>
+                            <img id="mountain-header" src="/ressources/background_s.svg"></img>
                         </div>
                         <div className="text-container">
                             {/*<h4>Hello participant,</h4>
