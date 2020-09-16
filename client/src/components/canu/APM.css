@@ -131,15 +131,28 @@
 .sv_p_root{
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
-    height: 71vmin;
+    height: 73vmin;
 }
 .sv_row{
     height:auto;
+}
+.sv_container{
+    height:inherit;
+}
+.sv_main .sv_container .sv_body{
+    height: inherit;
+}
+.sv_main form{
+    height:inherit;
 }
 .sv_main .sv_container .sv_body .sv_nav{
     height: 7vh;
     min-height: 60px;
     padding:0;
+    position: absolute;
+    width: 100%;
+    right: 3%;
+    bottom:15vh
 }
 .sv_main .sv_q_imgsel.checked label > div{
     background-color: #336666;

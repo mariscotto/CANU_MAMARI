@@ -800,12 +800,7 @@ class APM extends React.Component {
     };
 
     var surveyRender = !this.state.isCompleted ? (
-      <div style={{height: "100%"}}>
-        {/* <ProgressBar
-          percent={((this.props.count + 1) / this.props.total) * 100}
-          filledBackground="linear-gradient(to right,rgb(255, 187, 153), rgb(255, 134, 73))"
-        /> */}
-
+        <div style={{height: "100%"}}>
         <div className="questionnaire-description">
           <div className="apm-wrapper">
             <div className="task-heading">
@@ -819,10 +814,10 @@ class APM extends React.Component {
           </div>
         </div>
         <Survey.Survey
-          json={json}
-          showCompletedPage={false}
-          onComplete={this.onCompleteComponent}
-        />
+        json={json}
+      showCompletedPage={false}
+      onComplete={this.onCompleteComponent}
+      />
       </div>
     ) : null;
 
