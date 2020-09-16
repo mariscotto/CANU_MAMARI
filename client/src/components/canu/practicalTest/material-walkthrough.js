@@ -263,7 +263,7 @@ function _log(context, message) {
         var itCanBeRenderedInLeft = (position.left - WALK_PADDING) - walkContentWrapper.outerWidth() > 0;
 
         var itCanBeRenderedInTop = walkWrapper[0].getBoundingClientRect().top - walkContentWrapper.outerHeight() > 30;
-        var itCanBeRenderedInBottom = walkWrapper[0].getBoundingClientRect().top + walkWrapper.outerHeight() + walkContentWrapper.outerHeight() < $(window).outerHeight()-100;
+        var itCanBeRenderedInBottom = walkWrapper[0].getBoundingClientRect().top + walkWrapper.outerHeight() + walkContentWrapper.outerHeight() < $(window).outerHeight()-450;
 
         _log('WALK_CONTENT', 'itCanBeRenderedInRight: ' +itCanBeRenderedInRight);
         _log('WALK_CONTENT', 'itCanBeRenderedInLeft: ' +itCanBeRenderedInLeft);
