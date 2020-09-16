@@ -209,7 +209,7 @@ function _log(context, message) {
             positionOutOfBounds: positionOutOfBounds
         }, null, 2));
 
-        if (scrollTo > 0 && positionMode != 'fixed') {
+      /* if (scrollTo > 0 && positionMode != 'fixed') {
             _log('WALK_LOCK', 'Scrolling to ' +scrollTo);
             _log('WALK_SCROLL', 'scrollTo + windowHeight: ' +(scrollTo + windowHeight));
             if (scrollTo + windowHeight > documentHeight && !positionOutOfBounds) scrollTo = documentHeight - windowHeight; // Setting the scroll limit by the document's height
@@ -220,14 +220,14 @@ function _log(context, message) {
             }, WALK_TRANSITION_DURATION, function () {
                 locateCallback();
             });
-        } else {
+        } else {*/
             _log('WALK_LOCK', 'Resetting scroll');
             $('body,html').animate({
                 scrollTop: 0
             }, WALK_TRANSITION_DURATION, function () {
                 locateCallback();
             });
-        }
+        //}
 
     }
 
@@ -263,7 +263,7 @@ function _log(context, message) {
         var itCanBeRenderedInLeft = (position.left - WALK_PADDING) - walkContentWrapper.outerWidth() > 0;
 
         var itCanBeRenderedInTop = walkWrapper[0].getBoundingClientRect().top - walkContentWrapper.outerHeight() > 30;
-        var itCanBeRenderedInBottom = walkWrapper[0].getBoundingClientRect().top + walkWrapper.outerHeight() + walkContentWrapper.outerHeight() < $(window).outerHeight()-450;
+        var itCanBeRenderedInBottom = walkWrapper[0].getBoundingClientRect().top + walkWrapper.outerHeight() + walkContentWrapper.outerHeight() < $(window).outerHeight()-250;
 
         _log('WALK_CONTENT', 'itCanBeRenderedInRight: ' +itCanBeRenderedInRight);
         _log('WALK_CONTENT', 'itCanBeRenderedInLeft: ' +itCanBeRenderedInLeft);
