@@ -551,7 +551,7 @@ class ThankYou extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{height: "100%"}}>
                     <div id="congratulations-popup">
                         <h2 id="congratulations-text">Thank you!</h2>
                         <p>Since your data is completely anonymized, we have no possibility to identify your dataset.
