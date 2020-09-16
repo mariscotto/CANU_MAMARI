@@ -121,7 +121,6 @@
 .sv_main input[type="button"]:hover,
 .sv_main_btn {
     border: 1px solid #336666;
-    color: #336666;
     background-color:#336666;
 }
 .sv_main.sv_default_css input[type="button"], .sv_default_css button{
@@ -129,6 +128,7 @@
 }
 .sv_p_root{
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
     height: 71vh;
 }
 .sv_main .sv_container .sv_body .sv_nav{
@@ -139,5 +139,6 @@
     background-color: #336666;
 }
 .sv_main input[type="button"]:hover, .sv_main_btn{
-    background-color: transparent;
+    /*background-color: #719190;*/
+    color: white;
 }

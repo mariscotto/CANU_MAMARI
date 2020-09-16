@@ -54,8 +54,9 @@ strong{
 #form{
     padding: 0 5%;
     height:56vh;
-    overflow-x: scroll;
+    overflow-y: scroll;
     -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
 }
 /*::-webkit-scrollbar {
     display: none;

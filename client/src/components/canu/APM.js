@@ -2,7 +2,6 @@
 
 import React from "react";
 import axios from "axios";
-
 import * as Survey from "survey-react";
 import "survey-react/survey.css";
 
@@ -42,7 +41,6 @@ class APM extends React.Component {
       });
 
   };
-
   render() {
     // var model = new Survey.Model(this.json);
 

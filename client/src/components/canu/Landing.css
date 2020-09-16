@@ -24,6 +24,7 @@
 #modal1 .text-container{
   padding: 2% 3% 0 3%;
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   height: 73vmin;
   display: inline-block;
 }

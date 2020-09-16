@@ -262,8 +262,8 @@ function _log(context, message) {
         var itCanBeRenderedInRight = position.left + (walkWrapper.outerWidth() - WALK_PADDING) + walkContentWrapper.outerWidth() < $(window).outerWidth();
         var itCanBeRenderedInLeft = (position.left - WALK_PADDING) - walkContentWrapper.outerWidth() > 0;
 
-        var itCanBeRenderedInTop = walkWrapper[0].getBoundingClientRect().top - walkContentWrapper.outerHeight() > 0;
-        var itCanBeRenderedInBottom = walkWrapper[0].getBoundingClientRect().top + walkWrapper.outerHeight() + walkContentWrapper.outerHeight() < $(window).outerHeight();
+        var itCanBeRenderedInTop = walkWrapper[0].getBoundingClientRect().top - walkContentWrapper.outerHeight() > 30;
+        var itCanBeRenderedInBottom = walkWrapper[0].getBoundingClientRect().top + walkWrapper.outerHeight() + walkContentWrapper.outerHeight() < $(window).outerHeight()-100;
 
         _log('WALK_CONTENT', 'itCanBeRenderedInRight: ' +itCanBeRenderedInRight);
         _log('WALK_CONTENT', 'itCanBeRenderedInLeft: ' +itCanBeRenderedInLeft);

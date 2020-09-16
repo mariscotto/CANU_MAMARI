@@ -631,6 +631,12 @@ class PracticalTest extends React.Component {
         instance.open();
     }
 
+    closePopup(event){
+        var elem = document.getElementById(event.currentTarget.offsetParent.id);
+        var instance = M.Modal.init(elem, {dismissible: false});
+        instance.close();
+    }
+
     render() {
         const randomNum = Math.round(Math.random());
         randomNum === 1 ? this.state.motivated = false : this.state.motivated = true;
@@ -648,10 +654,10 @@ class PracticalTest extends React.Component {
                             <h1>Finish</h1>
                             <p>Are you done with the Puzzle Task?</p>
                             <div className="popup-footer">
-                                <a onClick={this.triggerSubmitSolution}
-                                   className="waves-effect waves-light btn-large">Yes</a>
-                                <a href="#!"
-                                   className="waves-effect waves-light btn-large modal-action modal-close">No</a>
+                                <a onMouseDown={this.triggerSubmitSolution}
+                                   className="btn-large modal-action modal-close">Yes</a>
+                                <a onMouseDown={this.closePopup}
+                                   className="btn-large modal-action modal-close">No</a>
                             </div>
                         </div>
                     </div>
@@ -664,8 +670,8 @@ class PracticalTest extends React.Component {
                         <div className="text-container">
                             <h1>Time's up</h1>
                             <p>You've finished the Puzzle Task - click next to proceed.</p>
-                            <a href="#" onMouseDown={this.triggerSubmitSolution}
-                               className="waves-effect waves-light btn-large modal-action modal-close">Next</a>
+                            <a onMouseDown={this.triggerSubmitSolution}
+                               className="btn-large modal-action">Next</a>
                         </div>
                     </div>
                 </div>
@@ -677,7 +683,7 @@ class PracticalTest extends React.Component {
                         <div className="text-container">
                             <h1>Ups!</h1>
                             <p>You have already submitted this solution or a rotation of it.</p>
-                            <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">Got
+                            <a onMouseDown={this.closePopup} className="btn-large modal-action modal-close">Got
                                 it</a>
                         </div>
                     </div>
@@ -690,7 +696,7 @@ class PracticalTest extends React.Component {
                         <div className="text-container">
                             <h1>Sorry!</h1>
                             <p>There are no pieces in the grid.</p>
-                            <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">Got
+                            <a onMouseDown={this.closePopup} className="btn-large modal-action modal-close">Got
                                 it</a>
                         </div>
                     </div>
@@ -718,9 +724,9 @@ class PracticalTest extends React.Component {
                 <div className="module-area">
                     <div className="wrapper">
                         <div id="button-nav-bar">
-                            <a id="submit-button" className="waves-effect waves-light btn-large"
+                            <a id="submit-button" className="btn-large"
                                onMouseDown={this.submitSolution}>Submit</a>
-                            <a id="p-finish-button" className="waves-effect waves-light btn-large"
+                            <a id="p-finish-button" className="btn-large"
                                onMouseDown={this.onSubmitPopup}>Finish</a>
                         </div>
                     </div>
@@ -744,8 +750,8 @@ class PracticalTest extends React.Component {
                                 <div className="swiper-container">
                                     <div className="swiper-wrapper">
                                     </div>
-                                    <div className="swiper-button-next"></div>
-                                    <div className="swiper-button-prev"></div>
+                                    <div className="swiper-button-next"/>
+                                    <div className="swiper-button-prev"/>
                                 </div>
                             </div>
 
@@ -754,7 +760,7 @@ class PracticalTest extends React.Component {
                 </div>
                 <a className="waves-effect waves-light btn-small impressum-button modal-trigger"
                    onClick={this.openImpressum}>i</a>
-                <img className="background" src="/ressources/background_s.svg"></img>
+                <img className="background" src="/ressources/background_s.svg"/>
             </div>
         );
     }

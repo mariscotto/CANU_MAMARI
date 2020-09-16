@@ -21,6 +21,7 @@
 #privacy-policy .text-container{
     padding: 3% 2% 0 3%;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
     height: 73vmin;
 }
 #privacy-policy .modal-footer{

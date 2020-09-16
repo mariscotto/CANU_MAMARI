@@ -42,6 +42,7 @@
 #impressum .text-container{
     padding: 3% 3% 0 3%;
     overflow: scroll;
+    -webkit-overflow-scrolling: touch;
    /* height: 53vh;*/
 }
 #impressum .modal-footer{

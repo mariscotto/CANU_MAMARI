@@ -122,11 +122,10 @@ class Shape {
 
   addDraggableListener() {
     var self = this;
-
-    document.addEventListener("touchstart", this.touchHandler, true);
-    document.addEventListener("touchmove", this.touchHandler, true);
-    document.addEventListener("touchend", this.touchHandler, true);
-    document.addEventListener("touchcancel", this.touchHandler, true);
+    document.getElementsByClassName("wrapper")[0].addEventListener("touchstart", this.touchHandler, {passive: false});
+    document.getElementsByClassName("wrapper")[0].addEventListener("touchmove", this.touchHandler, {passive: false});
+    document.getElementsByClassName("wrapper")[0].addEventListener("touchend", this.touchHandler, {passive: false});
+    document.getElementsByClassName("wrapper")[0].addEventListener("touchcancel", this.touchHandler, {passive: false});
     //$("." + this.name +" > li.piece").multiDraggable({ group: $("."+this.name + " .piece"), dragNative : function () {}});
     //  $(".shape-wrapper").multiDraggable({group: $("." + this.name +" > li.piece")});
     //$(".shape-wrapper").multiDraggable({});
@@ -458,8 +457,8 @@ class Shape {
         touch.clientX, touch.clientY, false,
         false, false, false, 0, null);
 
-    touch.target.dispatchEvent(simulatedEvent);
     event.preventDefault();
+    touch.target.dispatchEvent(simulatedEvent);
   }
 
   /*Shape.prototype.render = function() {
