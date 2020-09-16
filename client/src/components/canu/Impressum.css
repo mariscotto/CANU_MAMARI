@@ -42,9 +42,14 @@
 #impressum .text-container{
     padding: 3% 3% 0 3%;
     overflow: scroll;
-    height: 53vh;
+   /* height: 53vh;*/
 }
 #impressum .modal-footer{
     height: auto;
     padding:2.1%;
+}
+
+#impressum .text-container a{
+    text-decoration: underline;
+    color:#336666;
 }

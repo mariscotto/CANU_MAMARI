@@ -117,12 +117,12 @@ class PracticalTest extends React.Component {
                 console.log(err.response);
             });*/
         document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', "0 100");
-        if(this.state.motivated) {
+        if (this.state.motivated) {
             document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', "100 100");
             $('#work-box').text("Work: " + (this.workTime / 60) + " min");
             $('#countdown').text(this.workTime / 60 + ":00");
         }
-       // $(".clock-container").css("visibility", "hidden");
+        // $(".clock-container").css("visibility", "hidden");
         //This function controls the clock display and ticking
 
         //functions for the start, pause, and reset buttons
@@ -135,12 +135,12 @@ class PracticalTest extends React.Component {
              }
              $('#activity').addClass("animated rubberBand");
          });*/
-/*
-        $('#pause-button').click(function () {
-            this.state.running = false;
-            clearInterval(this.state.timerID);
-            $('#activity').removeClass("animated rubberBand");
-        });*/
+        /*
+                $('#pause-button').click(function () {
+                    this.state.running = false;
+                    clearInterval(this.state.timerID);
+                    $('#activity').removeClass("animated rubberBand");
+                });*/
 
         /*$('#reset-button').click(function () {
             minutes = workTime / 60;
@@ -201,7 +201,7 @@ class PracticalTest extends React.Component {
             clearInterval(this.timerID);
             //console.log(this.postSolution);
             var elem = document.getElementById('countdown-over');
-            var instance = M.Modal.init(elem,{dismissible:false});
+            var instance = M.Modal.init(elem, {dismissible: false});
             instance.open();
             // this.postSolution();
         } else if (this.seconds <= 0) {
@@ -220,13 +220,35 @@ class PracticalTest extends React.Component {
             $('#countdown').text(this.minutes + ":" + ("0" + Math.floor(this.seconds)).slice(-2));
         }
     }
-    onSubmitPopup(){
+
+    onSubmitPopup() {
         var elem = document.getElementById('practical-test-finish');
-        var instance = M.Modal.init(elem,{dismissible:false});
+        var instance = M.Modal.init(elem, {dismissible: false});
         instance.open();
     }
-    triggerSubmitSolution(){
-        this.postSolutions().then((r) => {this.props.history.push(this.state.link);});
+
+    triggerSubmitSolution() {
+        this.postSolutions().then((r) => {
+            this.props.history.push(this.state.link);
+        });
+    }
+
+    repositionPieces(boardGrid) {
+        do {
+            $(".shape-wrapper").remove();
+        } while ($(".shape-wrapper").length);
+        this.clearBoard(boardGrid);
+        window.view.createShapes();
+    }
+
+    clearBoard(boardGrid) {
+        boardGrid.forEach(function (row, rowIdx) {
+            row.forEach(function (tile, tileIdx) {
+                tile.type = null;
+                tile.kind = null;
+                tile.color = null;
+            });
+        });
     }
 
     submitSolution() {
@@ -236,8 +258,8 @@ class PracticalTest extends React.Component {
         //console.log(this.compareSolution(boardGrid));
         if (this.isPieceInGrid(boardGrid)) {
             if (!this.compareSolution(boardGrid)) {
-                /*$(".App").addClass("blink-2");
-                setTimeout(() =>  $(".App").removeClass("blink-2"), 750);*/
+                $(".App").addClass("blink-2");
+                setTimeout(() => $(".App").removeClass("blink-2"), 750);
                 console.log(this.calculateUsefulness(boardGrid));
                 minifiedGrid = this.beautifySolution(this.deepCloneArray(boardGrid));
                 this.buildSolutionGrid(minifiedGrid);
@@ -251,6 +273,7 @@ class PracticalTest extends React.Component {
                         //this.buildSolutionGrid(minifiedGrid);
                     }
                 }
+                this.repositionPieces(boardGrid);
             } else {
                 var pieceFound = document.getElementById('piece-found');
                 var instance1 = M.Modal.init(pieceFound);
@@ -263,8 +286,10 @@ class PracticalTest extends React.Component {
         }
     }
 
-    prepareArrayForPost(solution){
-        return solution.map(row => row.map((col) => {return {kind:col.kind}}));
+    prepareArrayForPost(solution) {
+        return solution.map(row => row.map((col) => {
+            return {kind: col.kind}
+        }));
     }
 
     deepCloneArray(arr) {
@@ -621,11 +646,12 @@ class PracticalTest extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Finish</h1>
-                            <p>Are you done with the Practical Test?</p>
+                            <p>Are you done with the Puzzle Task?</p>
                             <div className="popup-footer">
-                            <a onClick={this.triggerSubmitSolution}
-                               className="waves-effect waves-light btn-large">Yes</a>
-                            <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">No</a>
+                                <a onClick={this.triggerSubmitSolution}
+                                   className="waves-effect waves-light btn-large">Yes</a>
+                                <a href="#!"
+                                   className="waves-effect waves-light btn-large modal-action modal-close">No</a>
                             </div>
                         </div>
                     </div>
@@ -637,8 +663,9 @@ class PracticalTest extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Time's up</h1>
-                            <p>You've finished the Practical Test - click next to proceed.</p>
-                            <a href="#" onMouseDown={this.triggerSubmitSolution} className="waves-effect waves-light btn-large modal-action modal-close">Okay</a>
+                            <p>You've finished the Puzzle Task - click next to proceed.</p>
+                            <a href="#" onMouseDown={this.triggerSubmitSolution}
+                               className="waves-effect waves-light btn-large modal-action modal-close">Next</a>
                         </div>
                     </div>
                 </div>
@@ -671,7 +698,7 @@ class PracticalTest extends React.Component {
 
                 <div className="header">
                     <div className="left-area">
-                        <h1>Practical Test</h1>
+                        <h1>Puzzle Task</h1>
                         <h4>Pieces Pallete</h4>
                     </div>
                     <div className="right-area">
@@ -691,10 +718,10 @@ class PracticalTest extends React.Component {
                 <div className="module-area">
                     <div className="wrapper">
                         <div id="button-nav-bar">
-                        <a id="submit-button" className="waves-effect waves-light btn-large"
-                           onMouseDown={this.submitSolution}>Submit</a>
-                        <a id="p-finish-button" className="waves-effect waves-light btn-large"
-                           onMouseDown={this.onSubmitPopup}>Finish</a>
+                            <a id="submit-button" className="waves-effect waves-light btn-large"
+                               onMouseDown={this.submitSolution}>Submit</a>
+                            <a id="p-finish-button" className="waves-effect waves-light btn-large"
+                               onMouseDown={this.onSubmitPopup}>Finish</a>
                         </div>
                     </div>
                     <div className="module-footer">

@@ -35,7 +35,7 @@ class QuestionnaireIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Questionnaire</h1>
-                            <p>You have completed the Practical Test, in the following we would like to ask that you answer some personal questions.</p>
+                            <p>You have completed the Puzzle Task, in the following we would like to ask that you answer some personal questions.</p>
                             <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">Okay</a>
                         </div>
                     </div>

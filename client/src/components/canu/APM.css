@@ -47,6 +47,7 @@
 }
 
 .sv_main .sv_body {
+    font-size: 1.1rem;
     background-color: white;
     border-top: none;
 }
@@ -58,7 +59,54 @@
     align-items: flex-start;
     text-align: center;
 }
-
+#sq_101{
+    display:flex;
+    justify-content: center;
+}
+#sq_104{
+    display:flex;
+    justify-content: center;
+}
+#sq_107{
+    display:flex;
+    justify-content: center;
+}
+#sq_110{
+    display:flex;
+    justify-content: center;
+}
+#sq_113{
+    display:flex;
+    justify-content: center;
+}
+#sq_116{
+    display:flex;
+    justify-content: center;
+}
+#sq_119{
+    display:flex;
+    justify-content: center;
+}
+#sq_122{
+    display:flex;
+    justify-content: center;
+}
+#sq_125{
+    display:flex;
+    justify-content: center;
+}
+#sq_128{
+    display:flex;
+    justify-content: center;
+}
+#sq_131{
+    display:flex;
+    justify-content: center;
+}
+#sq_134{
+    display:flex;
+    justify-content: center;
+}
 .sv_main input[type="button"],
 .sv_main_btn {
     font-size: 25px;

@@ -484,7 +484,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                         <div className="form-step js-form-step waiting hidden" data-step="2">
 
                             <div id="header">
-                                <h2>What is your highest level of school degree?</h2>
+                                <h2>What is your highest level of education?</h2>
                             </div>
                             <div id="form">
                                 <div className="row">
@@ -527,6 +527,14 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                        value={"Bachelor degree"}
                                                        onChange={this.onChangeEducationGrade}/>
                                                 <span>Graduate degree (Diplom)</span>
+                                            </label>
+                                        </p>
+                                        <p>
+                                            <label>
+                                                <input className="with-gap" name="group2" type="radio"
+                                                       value={"Bachelor degree"}
+                                                       onChange={this.onChangeEducationGrade}/>
+                                                <span>Promotion</span>
                                             </label>
                                         </p>
                                     </div>

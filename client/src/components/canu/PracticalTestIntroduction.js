@@ -71,7 +71,7 @@ class PracticalTestIntroduction extends React.Component {
             {
                 target: '#p-finish-button',
                 color: '#003333',
-                content: 'The Practical test can be finished with this button.',
+                content: 'The Puzzle Task can be finished with this button.',
                 acceptText: 'Okay!'
             }
 
@@ -139,8 +139,8 @@ class PracticalTestIntroduction extends React.Component {
                             <img id="practical-test-logo" src="/ressources/practicalTestLogo.svg"></img>
                         </div>
                         <div className="text-container">
-                            <h1>Practical Test</h1>
-                            <p>The CANU practical test will be the main tool to assess your capability of generating new ideas.
+                            <h1>Puzzle Task</h1>
+                            <p>The CANU Puzzle Task will be the main tool to assess your capability of generating new ideas.
                                 In the following task, you will try to form a square with the provided puzzle pieces.</p>
                             <a href="#!" onMouseDown={this.openSecIntro} className="waves-effect waves-light btn-large modal-action modal-close">Next</a>
                         </div>
@@ -165,7 +165,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Time</h1>
-                            <p>A time limit of 12 minutes is set for this practical test. A timer on the top right corner will let you keep track of it.</p>
+                            <p>A time limit of 12 minutes is set for this Puzzle Task. A timer on the top right corner will let you keep track of it.</p>
                             <a href="#" onMouseDown={this.openThirdIntroMotivated} className="waves-effect waves-light btn-large modal-action modal-close">Okay</a>
                         </div>
                     </div>

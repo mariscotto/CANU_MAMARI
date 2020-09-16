@@ -79,7 +79,7 @@ class LandingCanu extends React.Component {
                             </p>
                             <h5>Procedure</h5>
                             <p>Your participation in the study is terminated after a <strong>single appointment</strong>. The study takes place completely <strong>online</strong>.
-                                During the experiment, you are asked to fulfill <strong>3 parts</strong>. Firstly, a <strong>practical test</strong> will be given, where you have to puzzle a certain shape to given instructions. Secondly, a <strong>test for conclusive thinking</strong>, the Raven’s APM will be presented. Lastly, a <strong>questionnaire</strong> will be served to fill in. Including the instructions, a total time expenditure of approx. <strong>30 minutes</strong> can be expected.
+                                During the experiment, you are asked to fulfill <strong>3 parts</strong>. Firstly, a <strong>Puzzle Task</strong> will be given, where you have to puzzle a certain shape to given instructions. Secondly, a <strong>test for conclusive thinking</strong>, the Raven’s APM will be presented. Lastly, a <strong>questionnaire</strong> will be served to fill in. Including the instructions, a total time expenditure of approx. <strong>30 minutes</strong> can be expected.
                             </p>
                             <p>Please contact jonas.bender@tum.de with any questions or comments.<br/><br/> Technical University
                             of Munich,<br/> Chair of Ergonomics</p>

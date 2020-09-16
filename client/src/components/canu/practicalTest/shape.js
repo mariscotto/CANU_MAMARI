@@ -2,8 +2,8 @@ import $ from 'jquery';
 import Tile from './tile';
 import NullTile from './nullTile';
 const SHAPES = require("./shapes");
-/*'lelbow3', 'lelbow3_upscaled','horizontal3', 'puzzle', 'counterpart'*/
-var COLORS = ['rgb(134,227,206, 0.6)', 'rgb(136, 185, 153, 0.6)', 'rgb(255,221,148, 0.6)', 'rgb(250,137,123, 0.6)', 'rgb(204,171,216, 0.6)','rgb(72, 73, 124, 0.6)'];
+/*'lelbow3', 'lelbow3_upscaled','horizontal3', 'puzzle', 'counterpart'*//*,'rgb(250,137,123, 0.6)'*/
+var COLORS = ['rgb(134,227,206, 0.6)', 'rgb(136, 185, 153, 0.6)', 'rgb(255,221,148, 0.6)', 'rgb(134,227,206, 0.6)', 'rgb(204,171,216, 0.6)', 'rgb(72, 73, 124, 0.6)'];
 
 class Shape {
 

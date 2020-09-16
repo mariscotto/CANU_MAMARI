@@ -54,7 +54,7 @@ class APM extends React.Component {
     Survey.StylesManager.applyTheme();*/
 
     let json = {
-      locale: "de",
+      locale: "en",
       pages: [
         {
           name: "Schlussfolgerndes Denken_Instruktionen",
@@ -63,7 +63,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_APM_Instruktion",
               html: {
-                de:
+                en:
                   "The following task is a <b>test of perception and logical thinking</b>. An example problem will be used to show you how the test works.<br>The upper part consists of a pattern from which a part is cut off. Look at the pattern and think about how the part must look like, fits the pattern in both <b>horizontal</b> and <b>vertical</b> direction. Select the correct one from the eight options below. Only one of these parts forms a correct answer.<br><br><img src='/images/Item_1.png' width='400' alt='Beispielaufgabe' align='middle'/><br><br>When looking at the example above, it becomes clear that answer option <b>number 4</b> offers the correct solution for both directions (vertical and horizontal).<br><br>You will notice that the following <b>twelve problems</b> are of varying degrees of difficulty and that the same method should always be used to solve both simple and difficult problems.<b>You have as much time as you want to work on the problems -</b> Remember that the accuracy is what counts. Problems are solved one by one and it is not possible to go back to the beginning of the task. Once you have decided on an answer option, click on it."
               }
             }
@@ -88,7 +88,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_1",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -148,7 +148,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_2",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -268,7 +268,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_4",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -328,7 +328,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_5",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -388,7 +388,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_6",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -448,7 +448,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_7",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -508,7 +508,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_8",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -568,7 +568,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_9",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -628,7 +628,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_10",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -688,7 +688,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_11",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -748,7 +748,7 @@ class APM extends React.Component {
               type: "imagepicker",
               name: "APM_12",
               title: {
-                de: " "
+                en: " "
               },
               isRequired: this.state.requiredQ,
               colCount: 4,
@@ -793,10 +793,10 @@ class APM extends React.Component {
       showPrevButton: false,
       showQuestionNumbers: "off",
       pageNextText: {
-        de: "Next"
+        en: "Next"
       },
       completeText: {
-        de: "Next"
+        en: "Next"
       },
       requiredText: ""
     };
