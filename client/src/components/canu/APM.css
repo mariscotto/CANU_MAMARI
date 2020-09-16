@@ -131,7 +131,7 @@
 .sv_p_root{
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
-    height: 73vmin;
+    height: 77%;
 }
 .sv_row{
     height:auto;
