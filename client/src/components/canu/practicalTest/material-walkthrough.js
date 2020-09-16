@@ -209,24 +209,24 @@ function _log(context, message) {
             positionOutOfBounds: positionOutOfBounds
         }, null, 2));
 
-      /* if (scrollTo > 0 && positionMode != 'fixed') {
+      /* if (scrollTo > 0 && positionMode != 'fixed') {*/
             _log('WALK_LOCK', 'Scrolling to ' +scrollTo);
             _log('WALK_SCROLL', 'scrollTo + windowHeight: ' +(scrollTo + windowHeight));
             if (scrollTo + windowHeight > documentHeight && !positionOutOfBounds) scrollTo = documentHeight - windowHeight; // Setting the scroll limit by the document's height
             _log('WALK_LOCK', 'Corrected scroll amount: ' +scrollTo);
 
             $('body,html').animate({
-                scrollTop: scrollTo
+                //scrollTop: scrollTo
             }, WALK_TRANSITION_DURATION, function () {
                 locateCallback();
             });
-        } else {*/
+      /*  } else {
             _log('WALK_LOCK', 'Resetting scroll');
             $('body,html').animate({
                 scrollTop: 0
             }, WALK_TRANSITION_DURATION, function () {
                 locateCallback();
-            });
+            });*/
         //}
 
     }
