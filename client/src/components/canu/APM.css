@@ -6,7 +6,7 @@
     height: 13vh;
 }
 
-.questionnaire-description .wrapper {
+.questionnaire-description .apm-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,6 +43,7 @@
 
 .sv_main {
     margin: 0 auto;
+    height: inherit;
 
 }
 
