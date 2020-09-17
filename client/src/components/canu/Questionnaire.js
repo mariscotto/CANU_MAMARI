@@ -492,7 +492,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group2" type="radio"
-                                                       value={"Less than high school degree"}
+                                                       value={"Less than high school degree (Haupt- oder Realschulabschluss)"}
                                                        onChange={this.onChangeEducationGrade}/>
                                                 <span>Less than high school degree (Haupt- oder Realschulabschluss)</span>
                                             </label>
@@ -500,7 +500,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group2" type="radio"
-                                                       value={"High school degree or equivalent"}
+                                                       value={"High school degree or equivalent (Abitur)"}
                                                        onChange={this.onChangeEducationGrade}/>
                                                 <span>High school degree or equivalent (Abitur)</span>
                                             </label>
@@ -510,7 +510,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Some college but no degree"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Bachelor degree</span>
+                                                <span>Bachelor's degree</span>
                                             </label>
                                         </p>
                                         <p>
@@ -518,13 +518,13 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Associate degree"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Master degree</span>
+                                                <span>Master's degree</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group2" type="radio"
-                                                       value={"Bachelor degree"}
+                                                       value={"Graduate degree (Diplom)"}
                                                        onChange={this.onChangeEducationGrade}/>
                                                 <span>Graduate degree (Diplom)</span>
                                             </label>
@@ -532,9 +532,9 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group2" type="radio"
-                                                       value={"Bachelor degree"}
+                                                       value={"Ph.D."}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Promotion</span>
+                                                <span>Ph.D.</span>
                                             </label>
                                         </p>
                                     </div>
@@ -556,7 +556,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
-                                                       value={"Architecture and Forestry"}
+                                                       value={"Agriculture and Forestry"}
                                                        onChange={this.onChangeJobArea}/>
                                                 <span>Agriculture and Forestry</span>
                                             </label>
@@ -593,7 +593,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
-                                                       value={"Natural Sciences"} onChange={this.onChangeJobArea}/>
+                                                       value={"Medicine & Healthcare"} onChange={this.onChangeJobArea}/>
                                                 <span>Medicine & Healthcare</span>
                                             </label>
                                         </p>
@@ -637,7 +637,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
-                                                       value={"Administration"} onChange={this.onChangeJobArea}/>
+                                                       value={"Other"} onChange={this.onChangeJobArea}/>
                                                 <span>Other</span>
                                             </label>
                                         </p>
