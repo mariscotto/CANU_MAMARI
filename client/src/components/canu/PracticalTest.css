@@ -3,7 +3,6 @@ ul {
 }
 
 h1{
-  font-family: skia;
   font-size: 2.3rem;
   font-weight: 800;
 }
@@ -103,7 +102,6 @@ li {
   text-align: initial;
   /* padding-left: 9%; */
   color: #003333;
-  font-family: skia;
 }
 
 
@@ -395,7 +393,7 @@ p {
   position: absolute;
   display: inline;
   color: #212121;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   text-align: center;
   cursor: pointer;
 }

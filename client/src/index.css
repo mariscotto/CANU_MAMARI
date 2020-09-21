@@ -1,5 +1,16 @@
 /* General Styling */
-@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+/*@import url('https://fonts.googleapis.com/css?family=Work+Sans');*/
+
+@import url('https://fonts.googleapis.com/css2?family=Spinnaker&display=swap');
+/*@font-face {
+  font-family: 'skia';
+  src:url('fonts/Skia/Skia.ttf.woff') format('woff'),
+  url('fonts/Skia/Skia.ttf.svg#Skia') format('svg'),
+  url('fonts/Skia/Skia.ttf.eot'),
+  url('fonts/Skia/Skia.ttf.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}*/
 @font-face {
   font-family: 'skia';
   src:url('fonts/Skia/Skia.ttf.woff') format('woff'),
@@ -14,7 +25,6 @@ html, body, figure, figcaption, ul, li, h1 {
   margin: 0;
   padding: 0;
   border: 0;
-
 }
 
 html {
@@ -27,10 +37,9 @@ body {
   /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif; */
-  font-family: 'skia', "Work Sans", sans-serif !important;
+  font-family: 'Spinnaker', "Work Sans", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-weight: bold;
   overflow: hidden;
   height: inherit;
 }

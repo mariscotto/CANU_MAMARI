@@ -555,7 +555,7 @@ class ThankYou extends React.Component {
                     <div id="congratulations-popup">
                         <h2 id="congratulations-text">Thank you!</h2>
                         <p>Since your data is completely anonymized, we have no possibility to identify your dataset.
-                            If you would like to receive your scores or want us to delete your data, please contact <strong>jonas.bender@tum.de</strong> or <strong>lorenz.prasch@tum.de</strong> with your request and the following identifier:</p>
+                            If you would like to receive your scores or want us to delete your data once the study is completed, please contact <strong>canu.lfe.mw@tum.de</strong> with your request and the following identifier:</p>
                         <p id="session-id">{this.state.VP_id}</p>
                     </div>
             </div>

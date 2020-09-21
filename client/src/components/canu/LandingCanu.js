@@ -21,7 +21,7 @@ class LandingCanu extends React.Component {
     state = {
         link: `/${this.props.match.params.studyid}/${
             this.props.match.params.groupid
-        }/canu/dsgvo`
+        }/canu/practicalTest`
     };
     componentDidMount() {
         var elem = document.getElementById('modal1');
@@ -69,7 +69,7 @@ class LandingCanu extends React.Component {
                                 of
                                 Munich:<br/> Chair of Ergonomics
                             </p>*/}
-                            <h4>Hello participant,</h4>
+                            <h5>Hello participant,</h5>
                             <p>Welcome to the CANU test - thank you for supporting this research!<br/><br/>
                                 This study is part of a master thesis of the TUM Chair of Ergonomics. The subject of this study is a newly developed measuring instrument in creativity research. On the basis of different evaluation methods, a creativity tool will be analyzed. The following test will take approximately <strong>30</strong> minutes and can be performed either on <strong>PC or Tablet devices</strong>.<br/><br/>
                                 Your participation in the study is <strong>voluntary</strong>. If you do not wish to participate or if you later withdraw your consent, you will not suffer any disadvantages.
@@ -80,7 +80,7 @@ class LandingCanu extends React.Component {
                             </p>
                             <h5>Procedure</h5>
                             <p>Your participation in the study is terminated after a <strong>single appointment</strong>. The study takes place completely <strong>online</strong>.
-                                During the experiment, you are asked to fulfill <strong>3 parts</strong>. Firstly, a <strong>Puzzle Task</strong> will be given, where you have to puzzle a certain shape to given instructions. Secondly, a <strong>test for conclusive thinking</strong>, the Raven’s APM will be presented. Lastly, a <strong>questionnaire</strong> will be served to fill in. Including the instructions, a total time expenditure of approx. <strong>30 minutes</strong> can be expected.
+                                During the experiment, you are asked to fulfill <strong>3 parts</strong>. Firstly, a <strong>Puzzle Task</strong> will be given, where you have to puzzle a certain shape to given instructions. Secondly, a <strong>test for conclusive thinking</strong> will be presented. Lastly, a <strong>questionnaire</strong> will be served to fill in. Including the instructions, a total time expenditure of approx. <strong>30 minutes</strong> can be expected.
                             </p>
                             <h5>Data Security</h5>
                             <p>In this study the TUM Chair of Ergonomics is responsible for data processing. The legal basis for the processing of your data is your consent.<br/><br/>
@@ -113,7 +113,7 @@ class LandingCanu extends React.Component {
                                 I was informed in detail about the purpose and the course of the study, the risks of participation and my rights and obligations. I had the opportunity to ask questions.
                                 These were answered satisfactorily and completely. It was pointed out to me that my participation is voluntary, and I have the right to withdraw my consent at any time without giving reasons and without incurring any disadvantages.
                                 I hereby agree to participate in the above-mentioned study and to the data processing as described in the respective section.</p>
-                            <p>Please contact jonas.bender@tum.de with any questions or comments.<br/><br/> Technical University
+                            <p>Please contact canu.lfe.mw@tum.de with any questions or comments.<br/><br/> Technical University
                             of Munich,<br/> Chair of Ergonomics</p>
                         </div>
                     </div>

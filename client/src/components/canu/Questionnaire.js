@@ -657,7 +657,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                             <div id="form">
                                 <div className="row">
                                     <div className="col s12">
-                                        <div className="section-title">I felt that I needed to be creative to solve the practical task well</div>
+                                        <div className="section-title">I felt that I needed to be creative to solve the Puzzle Task well</div>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group0" type="radio" value={0}

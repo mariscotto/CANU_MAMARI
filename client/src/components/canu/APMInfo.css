@@ -1,0 +1,35 @@
+
+#apm-info{
+    overflow:hidden;
+}
+#apm-info .modal-header{
+    display: flex;
+    height: 14vh;
+    padding: 2% 0 0 2%;
+    background-color: #F3F7F7;
+    box-shadow: 0 0 2px 1px rgba(0,0,0,0.16)
+}
+#apm-info .modal-header h4 {
+    align-self: flex-end;
+    font-weight: 600;
+}
+
+#apm-info .text-container{
+    padding: 3% 2% 0 3%;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    height: 73vmin;
+}
+#apm-info .modal-footer{
+    position: absolute;
+    bottom: 0;
+    height: auto;
+    padding:1.5%;
+}
+#apm-info li{
+    width: unset !important;
+    height: unset !important;
+    /* margin: 0.5px; */
+    border: none !important;
+    background: none !important;
+}
