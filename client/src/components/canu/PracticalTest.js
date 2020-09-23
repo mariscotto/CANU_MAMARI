@@ -40,9 +40,9 @@ class PracticalTest extends React.Component {
         link: `/${this.props.match.params.studyid}/${
             this.props.match.params.groupid
         }/canu/apm`,
-        startTime:undefined,
+        startTime: undefined,
         solutions: [],
-        timeStamps:[],
+        timeStamps: [],
         motivated: undefined,
     };
     line = 100;
@@ -64,29 +64,72 @@ class PracticalTest extends React.Component {
     };
 
     async postSolutions() {
-        return await Promise.all([this.state.solutions.map(async (solution, index) => {
-            const usefulness = this.calculateUsefulness(solution);
-            var minSolution = this.beautifySolution(this.deepCloneArray(solution));
-            const solutionObject = {
-                solution: this.prepareArrayForPost(minSolution),
-                usefulness_score: usefulness,
-                motivated:this.state.motivated,
-                timestamp:this.state.timeStamps[index],
-                timePassedMil: Math.abs(this.state.timeStamps[index]-this.state.startTime)
-            };
+        const usefulness = this.calculateUsefulness(this.state.solutions[0]);
+        var minSolution = this.beautifySolution(this.deepCloneArray(this.state.solutions[0]));
+        const solutionObject = {
+            solution: this.prepareArrayForPost(minSolution),
+            usefulness_score: usefulness,
+            motivated: this.state.motivated,
+            timestamp: this.state.timeStamps[0],
+            timePassedMil: Math.abs(this.state.timeStamps[0] - this.state.startTime)
+        };
+        axios.post(
+            `/api/solutionCanu/${this.props.match.params.studyid}/${
+                this.props.match.params.groupid
+            }`,
+            solutionObject
+        ).then(res => {
+            var restSolutions = this.state.solutions.slice(1, this.state.solutions.length);
+            return Promise.all([restSolutions.map(async (solution, index) => {
+                const usefulness = this.calculateUsefulness(solution);
+                var minSolution = this.beautifySolution(this.deepCloneArray(solution));
+                const solutionObject = {
+                    solution: this.prepareArrayForPost(minSolution),
+                    usefulness_score: usefulness,
+                    motivated: this.state.motivated,
+                    timestamp: this.state.timeStamps[index],
+                    timePassedMil: Math.abs(this.state.timeStamps[index] - this.state.startTime)
+                };
 
-            try {
-                const res = await axios.post(
-                    `/api/solutionCanu/${this.props.match.params.studyid}/${
-                        this.props.match.params.groupid
-                    }`,
-                    solutionObject
-                );
-                console.log(res.data);
-            } catch (err) {
+                try {
+                    const res = await axios.post(
+                        `/api/solutionCanu/${this.props.match.params.studyid}/${
+                            this.props.match.params.groupid
+                        }`,
+                        solutionObject
+                    );
+                    console.log(res.data);
+                } catch (err) {
+                    console.log(err.response);
+                }
+            })]);
+        })
+            .catch(err => {
                 console.log(err.response);
-            }
-        })]);
+            });
+        /* return await Promise.all([this.state.solutions.map(async (solution, index) => {
+             const usefulness = this.calculateUsefulness(solution);
+             var minSolution = this.beautifySolution(this.deepCloneArray(solution));
+             const solutionObject = {
+                 solution: this.prepareArrayForPost(minSolution),
+                 usefulness_score: usefulness,
+                 motivated:this.state.motivated,
+                 timestamp:this.state.timeStamps[index],
+                 timePassedMil: Math.abs(this.state.timeStamps[index]-this.state.startTime)
+             };
+
+             try {
+                 const res = await axios.post(
+                     `/api/solutionCanu/${this.props.match.params.studyid}/${
+                         this.props.match.params.groupid
+                     }`,
+                     solutionObject
+                 );
+                 console.log(res.data);
+             } catch (err) {
+                 console.log(err.response);
+             }
+         })]);*/
     }
 
     componentDidMount() {
@@ -189,7 +232,7 @@ class PracticalTest extends React.Component {
         if (this.line < 0) {
             this.line = 0;
         }
-        if(document.getElementById('circle-fill')) {
+        if (document.getElementById('circle-fill')) {
             document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', this.line + " 100");
             this.countDown((currentTime - this.startTime) / 1000);
             this.startTime = currentTime;
@@ -642,21 +685,22 @@ class PracticalTest extends React.Component {
         instance.open();
     }
 
-    closePopup(event){
+    closePopup(event) {
         var elem = document.getElementById(event.currentTarget.offsetParent.id);
         var instance = M.Modal.init(elem, {dismissible: false});
         instance.close();
     }
+
     setStartTime() {
         this.state.startTime = new Date();
     }
 
     render() {
         const randomNum = Math.round(Math.random());
-        randomNum === 1 ? this.state.motivated = false : this.state.motivated = true;
+        this.state.motivated = randomNum === 1 ? false : true;
         return (
             <div style={{height: "100%"}}>
-                <Countdown2 practicalTest={this} motivated={this.state.motivated} />
+                <Countdown2 practicalTest={this} motivated={this.state.motivated}/>
                 <Impressum/>
                 <PracticalTestIntroduction motivated={this.state.motivated} practicalTest={this}/>
                 <div id="practical-test-finish" className="modal practical-info">

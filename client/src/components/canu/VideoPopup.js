@@ -14,6 +14,16 @@ class VideoPopup extends React.Component {
     componentDidMount() {
         var vid = document.getElementById("video");
         vid.onended = function() {
+            //vid.abort();
+            var x = 0;
+            var intervalID = setInterval(function () {
+                    if(!document.getElementById("video").paused){
+                        document.getElementById("video").pause();
+                    }
+                if (++x === 20) {
+                    clearInterval(intervalID);
+                }
+            }, 200);
             var elem2 = document.getElementById('video-container');
             var instance2 = M.Modal.init(elem2,{dismissible:false});
             instance2.close();
@@ -36,7 +46,7 @@ class VideoPopup extends React.Component {
             <div>
                 <div id="video-container" className="modal">
                     <div className="modal-content">
-                        <video id="video" controls={true}>
+                        <video id="video" controls={true} loop={false}>
                             <source src="/ressources/motivation.mp4" type="video/mp4"></source>
                         </video>
                     </div>

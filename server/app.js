@@ -69,7 +69,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({
   name: 'VP',
   secret: 'visitacion31',
-  //cookie:{expires: new Date(Date.now()+1*3600*1000)},
+  //cookie:{expires: new Date(Date.now()+3600*1000)},
+  cookie:{maxAge: 3600*1000},
   resave: false,
   saveUninitialized: true,
   store: new FileStore()
