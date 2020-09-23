@@ -52,7 +52,9 @@ solutionCanuRouter.route('/:studyId/:groupId')
                                         solution: solution._id,
                                         VP_id: req.sessionID,
                                         study: req.params.studyId,
-                                        group: req.params.groupId
+                                        group: req.params.groupId,
+                                        timestamp: req.body.timestamp,
+                                        timePassedMil: req.body.timePassedMil
                                     }).then((solution) => {
                                         Study.findById(req.params.studyId)
                                             .then(study => {
@@ -82,7 +84,9 @@ solutionCanuRouter.route('/:studyId/:groupId')
                         solution: solution._id,
                         VP_id: req.sessionID,
                         study: req.params.studyId,
-                        group: req.params.groupId
+                        group: req.params.groupId,
+                        timestamp: req.body.timestamp,
+                        timePassedMil: req.body.timePassedMil
                     })
                         .then((solution) => {
                             // Referenz in Study anlegen

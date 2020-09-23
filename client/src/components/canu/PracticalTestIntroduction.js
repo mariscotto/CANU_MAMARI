@@ -18,6 +18,7 @@ class PracticalTestIntroduction extends React.Component {
         super(props);
         this.startIntro = this.startIntro.bind(this);
         this.openStartIntro = this.openStartIntro.bind(this);
+        this.setStartTime = this.setStartTime.bind(this);
     }
 
     // storing link to tasks
@@ -131,6 +132,9 @@ class PracticalTestIntroduction extends React.Component {
         instance.open();
     }
 
+    setStartTime(){
+        this.props.practicalTest.setStartTime();
+    }
     startCountdown() {
         var elem2 = document.getElementById('start-popup');
         var instance2 = M.Modal.init(elem2, {dismissible: false});
@@ -195,8 +199,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Solutions</h1>
-                            <p>Your goal is to find as many creative ways as possible to build a square with the puzzle
-                                pieces.</p>
+                            <p>Your goal is to find as many ways as possible to form a square (or something close to a square) with the puzzle pieces.</p>
                             <a href="#!" onMouseDown={this.openStartIntro}
                                className="waves-effect waves-light btn-large modal-action modal-close">Let's go</a>
                         </div>
@@ -209,8 +212,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Solutions</h1>
-                            <p>Your goal is to find as many creative ways as possible to build a square with the puzzle
-                                pieces. To boost your creativity, a small video will be played beforehand.</p>
+                            <p>Your goal is to find as many ways as possible to form a square (or something close to a square) with the puzzle pieces. To boost your creativity, a small video will be played beforehand.</p>
                             <a href="#!" onMouseDown={this.startVideo}
                                className="waves-effect waves-light btn-large modal-action modal-close">Let's go</a>
                         </div>
@@ -237,7 +239,7 @@ class PracticalTestIntroduction extends React.Component {
                         <div className="text-container">
                             <h1>Ready!</h1>
                             <p>You are set to get creative - if you are ready, hit start.</p>
-                            <a id="start-practical-test" href="#!"
+                            <a id="start-practical-test" href="#!" onMouseDown={this.setStartTime}
                                className="waves-effect waves-light btn-large modal-action modal-close">Start</a>
                         </div>
                     </div>

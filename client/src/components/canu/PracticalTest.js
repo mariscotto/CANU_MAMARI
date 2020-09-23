@@ -40,7 +40,9 @@ class PracticalTest extends React.Component {
         link: `/${this.props.match.params.studyid}/${
             this.props.match.params.groupid
         }/canu/apm`,
+        startTime:undefined,
         solutions: [],
+        timeStamps:[],
         motivated: undefined,
     };
     line = 100;
@@ -62,12 +64,14 @@ class PracticalTest extends React.Component {
     };
 
     async postSolutions() {
-        return await Promise.all([this.state.solutions.map(async (solution) => {
+        return await Promise.all([this.state.solutions.map(async (solution, index) => {
             const usefulness = this.calculateUsefulness(solution);
             var minSolution = this.beautifySolution(this.deepCloneArray(solution));
             const solutionObject = {
                 solution: this.prepareArrayForPost(minSolution),
-                usefulness_score: usefulness
+                usefulness_score: usefulness,
+                timestamp:this.state.timeStamps[index],
+                timePassedMil: Math.abs(this.state.timeStamps[index]-this.state.startTime)
             };
 
             try {
@@ -169,6 +173,7 @@ class PracticalTest extends React.Component {
         if (!this.running) {
             $('#circle-fill').css('transition', 'stroke-dasharray 0.1s');
             this.startTime = new Date().getTime();
+            this.state.startTime = new Date();
             this.timerID = setInterval(this.timer.bind(this), 100);
             this.running = true;
         }
@@ -183,9 +188,11 @@ class PracticalTest extends React.Component {
         if (this.line < 0) {
             this.line = 0;
         }
-        document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', this.line + " 100");
-        this.countDown((currentTime - this.startTime) / 1000);
-        this.startTime = currentTime;
+        if(document.getElementById('circle-fill')) {
+            document.getElementById('circle-fill').setAttributeNS(null, 'stroke-dasharray', this.line + " 100");
+            this.countDown((currentTime - this.startTime) / 1000);
+            this.startTime = currentTime;
+        }
         //Keep the circle from underfilling, creates a visual glitch
     }
 
@@ -254,6 +261,7 @@ class PracticalTest extends React.Component {
     submitSolution() {
         var boardGrid = window.view.game.board.grid;
         var solutions = this.state.solutions;
+        var timeStamps = this.state.timeStamps;
         var minifiedGrid;
         //console.log(this.compareSolution(boardGrid));
         if (this.isPieceInGrid(boardGrid)) {
@@ -264,11 +272,13 @@ class PracticalTest extends React.Component {
                 minifiedGrid = this.beautifySolution(this.deepCloneArray(boardGrid));
                 this.buildSolutionGrid(minifiedGrid);
                 solutions.push(this.deepCloneArray(boardGrid));
+                timeStamps.push(new Date());
                 var rotatedGrid = boardGrid;
                 if (this.shapeInGridRotatable(boardGrid)) {
                     for (var i = 0; i < 3; i++) {
                         rotatedGrid = this.rotateSolutionGrid(rotatedGrid);
                         solutions.push(this.deepCloneArray(rotatedGrid));
+                        timeStamps.push(new Date());
                         minifiedGrid = this.beautifySolution(this.deepCloneArray(rotatedGrid));
                         //this.buildSolutionGrid(minifiedGrid);
                     }
@@ -636,15 +646,18 @@ class PracticalTest extends React.Component {
         var instance = M.Modal.init(elem, {dismissible: false});
         instance.close();
     }
+    setStartTime() {
+        this.state.startTime = new Date();
+    }
 
     render() {
         const randomNum = Math.round(Math.random());
         randomNum === 1 ? this.state.motivated = false : this.state.motivated = true;
         return (
             <div style={{height: "100%"}}>
-                <Countdown2 practicalTest={this} motivated={this.state.motivated}/>
+                <Countdown2 practicalTest={this} motivated={this.state.motivated} />
                 <Impressum/>
-                <PracticalTestIntroduction motivated={this.state.motivated}/>
+                <PracticalTestIntroduction motivated={this.state.motivated} practicalTest={this}/>
                 <div id="practical-test-finish" className="modal practical-info">
                     <div className="modal-content">
                         <div className="piece-container">

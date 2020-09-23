@@ -508,7 +508,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group2" type="radio"
-                                                       value={"Some college but no degree"}
+                                                       value={"Bachelor's degree"}
                                                        onChange={this.onChangeEducationGrade}/>
                                                 <span>Bachelor's degree</span>
                                             </label>
@@ -516,7 +516,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group2" type="radio"
-                                                       value={"Associate degree"}
+                                                       value={"Master's degree"}
                                                        onChange={this.onChangeEducationGrade}/>
                                                 <span>Master's degree</span>
                                             </label>

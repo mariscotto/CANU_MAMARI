@@ -425,6 +425,8 @@ studyRouter.route('/:userId/:studyId/download')
                                 group: group_name,
                                 novelty_score: solutions[i].solution.novelty_score,
                                 usefulness_score: solutions[i].solution.usefulness_score,
+                                timestamp: solutions[i].timestamp,
+                                timePassedMil: solutions[i].timePassedMil,
                                 counter: solutions[i].solution.counter,
                                 study: solutions[i].study.study_name,
                                 VP_id: solutions[i].VP_id
@@ -506,6 +508,7 @@ studyRouter.route('/:userId/:studyId/download')
                                 // Erstellen eines Datensatzes zu je einem Teinehmer
                                 var csv = new Object({
                                     Participant: questionnaires[i].VP_id,
+                                    Finished:questionnaires[i].createdAt,
                                     Age: questionnaires[i].age,
                                     Gender: questionnaires[i].gender,
                                     Education_grade: questionnaires[i].education_grade,
@@ -534,6 +537,8 @@ studyRouter.route('/:userId/:studyId/download')
                                     csv["solution_"+index] = solution.solution;
                                     csv["solution_"+index+"_novScore"] = solution.novelty_score;
                                     csv["solution_"+index+"_usefulScore"] = solution.usefulness_score;
+                                    csv["solution_"+index+"_timestamp"] = solution.timestamp;
+                                    csv["solution_"+index+"_timePassedMil"] = solution.timePassedMil;
                                     csv["solution_"+index+"_counter"] = solution.counter;
                                 });
                                 // Erstellen des gesammten AusgabeArrays

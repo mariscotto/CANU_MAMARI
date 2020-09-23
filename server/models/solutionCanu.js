@@ -40,10 +40,13 @@ var SolutionCanuAllSchema = new Schema({
         },
         group_name: {
             type: String
+        },
+        timestamp:{
+            type: Date
+        },
+        timePassedMil:{
+            type: Number
         }
-    },
-    {
-        timestamps: true
     }
 );
 
