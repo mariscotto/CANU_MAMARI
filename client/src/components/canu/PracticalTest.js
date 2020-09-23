@@ -70,6 +70,7 @@ class PracticalTest extends React.Component {
             const solutionObject = {
                 solution: this.prepareArrayForPost(minSolution),
                 usefulness_score: usefulness,
+                motivated:this.state.motivated,
                 timestamp:this.state.timeStamps[index],
                 timePassedMil: Math.abs(this.state.timeStamps[index]-this.state.startTime)
             };

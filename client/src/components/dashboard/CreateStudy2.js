@@ -22,8 +22,8 @@ class CreateStudy2 extends React.Component {
         open: false,
         study_name: '',
         study_description: '',
-        groups: [{ group_name: 'notMotivated', motivated: false}, { group_name: 'motivated', motivated: true}],
-        group_count: 2
+        groups: [{ group_name: '' }],
+        group_count: 1
     }
 
     // Change group count value
@@ -112,8 +112,8 @@ class CreateStudy2 extends React.Component {
             open: false,
             study_name: '',
             study_description: '',
-            groups: [{ group_name: 'notMotivated', motivation: false}, { group_name: 'motivated', motivation: true}],
-            group_count: 2
+            groups: [{ group_name: '' }],
+            group_count: 1
         })
     };
 
@@ -167,7 +167,7 @@ class CreateStudy2 extends React.Component {
                                 onChange={this.onChangeStudyDescription}
                                 fullWidth
                             />
-                            {/* <DialogContentText style={{ marginTop: 10, marginBottom: 10 }}>
+                            <DialogContentText style={{ marginTop: 10, marginBottom: 10 }}>
                                 Select the number of test groups
                             </DialogContentText>
 
@@ -189,7 +189,6 @@ class CreateStudy2 extends React.Component {
                                 </Grid>
                             </Grid>
                             {this.createGroupInputFields()}
-*/}
                         </form>
 
                     </DialogContent>

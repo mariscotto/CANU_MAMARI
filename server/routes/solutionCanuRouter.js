@@ -53,6 +53,7 @@ solutionCanuRouter.route('/:studyId/:groupId')
                                         VP_id: req.sessionID,
                                         study: req.params.studyId,
                                         group: req.params.groupId,
+                                        motivated: req.body.motivated,
                                         timestamp: req.body.timestamp,
                                         timePassedMil: req.body.timePassedMil
                                     }).then((solution) => {
@@ -85,6 +86,7 @@ solutionCanuRouter.route('/:studyId/:groupId')
                         VP_id: req.sessionID,
                         study: req.params.studyId,
                         group: req.params.groupId,
+                        motivated: req.body.motivated,
                         timestamp: req.body.timestamp,
                         timePassedMil: req.body.timePassedMil
                     })

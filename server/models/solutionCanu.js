@@ -38,6 +38,9 @@ var SolutionCanuAllSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Group'
         },
+        motivated:{
+            type: Boolean
+        },
         group_name: {
             type: String
         },

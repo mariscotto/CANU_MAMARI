@@ -425,6 +425,7 @@ studyRouter.route('/:userId/:studyId/download')
                                 group: group_name,
                                 novelty_score: solutions[i].solution.novelty_score,
                                 usefulness_score: solutions[i].solution.usefulness_score,
+                                motivated: solutions[i].motivated,
                                 timestamp: solutions[i].timestamp,
                                 timePassedMil: solutions[i].timePassedMil,
                                 counter: solutions[i].solution.counter,
@@ -533,6 +534,7 @@ studyRouter.route('/:userId/:studyId/download')
                                 solutions_aktuell.forEach((solution, index) => {
                                     if(index === 0){
                                         csv["group"] = solution.group;
+                                        csv["motivated"] = solution.motivated;
                                     }
                                     csv["solution_"+index] = solution.solution;
                                     csv["solution_"+index+"_novScore"] = solution.novelty_score;
