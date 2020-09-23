@@ -535,6 +535,7 @@ studyRouter.route('/:userId/:studyId/download')
                                     if(index === 0){
                                         csv["group"] = solution.group;
                                         csv["motivated"] = solution.motivated;
+                                        csv["practicalTestStart"] = new Date(solution.timestamp.getTime() - solution.timePassedMil).toISOString();
                                     }
                                     csv["solution_"+index] = solution.solution;
                                     csv["solution_"+index+"_novScore"] = solution.novelty_score;
