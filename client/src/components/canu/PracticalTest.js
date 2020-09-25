@@ -64,72 +64,96 @@ class PracticalTest extends React.Component {
     };
 
     async postSolutions() {
-        const usefulness = this.calculateUsefulness(this.state.solutions[0]);
-        var minSolution = this.beautifySolution(this.deepCloneArray(this.state.solutions[0]));
-        const solutionObject = {
-            solution: this.prepareArrayForPost(minSolution),
-            usefulness_score: usefulness,
-            motivated: this.state.motivated,
-            timestamp: this.state.timeStamps[0],
-            timePassedMil: Math.abs(this.state.timeStamps[0] - this.state.startTime)
-        };
-        axios.post(
-            `/api/solutionCanu/${this.props.match.params.studyid}/${
-                this.props.match.params.groupid
-            }`,
-            solutionObject
-        ).then(res => {
-            var restSolutions = this.state.solutions.slice(1, this.state.solutions.length);
-            return Promise.all([restSolutions.map(async (solution, index) => {
-                const usefulness = this.calculateUsefulness(solution);
-                var minSolution = this.beautifySolution(this.deepCloneArray(solution));
+        const postSolutions = this.state.solutions.map((solution, index) => {
+            const usefulness = this.calculateUsefulness(solution);
+            const minSolution = this.beautifySolution(this.deepCloneArray(solution))
+            const timeStamp = this.state.timeStamps[index]
+            return {
+                solution: this.prepareArrayForPost(minSolution),
+                usefulness_score: usefulness,
+                motivated: this.state.motivated,
+                timestamp: timeStamp,
+                timePassedMil: Math.abs(timeStamp - this.state.startTime)
+            };
+        });
+        try {
+            const result = await axios.post(
+                `/api/solutionCanu/${this.props.match.params.studyid}/${
+                    this.props.match.params.groupid
+                }`,
+                {solutions: postSolutions}
+            )
+            console.log(result.data);
+        } catch (err) {
+            console.log(err);
+        }
+
+        /*
+                const usefulness = this.calculateUsefulness(this.state.solutions[0]);
+                const minSolution = this.beautifySolution(this.deepCloneArray(this.state.solutions[0]));
                 const solutionObject = {
                     solution: this.prepareArrayForPost(minSolution),
                     usefulness_score: usefulness,
                     motivated: this.state.motivated,
-                    timestamp: this.state.timeStamps[index],
-                    timePassedMil: Math.abs(this.state.timeStamps[index] - this.state.startTime)
+                    timestamp: this.state.timeStamps[0],
+                    timePassedMil: Math.abs(this.state.timeStamps[0] - this.state.startTime)
                 };
-
-                try {
-                    const res = await axios.post(
-                        `/api/solutionCanu/${this.props.match.params.studyid}/${
-                            this.props.match.params.groupid
-                        }`,
-                        solutionObject
-                    );
-                    console.log(res.data);
-                } catch (err) {
+                axios.post(
+                    `/api/solutionCanu/${this.props.match.params.studyid}/${
+                        this.props.match.params.groupid
+                    }`,
+                    solutionObject
+                ).then(res => {
+                    var restSolutions = this.state.solutions.slice(1, this.state.solutions.length);
+                    return Promise.all([restSolutions.map(async (solution, index) => {
+                        const usefulness = this.calculateUsefulness(solution);
+                        var minSolution = this.beautifySolution(this.deepCloneArray(solution));
+                        const solutionObject = {
+                            solution: this.prepareArrayForPost(minSolution),
+                            usefulness_score: usefulness,
+                            motivated: this.state.motivated,
+                            timestamp: this.state.timeStamps[index],
+                            timePassedMil: Math.abs(this.state.timeStamps[index] - this.state.startTime)
+                        };
+                        try {
+                            const res = await axios.post(
+                                `/api/solutionCanu/${this.props.match.params.studyid}/${
+                                    this.props.match.params.groupid
+                                }`,
+                                solutionObject
+                            );
+                            console.log(res.data);
+                        } catch (err) {
+                            console.log(err.response);
+                        }
+                    })]);
+                }).catch(err => {
                     console.log(err.response);
-                }
-            })]);
-        })
-            .catch(err => {
-                console.log(err.response);
-            });
-        /* return await Promise.all([this.state.solutions.map(async (solution, index) => {
-             const usefulness = this.calculateUsefulness(solution);
-             var minSolution = this.beautifySolution(this.deepCloneArray(solution));
-             const solutionObject = {
-                 solution: this.prepareArrayForPost(minSolution),
-                 usefulness_score: usefulness,
-                 motivated:this.state.motivated,
-                 timestamp:this.state.timeStamps[index],
-                 timePassedMil: Math.abs(this.state.timeStamps[index]-this.state.startTime)
-             };
+                });
+                return await Promise.all([this.state.solutions.map(async (solution, index) => {
+                    const usefulness = this.calculateUsefulness(solution);
+                    var minSolution = this.beautifySolution(this.deepCloneArray(solution));
+                    const solutionObject = {
+                        solution: this.prepareArrayForPost(minSolution),
+                        usefulness_score: usefulness,
+                        motivated: this.state.motivated,
+                        timestamp: this.state.timeStamps[index],
+                        timePassedMil: Math.abs(this.state.timeStamps[index] - this.state.startTime)
+                    };
 
-             try {
-                 const res = await axios.post(
-                     `/api/solutionCanu/${this.props.match.params.studyid}/${
-                         this.props.match.params.groupid
-                     }`,
-                     solutionObject
-                 );
-                 console.log(res.data);
-             } catch (err) {
-                 console.log(err.response);
-             }
-         })]);*/
+                    try {
+                        const res = await axios.post(
+                            `/api/solutionCanu/${this.props.match.params.studyid}/${
+                                this.props.match.params.groupid
+                            }`,
+                            solutionObject
+                        );
+                        console.log(res.data);
+                    } catch (err) {
+                        console.log(err.response);
+                    }
+                })]);
+        */
     }
 
     componentDidMount() {

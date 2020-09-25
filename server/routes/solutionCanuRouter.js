@@ -25,6 +25,17 @@ solutionCanuRouter.route('/:studyId/:groupId')
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.send(req.sessionID);
+                /*if (req.session) {
+                    req.session.destroy((err) => {
+                        if (err) {
+                            next(err)
+                        } else {
+                            console.log("trigger clear");
+                            res.clearCookie('connect.sid');
+                            res.redirect('/')
+                        }
+                    })
+                }*/
             }, (err) => next(err))
 
             .catch(err => next(err));
@@ -33,18 +44,19 @@ solutionCanuRouter.route('/:studyId/:groupId')
         //Welcher Aufagabentyp ?
         // Im Fall von "Neue_Wörter" alphabetisches Ordnen in einen Array der Lösungswörter
         // Abgleich mit Datenbank Solutions
-        Solution.findOne({ $and: [{ solution: req.body.solution }] })
-            .then((solution) => {
-                // Im Fall einer neuen Lösung
-                if (!solution) {
-                    // Erzeugen eines Eintrages in Solution
-                    Solution.create({
-                        solution: req.body.solution,
-                        novelty_score: 1,
-                        usefulness_score: req.body.usefulness_score,
-                        counter: 1,
-                    })
-                        .then((solution) => {
+        const addedSolutions = []
+        return Promise.all([
+            req.body.solutions.map((solutionEntry) => {
+                return Solution.findOne({$and: [{solution: solutionEntry.solution}]}).then((solution) => {
+                    // Im Fall einer neuen Lösung
+                    if (!solution) {
+                        // Erzeugen eines Eintrages in Solution
+                        return Solution.create({
+                            solution: solutionEntry.solution,
+                            novelty_score: 1,
+                            usefulness_score: solutionEntry.usefulness_score,
+                            counter: 1,
+                        }).then((solution) => {
                             //Erzeugen eines Eintrages in SolutionAll
                             let createSolutionAll = function () {
                                 return new Promise(function (resolve, reject) {
@@ -53,69 +65,75 @@ solutionCanuRouter.route('/:studyId/:groupId')
                                         VP_id: req.sessionID,
                                         study: req.params.studyId,
                                         group: req.params.groupId,
-                                        motivated: req.body.motivated,
-                                        timestamp: req.body.timestamp,
-                                        timePassedMil: req.body.timePassedMil
+                                        motivated: solutionEntry.motivated,
+                                        timestamp: solutionEntry.timestamp,
+                                        timePassedMil: solutionEntry.timePassedMil
                                     }).then((solution) => {
                                         Study.findById(req.params.studyId)
                                             .then(study => {
                                                 study.solutions.push(solution._id)
                                                 study.save();
-                                                resolve();
+                                                return resolve();
                                             }, err => next(err))
                                     }, err => next(err))
                                 })
                             }
                             //Aktualisieren des Neuheitswertes der anderen Lösungen zu diesem Task
                             //Reihenfolge beachten!! Eintragen in Solutions und SolutionsAll muss vor updateNeu beendet sein
-                            createSolutionAll().then(() => {
-                                //updateNeu(solution, req.body)
-                            }).then(() => {
-                                // Rückmeldung
-                                res.statusCode = 200;
-                                res.setHeader('Content-Type', 'application/json');
-                                res.json(solution);
-                            }, err => next(err));
+                            return createSolutionAll().then(() => {
+                                addedSolutions.push(solution)
+                            });
+                            //     .then(() => {
+                            //     //updateNeu(solution, req.body)
+                            // }).then(() => {
+                            //     // Rückmeldung
+                            //     res.statusCode = 200;
+                            //     res.setHeader('Content-Type', 'application/json');
+                            //     res.json(solution);
+                            // }, err => next(err));
                         }, err => next(err));
-                }
-                else {
-                    // Im Falle einer bereits existierenden Lösung:
-                    // Erzeugen eines Eintrages in SolutionAll
-                    SolutionAll.create({
-                        solution: solution._id,
-                        VP_id: req.sessionID,
-                        study: req.params.studyId,
-                        group: req.params.groupId,
-                        motivated: req.body.motivated,
-                        timestamp: req.body.timestamp,
-                        timePassedMil: req.body.timePassedMil
-                    })
-                        .then((solution) => {
+                    } else {
+                        // Im Falle einer bereits existierenden Lösung:
+                        // Erzeugen eines Eintrages in SolutionAll
+                        return SolutionAll.create({
+                            solution: solution._id,
+                            VP_id: req.sessionID,
+                            study: req.params.studyId,
+                            group: req.params.groupId,
+                            motivated: solutionEntry.motivated,
+                            timestamp: solutionEntry.timestamp,
+                            timePassedMil: solutionEntry.timePassedMil
+                        }).then((solution) => {
+                            const promises = []
                             // Referenz in Study anlegen
-                            Study.findById(req.params.studyId)
-                                .then(study => {
-                                    study.solutions.push(solution._id);
-                                    study.save();
-                                }, err => next(err))
+                            promises.push(Study.findById(req.params.studyId).then(study => {
+                                study.solutions.push(solution._id);
+                                study.save();
+                            }, err => next(err)))
 
                             // Aktualisieren der Werte "neu" und "counter" in Solutions und damit auch in SolutionsAll
                             // Funktion "actualizeSolution" siehe unten
-                            actualizeSolutions(solution, req.body, (solution) => {
+                            promises.push(actualizeSolutions(solution, solutionEntry, (solution) => {
                                 //Rückmeldung über den Erfolg der Aktion
                                 if (!solution) {
-                                    err = new Error('solution ' + req.body.solution + ' could not be actualized');
+                                    err = new Error('solution ' + solutionEntry + ' could not be actualized');
                                     err.status = 404;
                                     return next(err);
+                                } else {
+                                    addedSolutions.push(solution)
                                 }
-                                else {
-                                    res.statusCode = 200;
-                                    res.setHeader('Content-Type', 'application/json');
-                                    res.json(solution);
-                                }
-                            }, err => next(err));
+                            }, err => next(err)));
+
+                            return Promise.all(promises)
                         }, err => next(err));
-                }
-            }, err => next(err))
+                    }
+                }, err => next(err))
+            })
+        ]).then(() => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(addedSolutions);
+        });
     });
 
 // Ausgabe aller Tasks vom Typ "Tetris" zu einer Studie
@@ -128,8 +146,7 @@ solutionCanuRouter.route('/canu/:studyId/:groupId')
                 for (i = 0; i < study.tasks.length; i++) {
                     if (study.tasks[i].task_type == 'Tetris') {
                         blocks.push(study.tasks[i])
-                    }
-                    else {
+                    } else {
                         continue;
                     }
                 }
@@ -140,8 +157,11 @@ solutionCanuRouter.route('/canu/:studyId/:groupId')
             .catch(err => next(err));
     });
 
-
-
+solutionCanuRouter.route('/clearCookie')
+    .get((req, res, next) => {
+        res.clearCookie('VP');
+        res.send('Cookie cleared');
+    });
 
 
 solutionCanuRouter.route('/updateNovelty')
@@ -152,8 +172,7 @@ solutionCanuRouter.route('/updateNovelty')
                 err = new Error('solution ' + req.body.solution + ' could not be actualized');
                 err.status = 404;
                 return next(err);
-            }
-            else {
+            } else {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(solution);
@@ -174,11 +193,11 @@ function updateSolutionNovelty(req, body, callback) {
                 .then(solutions => {
                     if (solutions != null) {
                         solutions.forEach(function (solution) {
-                            if(solution.counter !== 1) {
+                            if (solution.counter !== 1) {
                                 solution.novelty_score = 1 - (solution.counter / N_max);
                                 // Runden auf fünf Nachkommastellen
                                 solution.novelty_score = Math.round((solution.novelty_score * 100)) / 100;
-                            } else{
+                            } else {
                                 solution.novelty_score = 1;
                             }
                             // Speichern
@@ -209,9 +228,6 @@ function updateSolutionNovelty(req, body, callback) {
 };
 
 
-
-
-
 // Aktualisiert in Solutions den Neuheitswert der anderen Lösungen bei neuer Lösung
 let updateNeu = function (solution, body) {
     // Zählen aller Einträge zu aktuellem Task in SolutionsAll
@@ -229,8 +245,7 @@ let updateNeu = function (solution, body) {
                             // Speichern des neuen Wertes
                             item.save();
                         })
-                    }
-                    else {
+                    } else {
                         return;
                     }
                 })
@@ -243,14 +258,15 @@ function actualizeSolutions(solution, body, callback, next) {
     //solution.counter = solution.counter + 1;
     //console.log(solution);
     // Zählen aller jemals eingegangenen Lösungen zur aktuellen Aufgabe
-    SolutionAll.countDocuments()
+    return SolutionAll.countDocuments()
         .then((N_max) => {
+            const promises = []
             //Aktualisierung des Neuheitswertes dieser Lösung, Berechnung linear
-           // Solution.find({"_id": solution.solution}/*ref in SolutionsALl*/)
-            Solution.findById(solution.solution /*ref in SolutionsALl*/)
+            // Solution.find({"_id": solution.solution}/*ref in SolutionsALl*/)
+            promises.push(Solution.findById(solution.solution /*ref in SolutionsALl*/)
                 .then(solution => {
                     solution.counter += 1;
-                   // solution.novelty_score = 1 - (solution.counter / N_max);
+                    // solution.novelty_score = 1 - (solution.counter / N_max);
                     // Runden auf fünf Nachkommastellen
                     //solution.novelty_score = Math.round((solution.novelty_score * 100)) / 100;
                     // Speichern
@@ -258,9 +274,9 @@ function actualizeSolutions(solution, body, callback, next) {
                         .then(solution => {
                             callback(solution)
                         });
-                })
+                }))
             //Aktualisieren des Neuheitswertes der anderen Lösungen zu diesem Task
-            Solution.find({ '_id': { $ne: solution.solution }})
+            promises.push(Solution.find({'_id': {$ne: solution.solution}})
                 .then((solutions) => {
                     if (solutions != null && N_max !== 1) {
                         solutions.forEach(function (item) {
@@ -270,11 +286,11 @@ function actualizeSolutions(solution, body, callback, next) {
                             //item.novelty_score = Math.round((item.novelty_score * 100)) / 100;
                             item.save();
                         })
-                    }
-                    else {
+                    } else {
                         return;
                     }
-                })
+                }))
+            return Promise.all(promises)
         })
 };
 
