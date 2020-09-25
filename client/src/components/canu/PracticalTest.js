@@ -521,8 +521,9 @@ class PracticalTest extends React.Component {
     removeTopRows(grid) {
         var deleted = true;
         var pieceFoundFlag = false;
-        for (let i = 0; i < grid.length; i++) {
-            for (let n = 0; n < grid[i].length; n++) {
+        var cond = grid.length;
+        for (let i = 0; i < cond; i++) {
+            for (let n = 0; n < grid[0].length; n++) {
                 if (grid[0][n].type) {
                     deleted = false;
                     pieceFoundFlag = true;
@@ -566,7 +567,8 @@ class PracticalTest extends React.Component {
     removeLeftCols(grid) {
         var deleted = true;
         var pieceFoundFlag = false;
-        for (let f = 0; f < grid[0].length; f++) {
+        var cond = grid[0].length;
+        for (let f = 0; f < cond; f++) {
             for (let j = 0; j < grid.length; j++) {
                 if (grid[j][0].type) {
                     deleted = false;
