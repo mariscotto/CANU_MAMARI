@@ -20,7 +20,8 @@ QuestionnaireRouter.route('/:studyId')
             creative_skills: req.body.creative_skills,
             education_grade: req.body.education_grade,
             job_area: req.body.job_area,
-            personality_adjectives: req.body.personality_adjectives
+            personality_adjectives: req.body.personality_adjectives,
+            study_id: req.body.study
         })
             .then(object => {
                 console.log(object);

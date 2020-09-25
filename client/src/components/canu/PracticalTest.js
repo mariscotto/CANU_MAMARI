@@ -342,7 +342,7 @@ class PracticalTest extends React.Component {
                 solutions.push(this.deepCloneArray(boardGrid));
                 timeStamps.push(new Date());
                 var rotatedGrid = boardGrid;
-                if (this.shapeInGridRotatable(boardGrid)) {
+                if (this.shapeInGridRotatable(minifiedGrid)) {
                     for (var i = 0; i < 3; i++) {
                         rotatedGrid = this.rotateSolutionGrid(rotatedGrid);
                         solutions.push(this.deepCloneArray(rotatedGrid));
@@ -452,7 +452,7 @@ class PracticalTest extends React.Component {
     shapeInGridRotatable(grid) {
         for (var i = 0; i < grid.length; i++) {
             for (var n = 0; n < grid[i].length; n++) {
-                if (grid[i][n].type && grid[i][n].type !== "square") {
+                if (grid[i][n].kind && grid[i][n].kind !== "square") {
                     return true;
                 }
             }
@@ -787,10 +787,10 @@ class PracticalTest extends React.Component {
                 <div className="header">
                     <div className="left-area">
                         <h1>Puzzle Task</h1>
-                        <h4>Pieces Pallete</h4>
+                        <h4>Pieces Pallet</h4>
                     </div>
                     <div className="right-area">
-                        <h2>Try to form squares with the pieces provided in the Pieces Pallete</h2>
+                        <h2>Try to form squares (or close to squares) with the pieces provided in the Pieces Pallet</h2>
                         <div className="clock-container">
                             <div id="main">
                                 <div id="countdown"></div>

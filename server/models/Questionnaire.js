@@ -25,6 +25,9 @@ var QuestionnaireSchema = new Schema({
         job_area: {
             type: String
         },
+        study_id: {
+            type: String
+        },
         personality_adjectives: {
             type: Array
         }

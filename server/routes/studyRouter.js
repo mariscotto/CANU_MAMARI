@@ -444,7 +444,7 @@ studyRouter.route('/:userId/:studyId/download')
         // Daten zu Versuchspersonen
         let questionnaire = function () {
             return new Promise(function (resolve) {
-                Questionnaire.find()
+                Questionnaire.find({study_id:req.params.studyId})
                     .then(questionnaires => {
                         resolve(questionnaires);
                     })

@@ -150,6 +150,7 @@ class Questionnaire extends React.Component {
             education_grade: this.state.education_grade,
             job_area: this.state.job_area,
             personality_adjectives: this.deepCloneArray(this.state.personality_adjectives),
+            study:this.props.match.params.studyid
         };
         axios.post(`/api/Questionnaire/${this.props.match.params.studyid}`, questionnaire)
             .then(res => {

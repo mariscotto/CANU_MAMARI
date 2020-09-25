@@ -166,45 +166,44 @@ solutionCanuRouter.route('/clearCookie')
 
 solutionCanuRouter.route('/updateNovelty')
     .post(/*passport.authenticate('jwt', { session: false }),*/(req, res, next) => {
-        updateSolutionNovelty(req, req.body, (solution) => {
+        updateSolutionNovelty(req, req.body).then((solutions) => {
             //Rückmeldung über den Erfolg der Aktion
-            if (!solution) {
-                err = new Error('solution ' + req.body.solution + ' could not be actualized');
-                err.status = 404;
-                return next(err);
-            } else {
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json(solution);
-            }
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(solutions);
         }, err => next(err));
     });
 
-function updateSolutionNovelty(req, body, callback) {
+function updateSolutionNovelty(req, body) {
     // Erhöhen des Zählers der aktuellen Lösung um eins
     //solution.counter = solution.counter + 1;
     //console.log(solution);
     // Zählen aller jemals eingegangenen Lösungen zur aktuellen Aufgabe
-    SolutionAll.countDocuments()
+    const updatedSolutions = []
+    return SolutionAll.countDocuments()
         .then((N_max) => {
             //Aktualisierung des Neuheitswertes dieser Lösung, Berechnung linear
             // Solution.find({"_id": solution.solution}/*ref in SolutionsALl*/)
-            Solution.find( /*ref in SolutionsALl*/)
+            return Solution.find( /*ref in SolutionsALl*/)
                 .then(solutions => {
                     if (solutions != null) {
-                        solutions.forEach(function (solution) {
-                            if (solution.counter !== 1) {
-                                solution.novelty_score = 1 - (solution.counter / N_max);
-                                // Runden auf fünf Nachkommastellen
-                                solution.novelty_score = Math.round((solution.novelty_score * 100)) / 100;
-                            } else {
-                                solution.novelty_score = 1;
-                            }
-                            // Speichern
-                            solution.save()
-                                .then(solution => {
-                                    callback(solution)
-                                });
+                        return Promise.all([
+                            solutions.map(function (solution) {
+                                if (solution.counter !== 1) {
+                                    solution.novelty_score = 1 - (solution.counter / N_max);
+                                    // Runden auf fünf Nachkommastellen
+                                    solution.novelty_score = Math.round((solution.novelty_score * 100)) / 100;
+                                } else {
+                                    solution.novelty_score = 1;
+                                }
+                                // Speichern
+                                return solution.save()
+                                    .then(solution => {
+                                        updatedSolutions.push(solution)
+                                    });
+                            })
+                        ]).then(() => {
+                            return Promise.resolve(updatedSolutions)
                         });
                     }
                 });
