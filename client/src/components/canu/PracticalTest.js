@@ -43,7 +43,7 @@ class PracticalTest extends React.Component {
         startTime: undefined,
         solutions: [],
         timeStamps: [],
-        motivated: undefined,
+        motivated: Math.round(Math.random()) !== 1,
     };
     line = 100;
     workTime = 720;
@@ -722,8 +722,8 @@ class PracticalTest extends React.Component {
     }
 
     render() {
-        const randomNum = Math.round(Math.random());
-        this.state.motivated = randomNum === 1 ? false : true;
+        /*const randomNum = Math.round(Math.random());
+        this.state.motivated = Math.round(Math.random()) !== 1;*/
         return (
             <div style={{height: "100%"}}>
                 <Countdown2 practicalTest={this} motivated={this.state.motivated}/>
