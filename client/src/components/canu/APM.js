@@ -4,6 +4,7 @@ import React from "react";
 import axios from "axios";
 import * as Survey from "survey-react";
 import "survey-react/survey.css";
+import {Trans, withTranslation } from 'react-i18next';
 
 import "./APM.css";
 
@@ -11,6 +12,7 @@ import "react-step-progress-bar/styles.css";
 import M from "materialize-css";
 import APMInfo from "./APMInfo";
 import Impressum from "./Impressum";
+import $ from "jquery";
 
 class APM extends React.Component {
   constructor(props){
@@ -75,7 +77,7 @@ class APM extends React.Component {
               name: "info_APM_Instruktion",
               html: {
                 en:
-                  "The following task is a <b>test of perception and logical thinking</b>. An example problem will be used to show you how the test works.<br>The upper part consists of a pattern from which a part is cut off. Look at the pattern and think about how the part must look like, fits the pattern in both <b>horizontal</b> and <b>vertical</b> direction. Select the correct one from the eight options below. Only one of these parts forms a correct answer.<br><br><img src='/images/Item_1.png' width='400' alt='Beispielaufgabe' align='middle'/><br><br>When looking at the example above, it becomes clear that answer option <b>number 4</b> offers the correct solution for both directions (vertical and horizontal).<br><br>You will notice that the following <b>twelve problems</b> are of varying degrees of difficulty and that the same method should always be used to solve both simple and difficult problems.<b> You have as much time as you want to work on the problems -</b> Remember that the accuracy is what counts. Problems are solved one by one and it is not possible to go back to the beginning of the task. Once you have decided on an answer option, click on it."
+                  "<span><Trans>"+this.props.t("apm_description1")+"</Trans></span><img src='/images/Item_1.png' width='400' alt='Beispielaufgabe' align='middle'/><span><Trans>"+this.props.t("apm_description2")+"</Trans></span>"
               }
             }
           ]
@@ -824,12 +826,14 @@ class APM extends React.Component {
               </h1>
             </div>
             <p className="questionnaire-task-description">
-              Please solve the following task.
+              {this.props.t("apm_header")}
             </p>
+            <div className="apm_menu">
             <a className="waves-effect waves-light btn-small info-button modal-trigger"
                onClick={this.openInfo}>?</a>
             <a className="waves-effect waves-light btn-small impressum-button modal-trigger"
                onClick={this.openImpressum}>i</a>
+            </div>
           </div>
         </div>
         <Survey.Survey
@@ -856,4 +860,4 @@ class APM extends React.Component {
   }
 }
 
-export default APM;
+export default withTranslation()(APM);

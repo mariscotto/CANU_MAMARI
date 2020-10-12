@@ -3,7 +3,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import $ from 'jquery'; // Importing jQuery first
-
+import {Trans, withTranslation } from 'react-i18next';
 import "./QuestionnaireIntroduction.css";
 import M from "materialize-css";
 
@@ -35,7 +35,7 @@ class QuestionnaireIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Questionnaire</h1>
-                            <p>You have completed the intelligence test, in the following we would like to ask that you answer some personal questions.</p>
+                            <p>{this.props.t("questionnaire_infopopup")}</p>
                             <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">Okay</a>
                         </div>
                     </div>
@@ -45,4 +45,4 @@ class QuestionnaireIntroduction extends React.Component {
     }
     }
 
-    export default QuestionnaireIntroduction;
+    export default withTranslation()(QuestionnaireIntroduction);

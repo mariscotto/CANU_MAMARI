@@ -34,3 +34,19 @@
   height: auto;
   padding:1.5%;
 }
+
+
+.switch{
+  position: absolute;
+  top: 1vh;
+  right: 1vh;
+}
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: #336666;
+}
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: #669999;
+}
+.language-switch label{
+  font-family: 'Spinnaker', "Work Sans", sans-serif !important;
+}

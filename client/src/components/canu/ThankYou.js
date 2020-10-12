@@ -21,6 +21,13 @@ class ThankYou extends React.Component {
             .then(res => {
                 console.log(res);
                 this.setState({VP_id:res.data});
+                /*axios.get('/api/solutionCanu/clearCookie')
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    });*/
             })
             .catch(err => {
                 console.log(err.response);

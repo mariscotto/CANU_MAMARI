@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 // It installs the JS asset only
 import 'materialize-css/dist/css/materialize.min.css';
 import M from "materialize-css";
-
+import {Trans, withTranslation } from 'react-i18next';
 /*"fsevents": "^2.1.3",*/
 import "./Landing.css";
 
@@ -17,12 +17,17 @@ import View from "./practicalTest/view";
 import DSGVO from "./DSGVO";
 
 class LandingCanu extends React.Component {
+    constructor(props) {
+        super(props);
+        this.changeLanguage = this.changeLanguage.bind(this);
+    }
     // storing link to tasks
     state = {
         link: `/${this.props.match.params.studyid}/${
             this.props.match.params.groupid
         }/canu/practicalTest`
     };
+
     componentDidMount() {
         var elem = document.getElementById('modal1');
         var instance = M.Modal.init(elem,{dismissible:false});
@@ -40,6 +45,9 @@ class LandingCanu extends React.Component {
         var instance = M.Modal.init(elem,{dismissible:false});
         instance.open();
     }
+    changeLanguage(e){
+        e.currentTarget.checked ? this.props.i18n.changeLanguage("de"):this.props.i18n.changeLanguage("en");
+    }
     render() {
         return (
             <div>
@@ -49,6 +57,20 @@ class LandingCanu extends React.Component {
                             <img id="mountain-header" src="/ressources/background_s.svg"></img>
                         </div>
                         <div className="text-container">
+                            <h5>{this.props.t("landing_dear")}</h5>
+                            <Trans><p>{this.props.t("landing_description1")}</p></Trans>
+                            <h5>{this.props.t("landing_header2")}</h5>
+                            <Trans><p>{this.props.t("landing_description2")}</p></Trans>
+                            <h5>{this.props.t("landing_header3")}</h5>
+                            <Trans><p>{this.props.t("landing_description3")}</p></Trans>
+                            <h5>{this.props.t("landing_header4")}</h5>
+                            <Trans><p>{this.props.t("landing_description4")}</p></Trans>
+                            <Trans><p>{this.props.t("landing_addressinfo")}</p></Trans>
+                            <Trans><p>{this.props.t("landing_adress_seperator")}</p></Trans>
+                            <Trans><p>{this.props.t("landing_addressinfo2")}</p></Trans>
+                            <h5>{this.props.t("landing_header5")}</h5>
+                            <Trans><p>{this.props.t("landing_description5")}</p></Trans>
+                            <Trans><p>{this.props.t("landing_farewell")}</p></Trans>
                             {/*<h4>Hello participant,</h4>
                             <p>Welcome to the CANU test - thank you for supporting this research!<br/><br/> This study is
                                 part of a master thesis of the TUM Chair of Ergonomics. The Subject of this study is
@@ -69,7 +91,7 @@ class LandingCanu extends React.Component {
                                 of
                                 Munich:<br/> Chair of Ergonomics
                             </p>*/}
-                            <h5>Hello participant,</h5>
+                            {/* <h5>Hello participant,</h5>
                             <p>Welcome to the CANU test - thank you for supporting this research!<br/><br/>
                                 This study is part of a master thesis of the TUM Chair of Ergonomics. The subject of this study is a newly developed measuring instrument in creativity research. On the basis of different evaluation methods, a creativity tool will be analyzed. The following test will take approximately <strong>30</strong> minutes and can be performed either on <strong>PC or Tablet devices</strong>.<br/><br/>
                                 Your participation in the study is <strong>voluntary</strong>. If you do not wish to participate or if you later withdraw your consent, you will not suffer any disadvantages.
@@ -110,15 +132,22 @@ class LandingCanu extends React.Component {
                             </p>
                             <h5>Declaration of informed consent</h5>
                             <p>I have been informed about the study by the investigators. I have received and read the written information and consent form for the above-mentioned study.
-                                I was informed in detail about the purpose and the course of the study, the risks of participation and my rights and obligations. I had the opportunity to ask questions.
-                                These were answered satisfactorily and completely. It was pointed out to me that my participation is voluntary, and I have the right to withdraw my consent at any time without giving reasons and without incurring any disadvantages.
-                                I hereby agree to participate in the above-mentioned study and to the data processing as described in the respective section.</p>
+                                I was informed in detail about the purpose and the course of the study, the risks of participation and my rights and obligations. It was pointed out to me that my participation is voluntary, and I have the right to withdraw my consent at any time without giving reasons and without incurring any disadvantages.
+                                I hereby agree to participate in the above-mentioned study and to the data processing as described in the respective section. Clicking on “Accept and Start” will be considered as consent to participate in the study.</p>
                             <p>Please contact canu.lfe.mw@tum.de with any questions or comments.<br/><br/> Technical University
-                            of Munich,<br/> Chair of Ergonomics</p>
+                            of Munich,<br/> Chair of Ergonomics</p>*/}
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <Link to={this.state.link} className="waves-effect waves-light btn-large modal-action modal-close">Accept and Start</Link>
+                        <Link to={this.state.link} className="waves-effect waves-light btn-large modal-action modal-close">{this.props.t("landing_button")}</Link>
+                    </div>
+                    <div className="language-switch switch">
+                        <label>
+                            EN
+                            <input type="checkbox" onClick={this.changeLanguage}></input>
+                                <span className="lever"></span>
+                                DE
+                        </label>
                     </div>
                 </div>
             </div>
@@ -126,4 +155,4 @@ class LandingCanu extends React.Component {
     }
     }
 
-    export default LandingCanu;
+    export default withTranslation()(LandingCanu);

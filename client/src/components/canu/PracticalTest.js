@@ -9,6 +9,9 @@ import 'material-icons';
 import "./PracticalTest.css";
 import './practicalTest/board.js';
 import Swiper from 'swiper';
+import {Trans, withTranslation } from 'react-i18next';
+import i18n from "../../i18n";
+
 // import Swiper styles
 import 'swiper/swiper-bundle.css';
 import Game from './practicalTest/game.js';
@@ -33,6 +36,7 @@ class PracticalTest extends React.Component {
         this.componentDidMount = this.componentDidMount.bind(this);
         this.postSolutions = this.postSolutions.bind(this);
         this.triggerSubmitSolution = this.triggerSubmitSolution.bind(this);
+        this.changeLanguage = this.changeLanguage.bind(this);
     }
 
     // storing link to tasks
@@ -180,7 +184,9 @@ class PracticalTest extends React.Component {
                 prevEl: '.swiper-button-prev',
             },
         });
-
+        if(this.props.i18n.language === "de"){
+            $(".language-switch input").prop("checked", true);
+        }
         /*axios.get(`/api/study/${this.props.match.params.groupid}/getGroup`)
             .then(res => {
                 console.log(res.data);
@@ -710,7 +716,9 @@ class PracticalTest extends React.Component {
         var instance = M.Modal.init(elem, {dismissible: false});
         instance.open();
     }
-
+    changeLanguage(e){
+        e.currentTarget.checked ? this.props.i18n.changeLanguage("de"):this.props.i18n.changeLanguage("en");
+    }
     closePopup(event) {
         var elem = document.getElementById(event.currentTarget.offsetParent.id);
         var instance = M.Modal.init(elem, {dismissible: false});
@@ -736,7 +744,7 @@ class PracticalTest extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Finish</h1>
-                            <p>Are you done with the Puzzle Task?</p>
+                            <p>{this.props.t("practicaltest_finishquestion")}</p>
                             <div className="popup-footer">
                                 <a onMouseDown={this.triggerSubmitSolution}
                                    className="btn-large modal-action modal-close">Yes</a>
@@ -753,7 +761,7 @@ class PracticalTest extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Time's up</h1>
-                            <p>You've finished the Puzzle Task - click next to proceed.</p>
+                            <p>{this.props.t("practicaltest_finishinfo")}</p>
                             <a onMouseDown={this.triggerSubmitSolution}
                                className="btn-large modal-action">Next</a>
                         </div>
@@ -766,7 +774,7 @@ class PracticalTest extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Ups!</h1>
-                            <p>You have already submitted this solution or a rotation of it.</p>
+                            <p>{this.props.t("practicaltest_piecefound")}</p>
                             <a onMouseDown={this.closePopup} className="btn-large modal-action modal-close">Got
                                 it</a>
                         </div>
@@ -779,7 +787,7 @@ class PracticalTest extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Sorry!</h1>
-                            <p>There are no pieces in the grid.</p>
+                            <p>{this.props.t("practicaltest_nopiece")}</p>
                             <a onMouseDown={this.closePopup} className="btn-large modal-action modal-close">Got
                                 it</a>
                         </div>
@@ -792,7 +800,7 @@ class PracticalTest extends React.Component {
                         <h4>Pieces Pallet</h4>
                     </div>
                     <div className="right-area">
-                        <h2>Try to form squares (or close to squares) with the pieces provided in the Pieces Pallet</h2>
+                        <h2>{this.props.t("practicaltest_description")}</h2>
                         <div className="clock-container">
                             <div id="main">
                                 <div id="countdown"></div>
@@ -829,7 +837,7 @@ class PracticalTest extends React.Component {
                             </div>*/}
                         </div>
                         <div className="footer-right">
-                            <h4>Solutions</h4>
+                            <h4>{this.props.t("practicaltest_timelinedesc")}</h4>
                             <div className="slider">
                                 <div className="swiper-container">
                                     <div className="swiper-wrapper">
@@ -842,6 +850,14 @@ class PracticalTest extends React.Component {
                         </div>
                     </div>
                 </div>
+                <div className="language-switch switch">
+                    <label>
+                        EN
+                        <input type="checkbox" onClick={this.changeLanguage}></input>
+                        <span className="lever"></span>
+                        DE
+                    </label>
+                </div>
                 <a className="waves-effect waves-light btn-small impressum-button modal-trigger"
                    onClick={this.openImpressum}>i</a>
                 <img className="background" src="/ressources/background_s.svg"/>
@@ -850,4 +866,4 @@ class PracticalTest extends React.Component {
     }
 }
 
-export default PracticalTest;
+export default withTranslation()(PracticalTest);

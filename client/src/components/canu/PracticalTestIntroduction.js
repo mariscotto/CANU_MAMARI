@@ -2,7 +2,7 @@
 
 import React from "react";
 import {Link} from "react-router-dom";
-
+import {Trans, withTranslation } from 'react-i18next';
 import "./PracticalTestIntroduction.css";
 
 import Header from "../layout/Header";
@@ -50,31 +50,31 @@ class PracticalTestIntroduction extends React.Component {
             {
                 target: '#pieces-pallet', // The target as a selector
                 color: '#003333', // Bg color
-                content: 'Choose the puzzle pieces you need here. You can resize or rotate them only in this area',
+                content: this.props.t("practicaltest_walkthrough1"),
                 acceptText: 'Ok!' // Accept text displayed in the button The Pieces Pallet stores all the puzzle pieces. Extended functionality such as resizing and turning can only be used when pieces are in this area
             },
             {
                 target: '.group', // It works also with js pure and jquery elements!
                 color: '#336666', // All css color values can be setted here!,
-                content: 'Drag and drop the puzzle pieces in this area to form solutions here.', // YES, YOU CAN put Html code in the content!,
+                content: this.props.t("practicaltest_walkthrough2"), // YES, YOU CAN put Html code in the content!,
                 acceptText: 'Perfect!'
             },
             {
                 target: '#submit-button',
                 color: '#003333',
-                content: "Submit your solution with this button.",
+                content: this.props.t("practicaltest_walkthrough3"),
                 acceptText: 'Alright!'
             },
             {
                 target: '.slider',
                 color: '#336666',
-                content: 'Submitted Solutions are added here and can\'t be removed.',
+                content: this.props.t("practicaltest_walkthrough4"),
                 acceptText: 'Got it!'
             },
             {
                 target: '#p-finish-button',
                 color: '#003333',
-                content: 'The Puzzle Task can be finished with this button.',
+                content: this.props.t("practicaltest_walkthrough5"),
                 acceptText: 'Okay!'
             }
 
@@ -155,10 +155,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Puzzle Task</h1>
-                            <p>The CANU Puzzle Task will be the main tool to assess your capability of generating new
-                                ideas.
-                                In the following task, you will try to form a square with the provided puzzle
-                                pieces.</p>
+                            <p>{this.props.t("practicaltest_info1")}</p>
                             <a href="#!" onMouseDown={this.openSecIntro}
                                className="waves-effect waves-light btn-large modal-action modal-close">Next</a>
                         </div>
@@ -171,7 +168,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Walkthrough</h1>
-                            <p>To explain the interface and the task in more depth, let's do a virtual walkthrough.</p>
+                            <p>{this.props.t("practicaltest_info2")}</p>
                             <a href="#!" onMouseDown={this.startIntro}
                                className="waves-effect waves-light btn-large modal-action modal-close">Start
                                 Walkthrough</a>
@@ -185,8 +182,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Time</h1>
-                            <p>A time limit of 12 minutes is set for this Puzzle Task. A timer on the top right corner
-                                will let you keep track of it.</p>
+                            <p>{this.props.t("practicaltest_info3")}</p>
                             <a href="#!" onMouseDown={this.openThirdIntroMotivated}
                                className="waves-effect waves-light btn-large modal-action modal-close">Okay</a>
                         </div>
@@ -199,7 +195,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Solutions</h1>
-                            <p>Your goal is to find as many ways as possible to build a square (or close to a square) with the puzzle pieces.</p>
+                            <p>{this.props.t("practicaltest_info4")}</p>
                             <a href="#!" onMouseDown={this.openStartIntro}
                                className="waves-effect waves-light btn-large modal-action modal-close">Let's go</a>
                         </div>
@@ -212,7 +208,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Solutions</h1>
-                            <p>Your goal is to find as many ways as possible to build a square (or close to a square) with the puzzle pieces. To boost your creativity, a small video will be played beforehand.</p>
+                            <p>{this.props.t("practicaltest_info4motivated")}</p>
                             <a href="#!" onMouseDown={this.startVideo}
                                className="waves-effect waves-light btn-large modal-action modal-close">Let's go</a>
                         </div>
@@ -225,7 +221,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Ready!</h1>
-                            <p>You are set to get creative - if you are ready, hit start.</p>
+                            <p>{this.props.t("practicaltest_info5")}</p>
                             <a id="start-practical-test" onMouseDown={this.startCountdown}
                                className="waves-effect waves-light btn-large modal-action modal-close">Start</a>
                         </div>
@@ -238,7 +234,7 @@ class PracticalTestIntroduction extends React.Component {
                         </div>
                         <div className="text-container">
                             <h1>Ready!</h1>
-                            <p>You are set to get creative - if you are ready, hit start.</p>
+                            <p>{this.props.t("practicaltest_info5")}</p>
                             <a id="start-practical-test" href="#!" onMouseDown={this.setStartTime}
                                className="waves-effect waves-light btn-large modal-action modal-close">Start</a>
                         </div>
@@ -249,4 +245,4 @@ class PracticalTestIntroduction extends React.Component {
     }
 }
 
-export default PracticalTestIntroduction;
+export default withTranslation()(PracticalTestIntroduction);

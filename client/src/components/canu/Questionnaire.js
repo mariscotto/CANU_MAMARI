@@ -6,6 +6,7 @@ import 'materialize-css'; // It installs the JS asset only
 import 'materialize-css/dist/css/materialize.min.css';
 import $ from 'jquery';
 import 'material-icons';
+import {Trans, withTranslation } from 'react-i18next';
 
 /*"fsevents": "^2.1.3",*/
 import "./Questionnaire.css";
@@ -28,6 +29,7 @@ class Questionnaire extends React.Component {
         this.onChangeJobArea = this.onChangeJobArea.bind(this);
         this.onChangePersonalityAdjectives = this.onChangePersonalityAdjectives.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.changeLanguage = this.changeLanguage.bind(this);
 
 
         this.state = {
@@ -51,6 +53,9 @@ class Questionnaire extends React.Component {
         this.formReset();
         this.setupFloatLabels();
         this.setupClickHandlers();
+        if(this.props.i18n.language === "de"){
+            $(".language-switch input").prop("checked", true);
+        }
     }
 
     /*Database Methods*/
@@ -377,17 +382,9 @@ class Questionnaire extends React.Component {
         //  return arr.map(row => row.slice(0));
         return JSON.parse(JSON.stringify(arr));
     }
-// e-mail
-/*<div className="row">
-<div className="col s12">
-<div className="input-field inline">
-<div className="section-title">E-mail</div>
-<input id="email_inline" type="email" className="validate"
-value={this.state.email} onChange={this.onChangeEmail}></input>
-<span className="helper-text">if you are interested in receiving your test score, feel free to add a e-mail address here.</span>
-</div>
-</div>
-</div>*/
+    changeLanguage(e){
+        e.currentTarget.checked ? this.props.i18n.changeLanguage("de"):this.props.i18n.changeLanguage("en");
+    }
 
     render() {
         return (
@@ -401,7 +398,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                         </div>
                         <div className="text-container">
                             <h1>Finish</h1>
-                            <p>Are you done with the Questionnaire?</p>
+                            <p>{this.props.t("questionnaire_finish")}</p>
                             <div className="popup-footer">
                             <a onClick={this.onSubmit}
                                className="waves-effect waves-light btn-large">Yes</a>
@@ -421,7 +418,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                 <div id="questionnaire" className="info-box">
                     <img id="personality-icon" src="/ressources/questionnaireLogo.svg"></img>
                     <h1>Questionnaire</h1>
-                    <p id="info-text">These questions are used for statistical analysis and interpretation</p>
+                    <p id="info-text">{this.props.t("questionnaire_info")}</p>
                     {/*<a onClick={this.onSubmit}
                        className="waves-effect waves-light btn-large modal-action modal-close">Paddle!</a>*/}
                 </div>
@@ -440,38 +437,38 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                     <div className="animation-container">
                         <div className="form-step js-form-step" data-step="1">
                             <div id="header">
-                                <h2>Please answer the following questions</h2>
+                                <h2>{this.props.t("questionnairep1_header")}</h2>
                             </div>
                             <div id="form">
                                 <div className="row">
                                     <div className="input-field col s3">
-                                        <div className="section-title">Age</div>
+                                        <div className="section-title">{this.props.t("questionnairep1_question1")}</div>
                                         <input placeholder="" id="age" type="number" className="validate"
                                                value={this.state.age} onChange={this.onChangeAge}></input>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col s12">
-                                        <div className="section-title">Gender</div>
+                                        <div className="section-title">{this.props.t("questionnairep1_question2")}</div>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group1" type="radio" value={"Male"}
                                                        onChange={this.onChangeGender}/>
-                                                <span>Male</span>
+                                                <span>{this.props.t("questionnairep1_selection21")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group1" type="radio" value={"Female"}
                                                        onChange={this.onChangeGender}/>
-                                                <span>Female</span>
+                                                <span>{this.props.t("questionnairep1_selection22")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group1" type="radio" value={"Diverse"}
                                                        onChange={this.onChangeGender}/>
-                                                <span>Diverse</span>
+                                                <span>{this.props.t("questionnairep1_selection23")}</span>
                                             </label>
                                         </p>
                                     </div>
@@ -485,7 +482,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                         <div className="form-step js-form-step waiting hidden" data-step="2">
 
                             <div id="header">
-                                <h2>What is your highest level of education?</h2>
+                                <h2>{this.props.t("questionnairep2_header")}</h2>
                             </div>
                             <div id="form">
                                 <div className="row">
@@ -495,7 +492,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Less than high school degree (Haupt- oder Realschulabschluss)"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Less than high school degree (Haupt- oder Realschulabschluss)</span>
+                                                <span>{this.props.t("questionnairep2_selection11")}</span>
                                             </label>
                                         </p>
                                         <p>
@@ -503,7 +500,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"High school degree or equivalent (Abitur)"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>High school degree or equivalent (Abitur)</span>
+                                                <span>{this.props.t("questionnairep2_selection12")}</span>
                                             </label>
                                         </p>
                                         <p>
@@ -511,7 +508,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Bachelor's degree"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Bachelor's degree</span>
+                                                <span>{this.props.t("questionnairep2_selection13")}</span>
                                             </label>
                                         </p>
                                         <p>
@@ -519,7 +516,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Master's degree"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Master's degree</span>
+                                                <span>{this.props.t("questionnairep2_selection14")}</span>
                                             </label>
                                         </p>
                                         <p>
@@ -527,7 +524,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Graduate degree (Diplom)"}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Graduate degree (Diplom)</span>
+                                                <span>{this.props.t("questionnairep2_selection15")}</span>
                                             </label>
                                         </p>
                                         <p>
@@ -535,7 +532,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group2" type="radio"
                                                        value={"Ph.D."}
                                                        onChange={this.onChangeEducationGrade}/>
-                                                <span>Ph.D.</span>
+                                                <span>{this.props.t("questionnairep2_selection16")}</span>
                                             </label>
                                         </p>
                                     </div>
@@ -549,7 +546,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                         </div>
                         <div className="form-step js-form-step waiting hidden" data-step="3">
                             <div id="header">
-                                <h2>In which area would you position your studies/training/job?</h2>
+                                <h2>{this.props.t("questionnairep3_header")}</h2>
                             </div>
                             <div id="form">
                                 <div className="row">
@@ -559,14 +556,14 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Agriculture and Forestry"}
                                                        onChange={this.onChangeJobArea}/>
-                                                <span>Agriculture and Forestry</span>
+                                                <span>{this.props.t("questionnairep3_selection11")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Social Science"} onChange={this.onChangeJobArea}/>
-                                                <span>Social Sciences</span>
+                                                <span>{this.props.t("questionnairep3_selection12")}</span>
                                             </label>
                                         </p>
                                         <p>
@@ -574,35 +571,35 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Computer Science & Mathematics"}
                                                        onChange={this.onChangeJobArea}/>
-                                                <span>Computer Science & Mathematics</span>
+                                                <span>{this.props.t("questionnairep3_selection13")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Media & Communication"} onChange={this.onChangeJobArea}/>
-                                                <span>Media & Communication</span>
+                                                <span>{this.props.t("questionnairep3_selection14")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Art, Design & Music"} onChange={this.onChangeJobArea}/>
-                                                <span>Art, Design & Music</span>
+                                                <span>{this.props.t("questionnairep3_selection15")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Medicine & Healthcare"} onChange={this.onChangeJobArea}/>
-                                                <span>Medicine & Healthcare</span>
+                                                <span>{this.props.t("questionnairep3_selection16")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Natural Sciences"} onChange={this.onChangeJobArea}/>
-                                                <span>Natural Sciences</span>
+                                                <span>{this.props.t("questionnairep3_selection17")}</span>
                                             </label>
                                         </p>
                                         <p>
@@ -610,7 +607,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Linguistics and cultural studies"}
                                                        onChange={this.onChangeJobArea}/>
-                                                <span>Linguistics and cultural studies</span>
+                                                <span>{this.props.t("questionnairep3_selection18")}</span>
                                             </label>
                                         </p>
                                         <p>
@@ -618,28 +615,28 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Technology & Engineering"}
                                                        onChange={this.onChangeJobArea}/>
-                                                <span>Technology & Engineering</span>
+                                                <span>{this.props.t("questionnairep3_selection19")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Economy & Law"} onChange={this.onChangeJobArea}/>
-                                                <span>Economy & Law</span>
+                                                <span>{this.props.t("questionnairep3_selection110")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Administration"} onChange={this.onChangeJobArea}/>
-                                                <span>Administration</span>
+                                                <span>{this.props.t("questionnairep3_selection111")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group3" type="radio"
                                                        value={"Other"} onChange={this.onChangeJobArea}/>
-                                                <span>Other</span>
+                                                <span>{this.props.t("questionnairep3_selection112")}</span>
                                             </label>
                                         </p>
                                     </div>
@@ -653,86 +650,86 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                         </div>
                         <div className="form-step js-form-step hidden" data-step="4">
                             <div id="header">
-                                <h2>Please answer the following questions</h2>
+                                <h2>{this.props.t("questionnairep4_header")}</h2>
                             </div>
                             <div id="form">
                                 <div className="row">
                                     <div className="col s12">
-                                        <div className="section-title">I felt that I needed to be creative to solve the Puzzle Task well</div>
+                                        <div className="section-title">{this.props.t("questionnairep4_question1")}</div>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group0" type="radio" value={0}
                                                        onChange={this.onChangeCreativeTest}/>
-                                                <span>Strongly Agree</span>
+                                                <span>{this.props.t("questionnairep4_selection11")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group0" type="radio" value={1}
                                                        onChange={this.onChangeCreativeTest}/>
-                                                <span>Agree</span>
+                                                <span>{this.props.t("questionnairep4_selection12")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group0" type="radio" value={2}
                                                        onChange={this.onChangeCreativeTest}/>
-                                                <span>Undecided</span>
+                                                <span>{this.props.t("questionnairep4_selection13")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group0" type="radio" value={3}
                                                        onChange={this.onChangeCreativeTest}/>
-                                                <span>Disagree</span>
+                                                <span>{this.props.t("questionnairep4_selection14")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group0" type="radio" value={4}
                                                        onChange={this.onChangeCreativeTest}/>
-                                                <span>Strongly Disagree</span>
+                                                <span>{this.props.t("questionnairep4_selection15")}</span>
                                             </label>
                                         </p>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col s12">
-                                        <div className="section-title">How would you rate your creative skills?
+                                        <div className="section-title">{this.props.t("questionnairep4_question2")}
                                         </div>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group1" type="radio" value={0}
                                                        onChange={this.onChangeCreativeSkills}/>
-                                                <span>Excellent</span>
+                                                <span>{this.props.t("questionnairep4_selection21")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group1" type="radio" value={1}
                                                        onChange={this.onChangeCreativeSkills}/>
-                                                <span>Good</span>
+                                                <span>{this.props.t("questionnairep4_selection22")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group1" type="radio" value={2}
                                                        onChange={this.onChangeCreativeSkills}/>
-                                                <span>Fair</span>
+                                                <span>{this.props.t("questionnairep4_selection23")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group1" type="radio" value={3}
                                                        onChange={this.onChangeCreativeSkills}/>
-                                                <span>Poor</span>
+                                                <span>{this.props.t("questionnairep4_selection24")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input className="with-gap" name="group1" type="radio" value={4}
                                                        onChange={this.onChangeCreativeSkills}/>
-                                                <span>Very Poor</span>
+                                                <span>{this.props.t("questionnairep4_selection25")}</span>
                                             </label>
                                         </p>
                                     </div>
@@ -746,8 +743,7 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                         </div>
                         <div className="form-step js-form-step waiting hidden" data-step="5">
                             <div id="header">
-                                <h2>Please indicate which of the following adjectives best describe yourself.
-                                    Check all that apply.</h2>
+                                <h2>{this.props.t("questionnairep5_header")}</h2>
                             </div>
                             <div id="form">
                                 <div className="row">
@@ -756,68 +752,68 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Capable"}
                                                        onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Capable</span>
+                                                <span>{this.props.t("questionnairep5_selection11")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Artificial"}
                                                        onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Artificial</span>
+                                                <span>{this.props.t("questionnairep5_selection12")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Clever"}
                                                        onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Clever</span>
+                                                <span>{this.props.t("questionnairep5_selection13")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Cautious"}
                                                        onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Cautious</span>
+                                                <span>{this.props.t("questionnairep5_selection14")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Confident"}
                                                        onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Confident</span>
+                                                <span>{this.props.t("questionnairep5_selection15")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Egotistical"}
                                                        onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Egotistical</span>
+                                                <span>{this.props.t("questionnairep5_selection16")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Commonplace"}
                                                        onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Commonplace</span>
+                                                <span>{this.props.t("questionnairep5_selection17")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Humorous"}
                                                        onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Humorous</span>
+                                                <span>{this.props.t("questionnairep5_selection18")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Conservative"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Conservative</span>
+                                                <span>{this.props.t("questionnairep5_selection19")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Individualistic"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Individualistic</span>
+                                                <span>{this.props.t("questionnairep5_selection110")}</span>
                                             </label>
                                         </p>
                                     </div>
@@ -825,61 +821,61 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Conventional"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Conventional</span>
+                                                <span>{this.props.t("questionnairep5_selection111")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Informal"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Informal</span>
+                                                <span>{this.props.t("questionnairep5_selection112")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Dissatisfied"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Dissatisfied</span>
+                                                <span>{this.props.t("questionnairep5_selection113")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Insightful"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Insightful</span>
+                                                <span>{this.props.t("questionnairep5_selection114")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Suspicious"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Suspicious</span>
+                                                <span>{this.props.t("questionnairep5_selection115")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Honest"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Honest</span>
+                                                <span>{this.props.t("questionnairep5_selection116")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Intelligent</span>
+                                                <span>{this.props.t("questionnairep5_selection117")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Well-mannered"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Well-mannered</span>
+                                                <span>{this.props.t("questionnairep5_selection118")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Wide interests"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Wide interests</span>
+                                                <span>{this.props.t("questionnairep5_selection119")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Inventive"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Inventive</span>
+                                                <span>{this.props.t("questionnairep5_selection120")}</span>
                                             </label>
                                         </p>
                                     </div>
@@ -887,61 +883,61 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Original"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Original</span>
+                                                <span>{this.props.t("questionnairep5_selection121")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Narrow interests"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Narrow interests</span>
+                                                <span>{this.props.t("questionnairep5_selection122")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Reflective"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Reflective</span>
+                                                <span>{this.props.t("questionnairep5_selection123")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Sincere"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Sincere</span>
+                                                <span>{this.props.t("questionnairep5_selection124")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
-                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Resourceful</span>
+                                                <input type="checkbox" className="filled-in" value={"Resourceful"} onChange={this.onChangePersonalityAdjectives}/>
+                                                <span>{this.props.t("questionnairep5_selection125")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Self-confident"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Self-confident</span>
+                                                <span>{this.props.t("questionnairep5_selection126")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Sexy"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Sexy</span>
+                                                <span>{this.props.t("questionnairep5_selection127")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Submissive"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Submissive</span>
+                                                <span>{this.props.t("questionnairep5_selection128")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Snobbish"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Snobbish</span>
+                                                <span>{this.props.t("questionnairep5_selection129")}</span>
                                             </label>
                                         </p>
                                         <p>
                                             <label>
                                                 <input type="checkbox" className="filled-in" value={"Unconventional"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>Unconventional</span>
+                                                <span>{this.props.t("questionnairep5_selection130")}</span>
                                             </label>
                                         </p>
                                     </div>
@@ -956,11 +952,20 @@ value={this.state.email} onChange={this.onChangeEmail}></input>
                         </div>
                     </div>
                 </div>
+                <div className="language-switch switch">
+                    <label>
+                        EN
+                        <input type="checkbox" onClick={this.changeLanguage}></input>
+                        <span className="lever"></span>
+                        DE
+                    </label>
+                </div>
                 <a className="waves-effect waves-light btn-small impressum-button modal-trigger" onClick={this.openImpressum}>i</a>
                 <img className="background" src="/ressources/background_s.svg"></img>
+
             </div>
         );
     }
 }
 
-export default Questionnaire;
+export default withTranslation()(Questionnaire);

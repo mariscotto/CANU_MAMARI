@@ -24,7 +24,7 @@
     position: absolute;
     text-transform: lowercase;
     top: 1vh;
-    right: 1vh;
+    left: 3.6rem;
     border-radius: 50px;
     background-color: #336666;
     box-shadow: none;

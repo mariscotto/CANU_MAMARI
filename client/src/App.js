@@ -8,6 +8,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
+import './i18n';
 
 import ScrollToTop from "./components/layout/ScrollToTop";
 
@@ -30,6 +31,7 @@ import APM from "./components/canu/APM";
 
 import "./App.css";
 import SidebarDashboard from "./components/dashboard/SidebarDashboard";
+import i18n from "./i18n";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
