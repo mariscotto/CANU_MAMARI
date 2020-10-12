@@ -52,8 +52,11 @@
 }
 
 #language-popup{
-  height: 32vh;
+  height: 34vh;
   width: 66vh;
+}
+#language-popup h1{
+  font-size: 1.8rem;
 }
 .second-button{
   margin-left: 2vmin;
@@ -64,3 +67,4 @@
 .popup-footer .btn-large{
   font-size: 1.7vmin;
 }
+
