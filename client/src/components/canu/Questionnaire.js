@@ -401,8 +401,8 @@ class Questionnaire extends React.Component {
                             <p>{this.props.t("questionnaire_finish")}</p>
                             <div className="popup-footer">
                             <a onClick={this.onSubmit}
-                               className="waves-effect waves-light btn-large">Yes</a>
-                            <a href="#!" className="waves-effect waves-light btn-large modal-action modal-close">No</a>
+                               className="waves-effect waves-light btn-large finishpopup-button">Yes</a>
+                            <a href="#!" className="waves-effect waves-light btn-large finishpopup-button modal-action modal-close second-button">No</a>
                         </div>
                         </div>
                     </div>

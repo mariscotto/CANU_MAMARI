@@ -24,7 +24,7 @@ class APMInfo extends React.Component {
                             <h4>Instruction</h4>
                         </div>
                         <div className="text-container">
-                            <p><Trans>{this.props.t("apm_popup")}</Trans></p>
+                            <Trans><p>{this.props.t("apm_popup")}</p></Trans>
                         </div>
                     </div>
                     <div className="modal-footer">

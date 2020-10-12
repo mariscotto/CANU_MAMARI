@@ -59,9 +59,6 @@ li {
 }
 .logo{
 }
-#lifeguard-logo {
-  width:52%;
-}
 /*LAYOUT*/
 .module-area{
   height: 100%;
@@ -554,10 +551,11 @@ width: 100%;
 display: flex;
 justify-content: flex-start;
 }
-
-.popup-footer .btn-large{
-  width: 30%;
-  margin-left: 10%;
+.finishpopup-button{
+  width:11vmin;
+}
+.lifeguard-logo{
+  width:53%;
 }
 
 .blink-2 {

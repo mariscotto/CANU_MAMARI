@@ -3,6 +3,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import $ from 'jquery'; // Importing jQuery first
+import {Trans, withTranslation } from 'react-i18next';
 
 import "./ThankYou.css";
 import M from "materialize-css";
@@ -560,9 +561,8 @@ class ThankYou extends React.Component {
         return (
             <div style={{height: "100%"}}>
                     <div id="congratulations-popup">
-                        <h2 id="congratulations-text">Thank you!</h2>
-                        <p>Since your data is completely anonymized, we have no possibility to identify your dataset.
-                            If you would like to receive your scores or want us to delete your data once the study is completed, please contact <strong>canu.lfe.mw@tum.de</strong> with your request and the following identifier:</p>
+                        <h2 id="congratulations-text">{this.props.t("thankyou_header")}</h2>
+                        <p><Trans>{this.props.t("thankyou_description")}</Trans></p>
                         <p id="session-id">{this.state.VP_id}</p>
                     </div>
             </div>
@@ -570,4 +570,4 @@ class ThankYou extends React.Component {
     }
     }
 
-    export default ThankYou;
+    export default withTranslation()(ThankYou);

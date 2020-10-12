@@ -95,7 +95,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                  "Once you have decided on an answer option, select it and then click on 'Next'."
+                  "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -155,7 +155,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                  "Once you have decided on an answer option, select it and then click on 'Next'."
+                  "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
         {
               type: "imagepicker",
@@ -215,7 +215,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                  "Once you have decided on an answer option, select it and then click on 'Next'."
+                  "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -275,7 +275,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                  "Once you have decided on an answer option, select it and then click on 'Next'."
+                  "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -335,7 +335,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                  "Once you have decided on an answer option, select it and then click on 'Next'."
+                  "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -395,7 +395,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                  "Once you have decided on an answer option, select it and then click on 'Next'."
+                  "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -455,7 +455,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                "Once you have decided on an answer option, select it and then click on 'Next'."
+                "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -515,7 +515,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                "Once you have decided on an answer option, select it and then click on 'Next'."
+                "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -575,7 +575,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                "Once you have decided on an answer option, select it and then click on 'Next'."
+                "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -635,7 +635,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                "Once you have decided on an answer option, select it and then click on 'Next'."
+                "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -695,7 +695,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                "Once you have decided on an answer option, select it and then click on 'Next'."
+                "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",
@@ -755,7 +755,7 @@ class APM extends React.Component {
               type: "html",
               name: "info_Anweisung",
               html:
-                "Once you have decided on an answer option, select it and then click on 'Next'."
+                "<Trans>"+this.props.t("apm_taskheader")+"</Trans>"
             },
             {
               type: "imagepicker",

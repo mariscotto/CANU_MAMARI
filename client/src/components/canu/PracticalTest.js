@@ -747,9 +747,9 @@ class PracticalTest extends React.Component {
                             <p>{this.props.t("practicaltest_finishquestion")}</p>
                             <div className="popup-footer">
                                 <a onMouseDown={this.triggerSubmitSolution}
-                                   className="btn-large modal-action modal-close">Yes</a>
+                                   className="btn-large finishpopup-button modal-action modal-close">Yes</a>
                                 <a onMouseDown={this.closePopup}
-                                   className="btn-large modal-action modal-close">No</a>
+                                   className="btn-large finishpopup-button modal-action modal-close second-button">No</a>
                             </div>
                         </div>
                     </div>

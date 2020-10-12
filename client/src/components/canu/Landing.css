@@ -50,3 +50,17 @@
 .language-switch label{
   font-family: 'Spinnaker', "Work Sans", sans-serif !important;
 }
+
+#language-popup{
+  height: 32vh;
+  width: 66vh;
+}
+.second-button{
+  margin-left: 2vmin;
+}
+#language-logo{
+  width: 50%;
+}
+.popup-footer .btn-large{
+  font-size: 1.7vmin;
+}

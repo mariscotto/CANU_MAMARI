@@ -20,6 +20,7 @@ class LandingCanu extends React.Component {
     constructor(props) {
         super(props);
         this.changeLanguage = this.changeLanguage.bind(this);
+        this.changeLanguagePopup = this.changeLanguagePopup.bind(this);
     }
     // storing link to tasks
     state = {
@@ -32,6 +33,9 @@ class LandingCanu extends React.Component {
         var elem = document.getElementById('modal1');
         var instance = M.Modal.init(elem,{dismissible:false});
         instance.open();
+        var elem2 = document.getElementById('language-popup');
+        var instance2 = M.Modal.init(elem2,{dismissible:false});
+        instance2.open();
         /*<a className="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
         <div className="btn-container">
             <Link to={this.state.link} className="btn">
@@ -44,6 +48,10 @@ class LandingCanu extends React.Component {
         var elem = document.getElementById('privacy-policy');
         var instance = M.Modal.init(elem,{dismissible:false});
         instance.open();
+    }
+    changeLanguagePopup(){
+        $(".language-switch input").prop("checked", true);
+        this.props.i18n.changeLanguage("de");
     }
     changeLanguage(e){
         e.currentTarget.checked ? this.props.i18n.changeLanguage("de"):this.props.i18n.changeLanguage("en");
@@ -148,6 +156,23 @@ class LandingCanu extends React.Component {
                                 <span className="lever"></span>
                                 DE
                         </label>
+                    </div>
+                </div>
+                <div id="language-popup" className="modal practical-info">
+                    <div className="modal-content">
+                        <div className="piece-container">
+                            <img id="language-logo" src="/ressources/language.svg"></img>
+                        </div>
+                        <div className="text-container">
+                            <h1>Language</h1>
+                            <p>Choose your language:</p>
+                            <div className="popup-footer">
+                            <a href="#!"
+                               className="waves-effect waves-light btn-large modal-action modal-close">English</a>
+                            <a href="#!" onMouseDown={this.changeLanguagePopup}
+                               className="waves-effect waves-light btn-large modal-action modal-close second-button">Deutsch</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
