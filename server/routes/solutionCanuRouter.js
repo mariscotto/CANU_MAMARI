@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 
 var Solution = require('../models/solutionCanu').SolutionCanu;
 var SolutionAll = require('../models/solutionCanu').SolutionCanuAll;
+var Questionnaire = require('../models/Questionnaire').Questionnaire;
 //var Solution = require('../models/solutionCanu').SolutionCanu;
 //var SolutionAll = require('../models/solutionCanu').SolutionCanuAll;
 var Study = require('../models/study').Study;
@@ -180,7 +181,7 @@ function updateSolutionNovelty(req, body) {
     //console.log(solution);
     // Zählen aller jemals eingegangenen Lösungen zur aktuellen Aufgabe
     const updatedSolutions = []
-    return SolutionAll.countDocuments()
+    return Questionnaire.countDocuments()
         .then((N_max) => {
             //Aktualisierung des Neuheitswertes dieser Lösung, Berechnung linear
             // Solution.find({"_id": solution.solution}/*ref in SolutionsALl*/)
