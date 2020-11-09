@@ -16,9 +16,12 @@ var QuestionnaireSchema = new Schema({
         creative_test: {
             type: String
         },
-        creative_skills: {
+        vp_code: {
             type: String
         },
+        // creative_skills: {
+        //     type: String
+        // },
         education_grade: {
             type: String
         },
@@ -27,10 +30,10 @@ var QuestionnaireSchema = new Schema({
         },
         study_id: {
             type: String
-        },
-        personality_adjectives: {
-            type: Array
-        }
+        // },
+        // personality_adjectives: {
+        //     type: Array
+        // }
     },
     {
         timestamps: true

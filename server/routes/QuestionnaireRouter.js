@@ -15,12 +15,13 @@ QuestionnaireRouter.route('/:studyId')
         Questionnaire.create({
             VP_id: req.sessionID,
             age: req.body.age,
+            vp_code: req.body.vp_code,
             gender: req.body.gender,
             creative_test: req.body.creative_test,
-            creative_skills: req.body.creative_skills,
+            // creative_skills: req.body.creative_skills,
             education_grade: req.body.education_grade,
             job_area: req.body.job_area,
-            personality_adjectives: req.body.personality_adjectives,
+            // personality_adjectives: req.body.personality_adjectives,
             study_id: req.body.study
         })
             .then(object => {
