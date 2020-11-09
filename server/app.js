@@ -42,9 +42,9 @@ const mongoose = require('mongoose');
 // Falls eigene lokale Datenbank, den unteren Block löschen oder auskommentieren
 
 
-const uri = "mongodb://canu-client:Cr34t1v1ty@creativity.lfe.mw.tum.de:27017/creativityDB";
+//const uri = "mongodb://canu-client:Cr34t1v1ty@creativity.lfe.mw.tum.de:27017/creativityDB";
 
-//const uri = "mongodb+srv://tedt:test1234@cluster0.0pgbs.mongodb.net/test?retryWrites=true";
+const uri = "mongodb+srv://tedt:test1234@cluster0.0pgbs.mongodb.net/test?retryWrites=true";
 
 //const uri = "mongodb+srv://Marcel:marcel94@test-cluster-m3jtf.mongodb.net/test?retryWrites=true";
 

@@ -1,4 +1,4 @@
 module.exports = {
-    mongoURI: "mongodb://canu-client:Cr34t1v1ty@creativity.lfe.mw.tum.de:27017/creativityDB",
+    mongoURI: "mongodb+srv://tedt:test1234@cluster0.0pgbs.mongodb.net/test?retryWrites=true",
     secretOrKey: "secret"
 };

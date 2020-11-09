@@ -43,14 +43,15 @@ class PracticalTest extends React.Component {
     state = {
         link: `/${this.props.match.params.studyid}/${
             this.props.match.params.groupid
-        }/canu/apm`,
+        }/canu/questionnaire`,
         startTime: undefined,
         solutions: [],
         timeStamps: [],
-        motivated: Math.round(Math.random()) !== 1,
+        // motivated: Math.round(Math.random()) !== 1,
+        motivated: true
     };
     line = 100;
-    workTime = 720;
+    workTime = 600; 
     running = false;
     startTime;
     minutes = this.workTime / 60;

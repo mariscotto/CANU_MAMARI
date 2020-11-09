@@ -23,14 +23,14 @@ class Questionnaire extends React.Component {
         this.onChangeAge = this.onChangeAge.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangeGender = this.onChangeGender.bind(this);
-        this.onChangeCreativeSkills = this.onChangeCreativeSkills.bind(this);
-        this.onChangeCreativeTest = this.onChangeCreativeTest.bind(this);
+        // this.onChangeCreativeSkills = this.onChangeCreativeSkills.bind(this);
+        // this.onChangeCreativeTest = this.onChangeCreativeTest.bind(this);
         this.onChangeEducationGrade = this.onChangeEducationGrade.bind(this);
         this.onChangeJobArea = this.onChangeJobArea.bind(this);
-        this.onChangePersonalityAdjectives = this.onChangePersonalityAdjectives.bind(this);
+        // this.onChangePersonalityAdjectives = this.onChangePersonalityAdjectives.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.changeLanguage = this.changeLanguage.bind(this);
-
+        this.onChangeVP_Code = this.onChangeVP_Code.bind(this);
 
         this.state = {
             link: `/${this.props.match.params.studyid}/${
@@ -38,11 +38,12 @@ class Questionnaire extends React.Component {
             }/canu/congratz`,
             age: "",
             gender: "",
-            creative_test: "",
-            creative_skills: "",
+            // creative_test: "",
+            // creative_skills: "",
             education_grade: "",
             job_area: "",
-            personality_adjectives: []
+            vp_code: ""
+            // personality_adjectives: []
         };
     }
 
@@ -81,18 +82,6 @@ class Questionnaire extends React.Component {
         })
     }
 
-    onChangeCreativeTest(e) {
-        this.setState({
-            creative_test: e.target.value
-        })
-    }
-
-    onChangeCreativeSkills(e) {
-        this.setState({
-            creative_skills: e.target.value
-        })
-    }
-
     onChangeEducationGrade(e) {
         this.setState({
             education_grade: e.target.value
@@ -105,15 +94,21 @@ class Questionnaire extends React.Component {
         })
     }
 
-    onChangePersonalityAdjectives (e){
-        if (e.target.checked) {
-            this.setState({
-                personality_adjectives: [...this.state.personality_adjectives, e.target.value]
-            })
-        } else {
-            this.setState({personality_adjectives: this.state.personality_adjectives.filter(adjective => adjective !== e.target.value)})
-        }
-    };
+    onChangeVP_Code(e) {
+        this.setState({
+            vp_code: e.target.value
+        })
+    }
+
+    // onChangePersonalityAdjectives (e){
+    //     if (e.target.checked) {
+    //         this.setState({
+    //             personality_adjectives: [...this.state.personality_adjectives, e.target.value]
+    //         })
+    //     } else {
+    //         this.setState({personality_adjectives: this.state.personality_adjectives.filter(adjective => adjective !== e.target.value)})
+    //     }
+    // };
 //          this.state.age === "" || this.state.gender === "" ? $('.validation-field').html("Please fill in all fields."): ('.validation-field').html("");
     onValidateForm(step){
         switch (step) {
@@ -133,15 +128,20 @@ class Questionnaire extends React.Component {
                 }
                 break;
             case 4:
-                if(this.state.creative_test === "" || this.state.creative_skills === ""){
+                if(this.state.vp_code === ""){
                     return false;
                 }
                 break;
-            case 5:
-                if(this.state.personality_adjectives.length === 0){
-                    return false;
-                }
-                break;
+            // case 4:
+            //     if(this.state.creative_test === "" || this.state.creative_skills === ""){
+            //         return false;
+            //     }
+            //     break;
+            // case 5:
+            //     if(this.state.personality_adjectives.length === 0){
+            //         return false;
+            //     }
+            //     break;
         }
         return true;
     }
@@ -150,11 +150,12 @@ class Questionnaire extends React.Component {
         const questionnaire = {
             age: this.state.age,
             gender: this.state.gender,
-            creative_test: this.state.creative_test,
-            creative_skills: this.state.creative_skills,
+            // creative_test: this.state.creative_test,
+            // creative_skills: this.state.creative_skills,
             education_grade: this.state.education_grade,
             job_area: this.state.job_area,
-            personality_adjectives: this.deepCloneArray(this.state.personality_adjectives),
+            vp_code: this.state.vp_code,
+            // personality_adjectives: this.deepCloneArray(this.state.personality_adjectives),
             study:this.props.match.params.studyid
         };
         axios.post(`/api/Questionnaire/${this.props.match.params.studyid}`, questionnaire)
@@ -473,6 +474,24 @@ class Questionnaire extends React.Component {
                                         </p>
                                     </div>
                                 </div>
+                                <div className="row">
+                                  <div class="col s12">
+                                      <div className="section-title">{this.props.t("questionnairep1_question3")}</div>
+                                        <p>
+                                            <label>
+                                                <input placeholder="" id="vp_code" type="text" className="validate"
+                                                  value={this.state.vp_code} onChange={this.onChangeVP_Code}></input>
+                                            </label>
+                                            <span class="helper-text" data-error="wrong" data-success="right">Bitte geben Sie zunächst Ihren persönlichen Code ein. <br/>Der Code besteht aus <strong>6 Zeichen</strong>:                              <br/>
+                                              <ul>
+                                                <li class="bullets">Den beiden Tagesziffern des Geburtstages Ihrer Mutter, z.B. <strong>06</strong>.02.96</li>
+                                                <li class="bullets">Die ersten beiden Buchstaben des Vornamens Ihrer Mutter, z.B. <strong>AN</strong>NA</li>
+                                                <li class="bullets">Die letzten beiden Buchstaben Ihres Nachnamens, z.B. MÜLL<strong>ER</strong></li>
+                                              </ul>
+                                            </span>
+                                        </p>
+                                      </div>
+                                </div>
                             </div>
                             <div className="animation-footer">
                             <div className="validation-field"></div>
@@ -648,308 +667,7 @@ class Questionnaire extends React.Component {
                             <a className="waves-effect waves-light btn-large back-button">back</a>
                             </div>
                         </div>
-                        <div className="form-step js-form-step hidden" data-step="4">
-                            <div id="header">
-                                <h2>{this.props.t("questionnairep4_header")}</h2>
-                            </div>
-                            <div id="form">
-                                <div className="row">
-                                    <div className="col s12">
-                                        <div className="section-title">{this.props.t("questionnairep4_question1")}</div>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group0" type="radio" value={0}
-                                                       onChange={this.onChangeCreativeTest}/>
-                                                <span>{this.props.t("questionnairep4_selection11")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group0" type="radio" value={1}
-                                                       onChange={this.onChangeCreativeTest}/>
-                                                <span>{this.props.t("questionnairep4_selection12")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group0" type="radio" value={2}
-                                                       onChange={this.onChangeCreativeTest}/>
-                                                <span>{this.props.t("questionnairep4_selection13")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group0" type="radio" value={3}
-                                                       onChange={this.onChangeCreativeTest}/>
-                                                <span>{this.props.t("questionnairep4_selection14")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group0" type="radio" value={4}
-                                                       onChange={this.onChangeCreativeTest}/>
-                                                <span>{this.props.t("questionnairep4_selection15")}</span>
-                                            </label>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col s12">
-                                        <div className="section-title">{this.props.t("questionnairep4_question2")}
-                                        </div>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group1" type="radio" value={0}
-                                                       onChange={this.onChangeCreativeSkills}/>
-                                                <span>{this.props.t("questionnairep4_selection21")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group1" type="radio" value={1}
-                                                       onChange={this.onChangeCreativeSkills}/>
-                                                <span>{this.props.t("questionnairep4_selection22")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group1" type="radio" value={2}
-                                                       onChange={this.onChangeCreativeSkills}/>
-                                                <span>{this.props.t("questionnairep4_selection23")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group1" type="radio" value={3}
-                                                       onChange={this.onChangeCreativeSkills}/>
-                                                <span>{this.props.t("questionnairep4_selection24")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input className="with-gap" name="group1" type="radio" value={4}
-                                                       onChange={this.onChangeCreativeSkills}/>
-                                                <span>{this.props.t("questionnairep4_selection25")}</span>
-                                            </label>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="animation-footer">
-                                <div className="validation-field"></div>
-                                <a className="waves-effect waves-light btn-large next-button">next</a>
-                                <a className="waves-effect waves-light btn-large back-button">back</a>
-                            </div>
-                        </div>
-                        <div className="form-step js-form-step waiting hidden" data-step="5">
-                            <div id="header">
-                                <h2>{this.props.t("questionnairep5_header")}</h2>
-                            </div>
-                            <div id="form">
-                                <div className="row">
-                                    <div className="col s4">
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Capable"}
-                                                       onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection11")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Artificial"}
-                                                       onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection12")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Clever"}
-                                                       onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection13")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Cautious"}
-                                                       onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection14")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Confident"}
-                                                       onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection15")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Egotistical"}
-                                                       onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection16")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Commonplace"}
-                                                       onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection17")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Humorous"}
-                                                       onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection18")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Conservative"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection19")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Individualistic"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection110")}</span>
-                                            </label>
-                                        </p>
-                                    </div>
-                                    <div className="col s4">
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Conventional"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection111")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Informal"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection112")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Dissatisfied"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection113")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Insightful"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection114")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Suspicious"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection115")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Honest"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection116")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Intelligent"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection117")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Well-mannered"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection118")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Wide interests"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection119")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Inventive"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection120")}</span>
-                                            </label>
-                                        </p>
-                                    </div>
-                                    <div className="col s4">
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Original"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection121")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Narrow interests"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection122")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Reflective"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection123")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Sincere"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection124")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Resourceful"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection125")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Self-confident"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection126")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Sexy"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection127")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Submissive"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection128")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Snobbish"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection129")}</span>
-                                            </label>
-                                        </p>
-                                        <p>
-                                            <label>
-                                                <input type="checkbox" className="filled-in" value={"Unconventional"} onChange={this.onChangePersonalityAdjectives}/>
-                                                <span>{this.props.t("questionnairep5_selection130")}</span>
-                                            </label>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="animation-footer">
-                                <div className="validation-field"/>
-                            <a className="waves-effect waves-light btn-large back-button">back</a>
-                            <a id="finish-button" onClick={this.onSubmitPopup}
-                                  className="waves-effect waves-light btn-large">finish</a>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div className="language-switch switch">

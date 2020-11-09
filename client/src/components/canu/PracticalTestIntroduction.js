@@ -123,6 +123,15 @@ class PracticalTestIntroduction extends React.Component {
         }
     }
 
+    openStartIntroMotivated() {
+        var elem2 = document.getElementById('pThirdIntroMotivated');
+        var instance2 = M.Modal.init(elem2, {dismissible: false});
+        instance2.close();
+        var elem = document.getElementById('start-popup');
+        var instance = M.Modal.init(elem, {dismissible: false});
+        instance.open();
+    }
+
     openThirdIntroMotivated() {
         var elem2 = document.getElementById('pClockIntro');
         var instance2 = M.Modal.init(elem2, {dismissible: false});
@@ -209,7 +218,7 @@ class PracticalTestIntroduction extends React.Component {
                         <div className="text-container">
                             <h1>Solutions</h1>
                             <p>{this.props.t("practicaltest_info4motivated")}</p>
-                            <a href="#!" onMouseDown={this.startVideo}
+                            <a href="#!"  onMouseDown={this.openStartIntroMotivated}
                                className="waves-effect waves-light btn-large modal-action modal-close">Let's go</a>
                         </div>
                     </div>

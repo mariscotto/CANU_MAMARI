@@ -17,7 +17,7 @@ QuestionnaireRouter.route('/:studyId')
             age: req.body.age,
             vp_code: req.body.vp_code,
             gender: req.body.gender,
-            creative_test: req.body.creative_test,
+            // creative_test: req.body.creative_test,
             // creative_skills: req.body.creative_skills,
             education_grade: req.body.education_grade,
             job_area: req.body.job_area,

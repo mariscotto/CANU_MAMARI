@@ -13,9 +13,9 @@ var QuestionnaireSchema = new Schema({
         gender: {
             type: String
         },
-        creative_test: {
-            type: String
-        },
+        // creative_test: {
+        //     type: String
+        // },
         vp_code: {
             type: String
         },
@@ -30,7 +30,7 @@ var QuestionnaireSchema = new Schema({
         },
         study_id: {
             type: String
-        // },
+        }
         // personality_adjectives: {
         //     type: Array
         // }
