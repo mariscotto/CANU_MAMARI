@@ -51,7 +51,7 @@ class PracticalTest extends React.Component {
         motivated: true
     };
     line = 100;
-    workTime = 600; 
+    workTime = 720;
     running = false;
     startTime;
     minutes = this.workTime / 60;
