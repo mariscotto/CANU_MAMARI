@@ -430,8 +430,8 @@ class Questionnaire extends React.Component {
                         <div className="form-progress-indicator one active"></div>
                         <div className="form-progress-indicator two"/>
                         <div className="form-progress-indicator three"></div>
-                        <div className="form-progress-indicator four"></div>
-                        <div className="form-progress-indicator five"></div>
+                        // <div className="form-progress-indicator four"></div>
+                        // <div className="form-progress-indicator five"></div>
                         <p id="form-progress-completion" className="js-form-progress-completion sr-only"
                            aria-live="polite">0% complete</p>
                     </div>
@@ -657,13 +657,12 @@ class Questionnaire extends React.Component {
                                 </div>
                             </div>
                             <div className="animation-footer">
-                                <div className="validation-field"></div>
-                            <a className="waves-effect waves-light btn-large next-button">next</a>
-                            <a className="waves-effect waves-light btn-large back-button">back</a>
+                                  <div className="validation-field"/>
+                                      <a className="waves-effect waves-light btn-large back-button">back</a>
+                                      <a id="finish-button" onClick={this.onSubmitPopup} className="waves-effect waves-light btn-large">finish</a>
                             </div>
-                        </div>
-
-                    </div>
+                          </div>
+                      </div>
                 </div>
                 <div className="language-switch switch">
                     <label>
