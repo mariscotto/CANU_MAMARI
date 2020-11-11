@@ -482,12 +482,7 @@ class Questionnaire extends React.Component {
                                                 <input placeholder="" id="vp_code" type="text" className="validate"
                                                   value={this.state.vp_code} onChange={this.onChangeVP_Code}></input>
                                             </label>
-                                            <span class="helper-text" data-error="wrong" data-success="right">Bitte geben Sie zunächst Ihren persönlichen Code ein. <br/>Der Code besteht aus <strong>6 Zeichen</strong>:                              <br/>
-                                              <ul>
-                                                <li class="bullets">Den beiden Tagesziffern des Geburtstages Ihrer Mutter, z.B. <strong>06</strong>.02.96</li>
-                                                <li class="bullets">Die ersten beiden Buchstaben des Vornamens Ihrer Mutter, z.B. <strong>AN</strong>NA</li>
-                                                <li class="bullets">Die letzten beiden Buchstaben Ihres Nachnamens, z.B. MÜLL<strong>ER</strong></li>
-                                              </ul>
+                                            <span class="helper-text" data-error="wrong" data-success="right">Bitte geben Sie zunächst Ihren persönlichen Code ein. <br/>Der Code besteht aus <strong>6 Zeichen</strong>:<br/>Den beiden Tagesziffern des Geburtstages Ihrer Mutter, z.B. <strong>06</strong>.02.96<br/>Die ersten beiden Buchstaben des Vornamens Ihrer Mutter, z.B. <strong>AN</strong>NA<br/>Die letzten beiden Buchstaben Ihres Nachnamens, z.B. MÜLL<strong>ER</strong>
                                             </span>
                                         </p>
                                       </div>
