@@ -430,8 +430,6 @@ class Questionnaire extends React.Component {
                         <div className="form-progress-indicator one active"></div>
                         <div className="form-progress-indicator two"/>
                         <div className="form-progress-indicator three"></div>
-                        // <div className="form-progress-indicator four"></div>
-                        // <div className="form-progress-indicator five"></div>
                         <p id="form-progress-completion" className="js-form-progress-completion sr-only"
                            aria-live="polite">0% complete</p>
                     </div>
