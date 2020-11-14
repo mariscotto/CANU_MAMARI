@@ -510,6 +510,7 @@ studyRouter.route('/:userId/:studyId/download')
                                 var csv = new Object({
                                     Participant: questionnaires[i].VP_id,
                                     Finished:questionnaires[i].createdAt,
+                                    VP_code:questionnaires[i].vp_code,
                                     Age: questionnaires[i].age,
                                     Gender: questionnaires[i].gender,
                                     Education_grade: questionnaires[i].education_grade,
